@@ -1,0 +1,98 @@
+/* ═══ IVA — themes (light default) ═══ */
+
+:root, [data-theme="light"] {
+  --bg: #F4F7F5;
+  --surface: #FFFFFF;
+  --surface-2: #EBF1EE;
+  --text: #132019;
+  --muted: #5B6B63;
+  --line: rgba(19,32,25,.09);
+
+  --primary: #0E8A6D;
+  --primary-2: #0A6E57;
+  --on-primary: #FFFFFF;
+  --accent: #C98A1B;
+  --danger: #CE3E58;
+  --info: #1F7AAE;
+  --warn: #B97F10;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: #0E1613;
+  --surface: #152019;
+  --surface-2: #1B2A22;
+  --text: #E9F0EB;
+  --muted: #92A69C;
+  --line: rgba(233,240,235,.09);
+
+  --primary: #35C7A0;
+  --primary-2: #1FA37F;
+  --on-primary: #06251B;
+  --accent: #E0A458;
+  --danger: #F2708A;
+  --info: #58A6D6;
+  --warn: #E5B45B;
+  color-scheme: dark;
+}
+
+[data-theme="midnight"] {
+  --bg: #0B1220;
+  --surface: #111B2E;
+  --surface-2: #182640;
+  --text: #E7EDF8;
+  --muted: #8E9BB5;
+  --line: rgba(231,237,248,.09);
+
+  --primary: #4CC2E8;
+  --primary-2: #2E9CC4;
+  --on-primary: #06222D;
+  --accent: #E0A458;
+  --danger: #F2708A;
+  --info: #7FB3E8;
+  --warn: #E5B45B;
+  color-scheme: dark;
+}
+
+/* Glass: translucent surfaces over a soft tinted gradient. */
+[data-theme="glass"] {
+  --bg: linear-gradient(160deg, #E8F4EF 0%, #DCEBE4 45%, #EAF0E4 100%);
+  --surface: rgba(255,255,255,.62);
+  --surface-2: rgba(255,255,255,.45);
+  --text: #16241E;
+  --muted: #55665E;
+  --line: rgba(22,36,30,.10);
+
+  --primary: #0E8A6D;
+  --primary-2: #0A6E57;
+  --on-primary: #FFFFFF;
+  --accent: #C98A1B;
+  --danger: #CE3E58;
+  --info: #1F7AAE;
+  --warn: #B97F10;
+  color-scheme: light;
+}
+[data-theme="glass"] body { background: var(--bg); }
+[data-theme="glass"] .sidebar,
+[data-theme="glass"] .topbar,
+[data-theme="glass"] .bottomnav {
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+[data-theme="glass"] .card,
+[data-theme="glass"] .sidebar { background: var(--surface); }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+[data-motion="reduced"] *, [data-motion="reduced"] *::before, [data-motion="reduced"] *::after {
+  animation-duration: .01ms !important;
+  transition-duration: .01ms !important;
+  scroll-behavior: auto !important;
+}
