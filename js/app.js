@@ -262,7 +262,7 @@ function pageSettings() {
   return el('div', {},
     el('div', { class: 'tool-head' }, el('div', { class: 'ico' }, '⚙️'), el('div', {}, el('h1', {}, 'تنظیمات'))),
     box,
-    el('div', { class: 'hint', style: 'margin-top:14px' }, 'IVA v1.3 — همه داده‌ها فقط روی دستگاه شما (localStorage). بدون سرور، بدون ردیابی.'));
+    el('div', { class: 'hint', style: 'margin-top:14px' }, `IVA v${VERSION} — همه داده‌ها فقط روی دستگاه شما (localStorage). بدون سرور، بدون ردیابی.`));
 }
 
 function pageChangelog() {

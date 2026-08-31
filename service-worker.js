@@ -2,7 +2,7 @@
  * Versioned cache, safe update, old-cache cleanup.
  * Never caches sensitive/decrypted content (those live only in memory).
  */
-const VERSION = 'iva-v1';
+const VERSION = 'iva-v2';
 const CORE = [
   './',
   './index.html',
@@ -16,10 +16,27 @@ const CORE = [
   './js/registry.js',
   './js/storage.js',
   './js/ui.js',
-  './js/clipboard.js',
   './js/helpers.js',
   './js/search.js',
   './js/pwa.js',
+  './js/clipboard.js',
+  './js/helps.js',
+  './js/changelog.js',
+  './js/jalaali.js',
+  './js/hashes-sync.js',
+  './tools/text.js',
+  './tools/dev.js',
+  './tools/design.js',
+  './tools/files.js',
+  './tools/math.js',
+  './tools/time.js',
+  './tools/security.js',
+  './tools/fun.js',
+  './tools/brain.js',
+  './tools/fun-data.js',
+  './vault/vault.js',
+  './vault/file-format.js',
+  './vault/crypto-utils.js',
   './assets/fonts/Vazirmatn-var.woff2',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',
