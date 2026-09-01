@@ -1,6 +1,22 @@
-/* IVA — localStorage persistence (namespaced, never stores secrets). */
+/* IR-Toolbox — localStorage persistence (namespaced, never stores secrets). */
 
-const NS = 'iva:';
+const NS = 'ir:';
+const LEGACY_NS = 'iva:'; // pre-1.3.2 brand (IVA) — migrated once, never written again.
+
+/* One-time migration of pre-rename (IVA) local data so users keep their prefs. */
+(function migrateLegacyKeys() {
+  try {
+    for (const key of ['settings', 'favs', 'recents', 'scores']) {
+      if (localStorage.getItem(NS + key) == null) {
+        const old = localStorage.getItem(LEGACY_NS + key);
+        if (old != null) {
+          localStorage.setItem(NS + key, old);
+          localStorage.removeItem(LEGACY_NS + key);
+        }
+      }
+    }
+  } catch {}
+})();
 
 function read(key, fallback) {
   try {
@@ -53,10 +69,10 @@ export function setBest(game, value, lowerBetter = false) {
   return false;
 }
 
-/* ── Export / import iva-settings.json (no vault passwords — never stored) ── */
+/* ── Export / import ir-settings.json (no vault passwords — never stored) ── */
 export function exportSettings() {
   return JSON.stringify({
-    app: 'iva-toolbox',
+    app: 'ir-toolbox',
     version: 1,
     exportedAt: new Date().toISOString(),
     settings: getSettings(),
@@ -67,7 +83,7 @@ export function exportSettings() {
 }
 export function importSettings(jsonText) {
   const data = JSON.parse(jsonText);
-  if (data.app !== 'iva-toolbox') throw new Error('فایل تنظیمات IVA نیست');
+  if (data.app !== 'ir-toolbox' && data.app !== 'iva-toolbox') throw new Error('فایل تنظیمات IR-Toolbox نیست'); // accepts pre-1.3.2 (IVA) exports too
   if (data.settings) write('settings', data.settings);
   if (Array.isArray(data.favorites)) write('favs', data.favorites);
   if (Array.isArray(data.recents)) write('recents', data.recents);
@@ -76,6 +92,6 @@ export function importSettings(jsonText) {
 
 export function clearAll() {
   Object.keys(localStorage)
-    .filter((k) => k.startsWith(NS))
+    .filter((k) => k.startsWith(NS) || k.startsWith(LEGACY_NS))
     .forEach((k) => localStorage.removeItem(k));
 }

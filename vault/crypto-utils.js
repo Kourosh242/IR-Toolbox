@@ -1,4 +1,4 @@
-/* IVA Vault — Web Crypto primitives.
+/* IR Vault — Web Crypto primitives.
  * KDF: PBKDF2-HMAC-SHA-256 (250,000 iters) → AES-256-GCM.
  * Password and keys never leave memory; never persisted.
  */

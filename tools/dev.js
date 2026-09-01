@@ -1,4 +1,4 @@
-/* IVA — توسعه‌دهنده / Developer tools */
+/* IR-Toolbox — توسعه‌دهنده / Developer tools */
 import { register } from '../js/registry.js';
 import { el, field, areaInput, textInput, readout, copyBtn, stat } from '../js/ui.js';
 import { faNum, escapeHTML } from '../js/helpers.js';

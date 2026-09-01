@@ -1,8 +1,8 @@
-/* IVA — service worker: app-shell cache + offline support.
+/* IR-Toolbox — service worker: app-shell cache + offline support.
  * Versioned cache, safe update, old-cache cleanup.
  * Never caches sensitive/decrypted content (those live only in memory).
  */
-const VERSION = 'iva-v2';
+const VERSION = 'ir-v1';
 const CORE = [
   './',
   './index.html',

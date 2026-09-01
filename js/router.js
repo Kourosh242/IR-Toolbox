@@ -1,4 +1,4 @@
-/* IVA — tiny hash router */
+/* IR-Toolbox — tiny hash router */
 
 const routes = [];
 

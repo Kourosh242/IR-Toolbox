@@ -1,4 +1,4 @@
-/* IVA — متن / Text tools */
+/* IR-Toolbox — متن / Text tools */
 import { register } from '../js/registry.js';
 import { el, field, areaInput, readout, stat, copyBtn } from '../js/ui.js';
 import { faNum, faBytes, debounce } from '../js/helpers.js';

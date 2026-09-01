@@ -4,7 +4,7 @@ const fs = require('fs');
 
 test('home renders dashboard with categories and tools', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('.brand-name')).toHaveText('IVA');
+  await expect(page.locator('.brand-name')).toHaveText('IR-Toolbox');
   await expect(page.locator('.cat-card')).toHaveCount(9);
   expect(await page.locator('.tool-card').count()).toBeGreaterThanOrEqual(40);
 });
@@ -23,13 +23,13 @@ test('json formatter validates and formats', async ({ page }) => {
 test('base64 round-trips persian text', async ({ page }) => {
   await page.goto('/#/t/base64');
   const ta = page.locator('textarea').first();
-  await ta.fill('سلام آیوا');
+  await ta.fill('سلام IR');
   await page.getByRole('button', { name: /کدگذاری/ }).click();
   const enc = (await page.locator('.readout').first().textContent()).trim();
   expect(enc.length).toBeGreaterThan(0);
   await ta.fill(enc);
   await page.getByRole('button', { name: /رمزگشایی/ }).click();
-  await expect(page.locator('.readout').first()).toContainText('سلام آیوا');
+  await expect(page.locator('.readout').first()).toContainText('سلام IR');
 });
 
 test('calculator uses thousands separators', async ({ page }) => {
@@ -55,7 +55,7 @@ test('hash to text finds common value from local db', async ({ page }) => {
   await expect(page.locator('.readout').last()).toContainText('123456');
 });
 
-test('vault text round-trip + wrong password + tamper (iva256)', async ({ page }) => {
+test('vault text round-trip + wrong password + tamper (ir256)', async ({ page }) => {
   await page.goto('/#/t/vault');
   await page.locator('textarea').first().fill('متن محرمانه سلام');
   const pws = page.locator('input[type=password]');
@@ -65,14 +65,14 @@ test('vault text round-trip + wrong password + tamper (iva256)', async ({ page }
     page.waitForEvent('download'),
     page.getByRole('button', { name: /رمزنگاری و دانلود/ }).click(),
   ]);
-  expect(download.suggestedFilename()).toContain('.iva256');
-  const path = '/tmp/iva-e2e.iva256';
+  expect(download.suggestedFilename()).toContain('.ir256');
+  const path = '/tmp/ir-e2e.ir256';
   await download.saveAs(path);
   const bytes = fs.readFileSync(path);
-  expect(bytes.subarray(0, 4).toString()).toBe('IVA1');
+  expect(bytes.subarray(0, 4).toString()).toBe('IRT1');
 
   await page.getByRole('button', { name: '🔓 بازگشایی' }).first().click();
-  await page.setInputFiles('input[type=file][accept=".iva256"]', path);
+  await page.setInputFiles('input[type=file][accept=".ir256,.iva256"]', path);
   await page.locator('input[type=password]').first().fill('Test1234!');
   await page.getByRole('button', { name: '🔓 بازگشایی' }).last().click();
   await expect(page.locator('.readout').last()).toContainText('متن محرمانه سلام');
@@ -83,19 +83,19 @@ test('vault text round-trip + wrong password + tamper (iva256)', async ({ page }
 
   const tampered = Buffer.from(bytes);
   tampered[tampered.length - 20] ^= 0xff;
-  const tPath = '/tmp/iva-e2e-tampered.iva256';
+  const tPath = '/tmp/ir-e2e-tampered.ir256';
   fs.writeFileSync(tPath, tampered);
-  await page.setInputFiles('input[type=file][accept=".iva256"]', tPath);
+  await page.setInputFiles('input[type=file][accept=".ir256,.iva256"]', tPath);
   await page.locator('input[type=password]').first().fill('Test1234!');
   await page.getByRole('button', { name: '🔓 بازگشایی' }).last().click();
   await expect(page.locator('.readout').last()).toContainText('رمز عبور اشتباه');
 });
 
-test('vault file encryption produces iva256 and decrypts back', async ({ page }) => {
-  fs.writeFileSync('/tmp/iva-plain.txt', 'سلام فایل متنی تست');
+test('vault file encryption produces ir256 and decrypts back', async ({ page }) => {
+  fs.writeFileSync('/tmp/ir-plain.txt', 'سلام فایل متنی تست');
   await page.goto('/#/t/vault');
   await page.getByRole('button', { name: '📁 رمزنگاری فایل' }).click();
-  await page.setInputFiles('div.card input[type=file]', '/tmp/iva-plain.txt');
+  await page.setInputFiles('div.card input[type=file]', '/tmp/ir-plain.txt');
   const pws = page.locator('input[type=password]');
   await pws.nth(0).fill('FilePass123!');
   await pws.nth(1).fill('FilePass123!');
@@ -103,13 +103,13 @@ test('vault file encryption produces iva256 and decrypts back', async ({ page })
     page.waitForEvent('download'),
     page.getByRole('button', { name: /رمزنگاری و دانلود/ }).click(),
   ]);
-  const path = '/tmp/iva-file.iva256';
+  const path = '/tmp/ir-file.ir256';
   await download.saveAs(path);
-  expect(fs.readFileSync(path).subarray(0, 4).toString()).toBe('IVA1');
+  expect(fs.readFileSync(path).subarray(0, 4).toString()).toBe('IRT1');
 
   // decrypt and confirm restored file chip appears
   await page.getByRole('button', { name: '🔓 بازگشایی' }).first().click();
-  await page.setInputFiles('input[type=file][accept=".iva256"]', path);
+  await page.setInputFiles('input[type=file][accept=".ir256,.iva256"]', path);
   await page.locator('input[type=password]').first().fill('FilePass123!');
   await page.getByRole('button', { name: '🔓 بازگشایی' }).last().click();
   await expect(page.locator('.readout').last()).toContainText('سلام فایل متنی تست');
@@ -120,7 +120,7 @@ test('vault file encryption produces iva256 and decrypts back', async ({ page })
     page.waitForEvent('download'),
     page.getByRole('button', { name: /دانلود با نام اصلی/ }).click(),
   ]);
-  expect(dl.suggestedFilename()).toBe('iva-plain.txt');
+  expect(dl.suggestedFilename()).toBe('ir-plain.txt');
 
   // file action cards must sit ABOVE the (possibly long) text preview
   const btnY = (await page.getByRole('button', { name: /دانلود با نام اصلی/ }).boundingBox()).y;
@@ -162,10 +162,37 @@ test('ctrl+k palette searches and navigates', async ({ page }) => {
   await expect(page.locator('.tool-head h1')).toContainText('بررسی هش');
 });
 
-test('changelog page lists v1.3 first', async ({ page }) => {
+test('changelog page lists v1.3.2 first', async ({ page }) => {
   await page.goto('/#/changelog');
-  await expect(page.locator('.badge.ok').first()).toContainText('v1.3');
+  await expect(page.locator('.badge.ok').first()).toContainText('v1.3.2');
+  await expect(page.locator('body')).toContainText('IR-Toolbox');
   await expect(page.locator('body')).toContainText('پاک شدن خودکار خروجی');
+});
+
+test('legacy .iva256 (IVA1 magic) containers still decrypt', async ({ page }) => {
+  await page.goto('/#/t/vault');
+  await page.locator('textarea').first().fill('میراث آیوا');
+  const pws = page.locator('input[type=password]');
+  await pws.nth(0).fill('Legacy123!');
+  await pws.nth(1).fill('Legacy123!');
+  const [download] = await Promise.all([
+    page.waitForEvent('download'),
+    page.getByRole('button', { name: /رمزنگاری و دانلود/ }).click(),
+  ]);
+  expect(download.suggestedFilename()).toContain('.ir256');
+  const path = '/tmp/ir-legacy.ir256';
+  await download.saveAs(path);
+  // rewrite the magic to the pre-1.3.2 brand bytes to simulate an old file
+  const legacy = Buffer.from(fs.readFileSync(path));
+  legacy.write('IVA1', 0, 'ascii');
+  const legacyPath = '/tmp/ir-legacy.iva256';
+  fs.writeFileSync(legacyPath, legacy);
+
+  await page.getByRole('button', { name: '🔓 بازگشایی' }).first().click();
+  await page.setInputFiles('input[type=file][accept=".ir256,.iva256"]', legacyPath);
+  await page.locator('input[type=password]').first().fill('Legacy123!');
+  await page.getByRole('button', { name: '🔓 بازگشایی' }).last().click();
+  await expect(page.locator('.readout').last()).toContainText('میراث آیوا');
 });
 
 test('dev tools spot check: slug, uuid, url codec', async ({ page }) => {

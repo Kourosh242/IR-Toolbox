@@ -1,4 +1,4 @@
-/* IVA — بازی فکری / Brain games (best scores stored locally) */
+/* IR-Toolbox — بازی فکری / Brain games (best scores stored locally) */
 import { register } from '../js/registry.js';
 import { el, stat, toast } from '../js/ui.js';
 import { faNum } from '../js/helpers.js';

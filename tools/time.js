@@ -1,4 +1,4 @@
-/* IVA — زمان / Time tools — با تقویم فارسی شمسی (پیکر جلالی) */
+/* IR-Toolbox — زمان / Time tools — با تقویم فارسی شمسی (پیکر جلالی) */
 import { register } from '../js/registry.js';
 import { el, field, textInput, selectInput, readout, stat } from '../js/ui.js';
 import { faNum, faGroup } from '../js/helpers.js';

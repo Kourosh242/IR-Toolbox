@@ -1,4 +1,4 @@
-/* IVA — امنیت / Security tools */
+/* IR-Toolbox — امنیت / Security tools */
 import { register } from '../js/registry.js';
 import { el, field, areaInput, textInput, selectInput, readout, fileInput, stat } from '../js/ui.js';
 import { faNum, faBytes, debounce } from '../js/helpers.js';
@@ -100,7 +100,7 @@ register({
       el('div', { class: 'card', style: 'padding:16px' },
         el('div', { class: 'lbl', style: 'font-weight:700' }, '۳) هش ← متن (حدس با دیتابیس محلی)'),
         field('هش ورودی', hIn), guess, foundOut.root, status),
-      el('div', { class: 'hint' }, 'هش یعنی «اثر انگشت» داده — رمزنگاری نیست و قابل برگشت نیست. برای ذخیره محرمانه از گاوصندوق IVA استفاده کنید.')
+      el('div', { class: 'hint' }, 'هش یعنی «اثر انگشت» داده — رمزنگاری نیست و قابل برگشت نیست. برای ذخیره محرمانه از گاوصندوق IR استفاده کنید.')
     );
   }
 });

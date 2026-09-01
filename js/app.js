@@ -1,4 +1,4 @@
-/* IVA — app shell, routes, pages. */
+/* IR-Toolbox — app shell, routes, pages. */
 import * as registry from './registry.js';
 import * as router from './router.js';
 import * as store from './storage.js';
@@ -40,7 +40,7 @@ const view = () => document.getElementById('view');
 const NAV_MAIN = [
   { hash: '#/', icon: '🏠', fa: 'خانه', test: (p) => p.length === 0 },
   { hash: '#/fav', icon: '⭐', fa: 'علاقه‌مندی‌ها', test: (p) => p[0] === 'fav' },
-  { hash: '#/t/vault', icon: '🧰', fa: 'گاوصندوق IVA', test: (p) => p[0] === 't' && p[1] === 'vault' },
+  { hash: '#/t/vault', icon: '🧰', fa: 'گاوصندوق IR', test: (p) => p[0] === 't' && p[1] === 'vault' },
 ];
 const NAV_FOOT = [
   { hash: '#/changelog', icon: '🗂️', fa: 'تغییرات ورژن', test: (p) => p[0] === 'changelog' },
@@ -52,7 +52,7 @@ function buildShell() {
   const sidebar = el('aside', { class: 'sidebar', id: 'sidebar' });
   const brand = el('div', { class: 'brand' },
     el('div', { class: 'brand-logo', html: SPARK }),
-    el('div', {}, el('div', { class: 'brand-name' }, 'IVA'), el('div', { class: 'brand-sub' }, 'جعبه ابزار آیوا')));
+    el('div', {}, el('div', { class: 'brand-name' }, 'IR-Toolbox'), el('div', { class: 'brand-sub' }, 'جعبه ابزار IR')));
   sidebar.append(brand);
 
   const navFor = (items) => items.map((n) =>
@@ -118,7 +118,7 @@ function toolCard(t, q = '') {
 
 /* ── Pages ─ */
 function pageHome() {
-  document.title = 'IVA — جعبه ابزار آیوا';
+  document.title = 'IR-Toolbox — جعبه ابزار IR';
   const favs = store.getFavs().map(registry.get).filter(Boolean);
   const recents = store.getRecents().map((r) => ({ t: registry.get(r.id), ts: r.ts })).filter((r) => r.t);
 
@@ -135,11 +135,11 @@ function pageHome() {
 
   const hero = el('div', { class: 'hero-dash' },
     el('span', { class: 'eyebrow' }, '✦ کاملاً محلی · بدون سرور · آفلاین'),
-    el('h1', {}, 'جعبه ابزار آیوا'),
+    el('h1', {}, 'جعبه ابزار IR'),
     el('p', {}, `${faNum(registry.all().length)} ابزار کاربردی در جیب شما — متن، کد، فایل، امنیت و سرگرمی. همه‌چیز روی دستگاه خودتان می‌ماند.`),
     el('div', { class: 'hint', style: 'margin-top:6px' }, faDate()),
     el('div', { class: 'dash-actions' },
-      el('button', { class: 'btn primary', onclick: () => location.hash = '#/t/vault' }, '🧰 گاوصندوق IVA'),
+      el('button', { class: 'btn primary', onclick: () => location.hash = '#/t/vault' }, '🧰 گاوصندوق IR'),
       el('button', { class: 'btn tonal', onclick: () => search.open() }, '🔍 جستجو'),
       install),
     el('div', { class: 'stats', style: 'margin-top:16px' },
@@ -171,7 +171,7 @@ function pageHome() {
 function pageCat(id) {
   const c = registry.cat(id);
   if (!c) return notFound();
-  document.title = `${c.fa} — IVA`;
+  document.title = `${c.fa} — IR-Toolbox`;
   return el('div', {},
     el('div', { class: 'tool-head' },
       el('div', { class: 'ico' }, c.icon),
@@ -182,7 +182,7 @@ function pageCat(id) {
 function pageTool(id) {
   const t = registry.get(id);
   if (!t) return notFound();
-  document.title = `${t.fa} — IVA`;
+  document.title = `${t.fa} — IR-Toolbox`;
   store.pushRecent(id);
   const fav = store.getFavs().includes(id);
   const body = el('div', { class: 'tool-body' });
@@ -207,7 +207,7 @@ function pageTool(id) {
 }
 
 function pageFav() {
-  document.title = 'علاقه‌مندی‌ها — IVA';
+  document.title = 'علاقه‌مندی‌ها — IR-Toolbox';
   const favs = store.getFavs().map(registry.get).filter(Boolean);
   if (!favs.length) return el('div', { class: 'empty' }, el('span', { class: 'big' }, '☆'), 'هنوز ابزاری را ستاره‌دار نکرده‌اید.', el('div', {}, el('button', { class: 'btn primary', style: 'margin-top:12px', onclick: () => location.hash = '#/' }, 'مشاهده ابزارها')));
   return el('div', {}, el('div', { class: 'tool-head' }, el('div', { class: 'ico' }, '⭐'), el('div', {}, el('h1', {}, 'علاقه‌مندی‌ها'))),
@@ -221,12 +221,12 @@ function segBtns(value, options, onPick) {
 }
 
 function pageSettings() {
-  document.title = 'تنظیمات — IVA';
+  document.title = 'تنظیمات — IR-Toolbox';
   const s = store.getSettings();
   const box = el('div', { class: 'card', style: 'padding:8px 20px' });
 
   const themeRow = el('div', { class: 'set-row' },
-    el('div', {}, el('div', { class: 't' }, 'پوسته'), el('div', { class: 'd' }, 'روشن، تاریک، سیستم یا پوسته‌های IVA')),
+    el('div', {}, el('div', { class: 't' }, 'پوسته'), el('div', { class: 'd' }, 'روشن، تاریک، سیستم یا پوسته‌های IR-Toolbox')),
     el('div', { class: 'ctrl' }, segBtns(s.theme, [['light', 'روشن'], ['dark', 'تاریک'], ['system', 'سیستم'], ['midnight', 'نیمه‌شب'], ['glass', 'شیشه‌ای']], (v) => { store.setSettings({ theme: v }); applyPrefs(); renderCurrent(); })));
 
   const motionSwitch = el('button', { class: 'switch', role: 'switch', 'aria-checked': s.motion === 'reduced', onclick: (e) => {
@@ -245,14 +245,14 @@ function pageSettings() {
   });
 
   const dataRow = el('div', { class: 'set-row' },
-    el('div', {}, el('div', { class: 't' }, 'داده‌های محلی'), el('div', { class: 'd' }, 'خروجی/ورودی iva-settings.json — بدون رمز گاوصندوق')),
+    el('div', {}, el('div', { class: 't' }, 'داده‌های محلی'), el('div', { class: 'd' }, 'خروجی/ورودی ir-settings.json — بدون رمز گاوصندوق')),
     el('div', { class: 'ctrl' },
-      el('button', { class: 'btn tonal sm', onclick: () => import('./helpers.js').then(({ download, textBlob }) => download('iva-settings.json', textBlob(store.exportSettings(), 'application/json'))) }, 'خروجی'),
+      el('button', { class: 'btn tonal sm', onclick: () => import('./helpers.js').then(({ download, textBlob }) => download('ir-settings.json', textBlob(store.exportSettings(), 'application/json'))) }, 'خروجی'),
       el('button', { class: 'btn tonal sm', onclick: () => fileImp.click() }, 'ورودی'),
-      el('button', { class: 'btn danger sm', onclick: () => { if (confirm('همه داده‌های محلی IVA پاک شود؟')) { store.clearAll(); applyPrefs(); renderCurrent(); toast('پاک شد'); } } }, 'پاک‌سازی')));
+      el('button', { class: 'btn danger sm', onclick: () => { if (confirm('همه داده‌های محلی IR-Toolbox پاک شود؟')) { store.clearAll(); applyPrefs(); renderCurrent(); toast('پاک شد'); } } }, 'پاک‌سازی')));
 
   const pwaRow = el('div', { class: 'set-row' },
-    el('div', {}, el('div', { class: 't' }, 'نصب به‌صورت اپ'), el('div', { class: 'd' }, pwa.isIOS() ? 'iOS: در سافاری Share سپس Add to Home Screen' : 'با پشتیبانی مرورگر، IVA مثل اپ نصب می‌شود')),
+    el('div', {}, el('div', { class: 't' }, 'نصب به‌صورت اپ'), el('div', { class: 'd' }, pwa.isIOS() ? 'iOS: در سافاری Share سپس Add to Home Screen' : 'با پشتیبانی مرورگر، IR-Toolbox مثل اپ نصب می‌شود')),
     el('div', { class: 'ctrl' }, pwa.canInstall()
       ? el('button', { class: 'btn primary sm', onclick: async () => { await pwa.promptInstall(); } }, 'نصب')
       : el('span', { class: 'badge info' }, pwa.isStandalone() ? 'نصب شده ✔' : 'در دسترس نیست')));
@@ -262,11 +262,11 @@ function pageSettings() {
   return el('div', {},
     el('div', { class: 'tool-head' }, el('div', { class: 'ico' }, '⚙️'), el('div', {}, el('h1', {}, 'تنظیمات'))),
     box,
-    el('div', { class: 'hint', style: 'margin-top:14px' }, `IVA v${VERSION} — همه داده‌ها فقط روی دستگاه شما (localStorage). بدون سرور، بدون ردیابی.`));
+    el('div', { class: 'hint', style: 'margin-top:14px' }, `IR-Toolbox v${VERSION} — همه داده‌ها فقط روی دستگاه شما (localStorage). بدون سرور، بدون ردیابی.`));
 }
 
 function pageChangelog() {
-  document.title = 'تغییرات ورژن — IVA';
+  document.title = 'تغییرات ورژن — IR-Toolbox';
   const list = el('div', {}, CHANGELOG.map((c) =>
     el('div', { class: 'card', style: 'padding:16px 20px;margin-bottom:14px' },
       el('div', { style: 'display:flex;align-items:center;gap:10px;margin-bottom:8px' },
@@ -282,17 +282,17 @@ function pageChangelog() {
 }
 
 function pageSec() {
-  document.title = 'امنیت و حریم — IVA';
+  document.title = 'امنیت و حریم — IR-Toolbox';
   const row = (i, t, d) => el('div', { class: 'set-row' }, el('div', { style: 'font-size:1.3rem' }, i), el('div', {}, el('div', { class: 't' }, t), el('div', { class: 'd' }, d)));
   return el('div', {},
     el('div', { class: 'tool-head' }, el('div', { class: 'ico' }, '🛡️'), el('div', {}, el('h1', {}, 'امنیت و حریم خصوصی'), el('div', { class: 'en' }, 'Security & Privacy'))),
     el('div', { class: 'card', style: 'padding:8px 20px' },
-      row('🏠', 'همه‌چیز محلی', 'IVA هیچ سروری ندارد؛ هیچ داده‌ای از مرورگر شما خارج نمی‌شود. بدون آنالیتیکس، بدون کوکی ردیابی، بدون آپلود. حتی وقتی آفلاین باشید کامل کار می‌کند.'),
-      row('🧰', 'گاوصندوق IVA', 'رمزنگاری با PBKDF2-HMAC-SHA-256 (۲۵۰٬۰۰ تکرار) برای مشتق کلید + AES-256-GCM برای رمزنگاری، با salt و IV تصادفی برای هر فایل. رمز عبور و کلید هرگز ذخیره نمی‌شوند؛ فراموشی رمز یعنی از دست رفتن داده — این یک ویژگی امنیتی است، نه باگ.'),
-      row('📦', 'فایل ‎.iva256', 'کانتینر باینری نسخه‌دار: magic «IVA1» + شماره نسخه + شناسه الگوریتم‌ها + salt + IV + متن رمزنگاری‌شده. نام و نوع فایل‌ها هم رمزنگاری می‌شوند و هنگام بازگشایی دقیقاً برمی‌گردند.'),
+      row('🏠', 'همه‌چیز محلی', 'IR-Toolbox هیچ سروری ندارد؛ هیچ داده‌ای از مرورگر شما خارج نمی‌شود. بدون آنالیتیکس، بدون کوکی ردیابی، بدون آپلود. حتی وقتی آفلاین باشید کامل کار می‌کند.'),
+      row('🧰', 'گاوصندوق IR', 'رمزنگاری با PBKDF2-HMAC-SHA-256 (۲۵۰٬۰۰ تکرار) برای مشتق کلید + AES-256-GCM برای رمزنگاری، با salt و IV تصادفی برای هر فایل. رمز عبور و کلید هرگز ذخیره نمی‌شوند؛ فراموشی رمز یعنی از دست رفتن داده — این یک ویژگی امنیتی است، نه باگ.'),
+      row('📦', 'فایل ‎.ir256', 'کانتینر باینری نسخه‌دار: magic «IRT1» + شماره نسخه + شناسه الگوریتم‌ها + salt + IV + متن رمزنگاری‌شده. نام و نوع فایل‌ها هم رمزنگاری می‌شوند و هنگام بازگشایی دقیقاً برمی‌گردند. فایل‌های قدیمی ‎.iva256 (magic «IVA1») هم بدون هیچ تغییری بازگشایی می‌شوند.'),
       row('#️⃣', 'هش ≠ رمزنگاری', 'هش یک‌طرفه است («اثر انگشت» داده) و برای تشخیص تغییر فایل/متن استفاده می‌شود؛ با هش نمی‌توان چیزی را محرمانه نگه داشت و هش قابل برگشت به متن نیست.'),
       row('⚠️', 'SHA-1 ناامن', 'SHA-1 سال‌هاست شکسته شده؛ فقط برای سازگاری با سامانه‌های قدیمی ارائه شده و با هشدار نمایش داده می‌شود. برای هر کاربرد امنیتی SHA-256 یا بالاتر استفاده کنید.'),
-      row('🗄️', 'چه چیزی محلی ذخیره می‌شود؟', 'فقط تنظیمات، علاقه‌مندی‌ها، فهرست ابزارهای اخیر (شناسه ابزار، نه مقدار ورودی‌ها) و رکورد بازی‌ها — با پیشوند iva: در localStorage. خروجی/ورودی تنظیمات هم شامل رمز گاوصندوق نیست.'),
+      row('🗄️', 'چه چیزی محلی ذخیره می‌شود؟', 'فقط تنظیمات، علاقه‌مندی‌ها، فهرست ابزارهای اخیر (شناسه ابزار، نه مقدار ورودی‌ها) و رکورد بازی‌ها — با پیشوند ir: در localStorage. خروجی/ورودی تنظیمات هم شامل رمز گاوصندوق نیست.'),
       row('🔓', 'بدون ادعای شکست‌ناپذیری', 'هیچ ابزار رمزنگاری‌ای «غیرقابل شکستن» مطلق نیست؛ امنیت واقعی به قوی بودن رمز عبور شما هم بستگی دارد. رمز بلند و یکتا انتخاب کنید و آن را در جای امن نگه دارید.')),
     el('div', { class: 'hint', style: 'margin-top:12px' }, 'خلاصه فنی کامل‌تر (فرمت کانتینر و جزئیات الگوریتم‌ها) در README پروژه آمده است.'));
 }

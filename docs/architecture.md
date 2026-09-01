@@ -1,11 +1,11 @@
 # معماری و ساختار کد
 
-IVA یک وب‌اپ استاتیک **بدون build** است؛ همه‌چیز با ES Modules بومی مرورگر کار می‌کند.
+IR-Toolbox یک وب‌اپ استاتیک **بدون build** است؛ همه‌چیز با ES Modules بومی مرورگر کار می‌کند.
 
 ## ساختار پروژه
 
 ```
-iva/
+IR-Toolbox/
 ├─ index.html            پوسته RTL + لینک PWA
 ├─ manifest.json         متادیتای PWA (fa/rtl)
 ├─ service-worker.js     کش نسخه‌دار + آفلاین
@@ -18,7 +18,7 @@ iva/
 │  ├─ app.js             پوسته اپ، صفحات و مسیریابی
 │  ├─ registry.js        رجیستری ماژولار ابزارها
 │  ├─ router.js          روتر hash ساده
-│  ├─ storage.js         localStorage با پیشوند iva:
+│  ├─ storage.js         localStorage با پیشوند ir:
 │  ├─ ui.js              کمکی‌های DOM، toast و ویجت‌ها
 │  ├─ search.js          پالت فرمان Ctrl+K
 │  ├─ pwa.js             Service Worker و نصب PWA

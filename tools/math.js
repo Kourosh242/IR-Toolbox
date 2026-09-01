@@ -1,4 +1,4 @@
-/* IVA — محاسبات / Math tools */
+/* IR-Toolbox — محاسبات / Math tools */
 import { register } from '../js/registry.js';
 import { el, field, textInput, readout, selectInput, stat } from '../js/ui.js';
 import { faNum, faGroup } from '../js/helpers.js';

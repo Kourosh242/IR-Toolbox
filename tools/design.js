@@ -1,4 +1,4 @@
-/* IVA — طراحی / Design tools */
+/* IR-Toolbox — طراحی / Design tools */
 import { register } from '../js/registry.js';
 import { el, field, textInput, readout, selectInput, stat } from '../js/ui.js';
 import { faNum } from '../js/helpers.js';

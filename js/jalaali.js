@@ -1,4 +1,4 @@
-/* IVA — Jalali ↔ Gregorian conversion (jalaali-js algorithm, inlined, no deps). */
+/* IR-Toolbox — Jalali ↔ Gregorian conversion (jalaali-js algorithm, inlined, no deps). */
 
 function div(a, b) { return ~~(a / b); }
 function mod(a, b) { return a - ~~(a / b) * b; }

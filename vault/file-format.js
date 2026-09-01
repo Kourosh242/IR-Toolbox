@@ -1,7 +1,7 @@
-/* IVA Vault — .iva256 binary container (versioned, self-describing).
+/* IR Vault — .ir256 binary container (versioned, self-describing).
  *
  * Layout (little-endian):
- *   [4]   magic   "IVA1"
+ *   [4]   magic   "IRT1" (pre-1.3.2 files carry "IVA1"; still accepted on decrypt)
  *   [1]   version (1)
  *   [1]   kdfId   (1 = PBKDF2-HMAC-SHA256, 250k)
  *   [1]   algId   (1 = AES-256-GCM)
@@ -15,13 +15,15 @@
  */
 import { encryptBytes, decryptBytes } from './crypto-utils.js';
 
-export const MAGIC = 'IVA1';
+export const MAGIC = 'IRT1';
+export const LEGACY_MAGIC = 'IVA1'; // pre-1.3.2 brand (IVA) — accepted on decrypt only.
 export const VERSION = 1;
 
 const te = new TextEncoder();
 const td = new TextDecoder();
 
-export const EXT = '.iva256';
+export const EXT = '.ir256';
+export const LEGACY_EXT = '.iva256'; // pre-1.3.2 extension — accepted in the file picker.
 
 export async function packContainer(files, password) {
   // files: [{name, mime, bytes:Uint8Array}]
@@ -56,7 +58,8 @@ export async function packContainer(files, password) {
 export async function unpackContainer(buf, password) {
   const u8 = new Uint8Array(buf);
   const v = new DataView(u8.buffer, u8.byteOffset, u8.byteLength);
-  if (u8.length < 13 || String.fromCharCode(...u8.slice(0, 4)) !== MAGIC)
+  const magic = String.fromCharCode(...u8.slice(0, 4));
+  if (u8.length < 13 || (magic !== MAGIC && magic !== LEGACY_MAGIC))
     throw new Error('bad');
   const version = v.getUint8(4);
   if (version !== VERSION) throw new Error('bad');
