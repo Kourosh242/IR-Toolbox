@@ -1,4 +1,4 @@
-/* IVA — sync hex digests (MD5 / SHA-1 / SHA-256) for offline hash→text dictionary lookup.
+/* IR-Toolbox — sync hex digests (MD5 / SHA-1 / SHA-256) for offline hash→text dictionary lookup.
  * Used ONLY for matching against a local dictionary; hashes are still one-way.
  */
 

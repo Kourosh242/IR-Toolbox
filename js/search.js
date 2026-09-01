@@ -1,4 +1,4 @@
-/* IVA — command palette (Ctrl+K / Cmd+K) with debounced, highlighted search. */
+/* IR-Toolbox — command palette (Ctrl+K / Cmd+K) with debounced, highlighted search. */
 import { el, toast } from './ui.js';
 import * as registry from './registry.js';
 import { highlight, debounce } from './helpers.js';
@@ -23,7 +23,7 @@ function open(onNavigate) {
   const actions = [
     { icon: '🏠', fa: 'رفتن به خانه', run: () => location.hash = '#/' },
     { icon: '⭐', fa: 'علاقه‌مندی‌ها', run: () => location.hash = '#/fav' },
-    { icon: '🧰', fa: 'گاوصندوق IVA', run: () => location.hash = '#/t/vault' },
+    { icon: '🧰', fa: 'گاوصندوق IR', run: () => location.hash = '#/t/vault' },
     { icon: '⚙️', fa: 'تنظیمات', run: () => location.hash = '#/settings' },
     { icon: '🛡️', fa: 'اطلاعات امنیتی', run: () => location.hash = '#/sec' },
   ];

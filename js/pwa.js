@@ -1,4 +1,4 @@
-/* IVA — PWA: service worker + install UX (real prompt only, honest iOS guidance). */
+/* IR-Toolbox — PWA: service worker + install UX (real prompt only, honest iOS guidance). */
 
 let deferredPrompt = null;
 const listeners = new Set();

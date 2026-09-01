@@ -1,4 +1,4 @@
-/* IVA — سرگرمی / Fun (built-in offline content, no API) */
+/* IR-Toolbox — سرگرمی / Fun (built-in offline content, no API) */
 import { register } from '../js/registry.js';
 import { el, copyBtn } from '../js/ui.js';
 import { faNum } from '../js/helpers.js';

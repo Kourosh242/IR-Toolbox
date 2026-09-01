@@ -1,10 +1,10 @@
-/* IVA Vault — encrypt/decrypt text & files into .iva256 containers. */
+/* IR Vault — encrypt/decrypt text & files into .ir256 containers. */
 import { register } from '../js/registry.js';
 import { el, field, areaInput, textInput, fileInput, readout, downloadBtn } from '../js/ui.js';
 import { faNum, faBytes, download } from '../js/helpers.js';
 import { copyText } from '../js/clipboard.js';
 import { toast } from '../js/ui.js';
-import { packContainer, unpackContainer, EXT } from './file-format.js';
+import { packContainer, unpackContainer, EXT, LEGACY_EXT } from './file-format.js';
 
 const te = new TextEncoder();
 const td = new TextDecoder();
@@ -24,8 +24,8 @@ function pwField(label = 'رمز عبور') {
 
 register({
   id: 'vault', cat: 'security', icon: '🧰',
-  fa: 'گاوصندوق IVA', en: 'IVA Vault',
-  desc: 'رمزنگاری متن/فایل با AES-256-GCM — خروجی .iva256',
+  fa: 'گاوصندوق IR', en: 'IR Vault',
+  desc: 'رمزنگاری متن/فایل با AES-256-GCM — خروجی .ir256',
   keywords: ['vault', 'encrypt', 'decrypt', 'رمزنگاری', 'گاوصندوق'],
   mount(root) {
     const tabs = el('div', { class: 'seg' });
@@ -54,7 +54,7 @@ register({
           const bytes = te.encode(ta.value);
           const out = await packContainer([{ name: 'secret.txt', mime: 'text/plain', bytes }], pw.input.value);
           const blob = new Blob([out], { type: 'application/octet-stream' });
-          const name = `iva-vault-${Date.now()}${EXT}`;
+          const name = `ir-vault-${Date.now()}${EXT}`;
           download(name, blob);
           info.textContent = '';
           info.append(savedPanel(blob, name));
@@ -82,7 +82,7 @@ register({
           for (const f of files) entries.push({ name: f.name, mime: f.type || 'application/octet-stream', bytes: new Uint8Array(await f.arrayBuffer()) });
           const out = await packContainer(entries, pw.input.value);
           const blob = new Blob([out], { type: 'application/octet-stream' });
-          const name = `iva-vault-${files.length > 1 ? files.length + 'files-' : ''}${Date.now()}${EXT}`;
+          const name = `ir-vault-${files.length > 1 ? files.length + 'files-' : ''}${Date.now()}${EXT}`;
           download(name, blob);
           info.textContent = '';
           info.append(savedPanel(blob, name), el('div', { class: 'hint' }, `${faNum(files.length)} فایل رمزنگاری شد (${faBytes(out.length)})`));
@@ -97,7 +97,7 @@ register({
     const isText = (f) => (f.mime || '').startsWith('text/') || /\.(txt|md|json|js|mjs|css|html|csv|log|xml|yml|yaml)$/i.test(f.name);
     function paneDec(p) {
       let container = null;
-      const fi = fileInput({ accept: EXT, onFiles: ([f]) => { if (f) f.arrayBuffer().then((b) => { container = b; fname.textContent = 'فایل انتخابی: ' + f.name; }); } });
+      const fi = fileInput({ accept: EXT + ',' + LEGACY_EXT, onFiles: ([f]) => { if (f) f.arrayBuffer().then((b) => { container = b; fname.textContent = 'فایل انتخابی: ' + f.name; }); } });
       const fname = el('div', { class: 'hint' });
       const pw = pwField();
       const out = readout('پیش‌نمایش محتوای متنی (بدون نام فایل)…');

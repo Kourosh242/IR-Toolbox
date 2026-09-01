@@ -1,4 +1,4 @@
-/* IVA — فایل / Files tools (همه محلی، بدون آپلود) */
+/* IR-Toolbox — فایل / Files tools (همه محلی، بدون آپلود) */
 import { register } from '../js/registry.js';
 import { el, field, areaInput, readout, fileInput, stat, downloadBtn } from '../js/ui.js';
 import { faNum, faBytes, escapeHTML, download, textBlob, debounce } from '../js/helpers.js';
@@ -106,7 +106,7 @@ register({
   desc: 'رندر محلی Markdown با خروجی امن (escape شده)',
   keywords: ['markdown', 'md', 'preview'],
   mount(root) {
-    const ta = areaInput({ mono: true, rows: 8, value: '# سلام IVA\n\nمتن **ضخیم** و *کج* و `کد`.\n\n- مورد اول\n- مورد دوم\n\n> نقل‌قول\n\n[لینک](https://example.com)' });
+    const ta = areaInput({ mono: true, rows: 8, value: '# سلام IR-Toolbox\n\nمتن **ضخیم** و *کج* و `کد`.\n\n- مورد اول\n- مورد دوم\n\n> نقل‌قول\n\n[لینک](https://example.com)' });
     const prev = el('div', { class: 'card', style: 'padding:20px' });
     const md = (src) => {
       let s = escapeHTML(src);

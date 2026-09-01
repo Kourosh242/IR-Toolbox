@@ -1,8 +1,8 @@
 {
-  "name": "IVA — جعبه ابزار آیوا",
-  "short_name": "IVA",
+  "name": "IR-Toolbox — جعبه ابزار IR",
+  "short_name": "IR-Toolbox",
   "description": "جعبه ابزار همه‌کاره‌ی وب: ابزار متن، توسعه، طراحی، فایل، محاسبات، زمان، امنیت، سرگرمی و گاوصندوق رمزنگاری — کاملاً آفلاین و محلی.",
-  "id": "iva-toolbox",
+  "id": "ir-toolbox",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

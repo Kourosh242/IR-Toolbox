@@ -1,4 +1,4 @@
-/* IVA — small shared helpers */
+/* IR-Toolbox — small shared helpers */
 
 export const $ = (sel, root = document) => root.querySelector(sel);
 export const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];

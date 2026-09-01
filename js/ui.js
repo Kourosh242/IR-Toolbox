@@ -1,4 +1,4 @@
-/* IVA — DOM helpers, toasts, shared tool widgets. */
+/* IR-Toolbox — DOM helpers, toasts, shared tool widgets. */
 import { $ } from './helpers.js';
 import { copyText } from './clipboard.js';
 

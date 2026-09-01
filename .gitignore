@@ -1,0 +1,4 @@
+# local-only artifacts (e2e dev deps & test output) — the app itself needs no build
+node_modules/
+test-results/
+playwright-report/

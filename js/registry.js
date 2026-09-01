@@ -1,4 +1,4 @@
-/* IVA — modular tool registry.
+/* IR-Toolbox — modular tool registry.
  * New tool = one registration call (in any module). No app rewrite needed.
  */
 
@@ -9,7 +9,7 @@ export const CATS = [
   { id: 'files',    fa: 'فایل',         en: 'Files',      icon: '📁', desc: 'هش فایل، تصویر و داده — همه محلی' },
   { id: 'math',     fa: 'محاسبات',      en: 'Math',       icon: '🧮', desc: 'ماشین‌حساب، درصد و تبدیل واحد' },
   { id: 'time',     fa: 'زمان',         en: 'Time',       icon: '⏰', desc: 'تاریخ شمسی/میلادی، کرنومتر و تایمر' },
-  { id: 'security', fa: 'امنیت',        en: 'Security',   icon: '🔐', desc: 'هش، رمزساز و گاوصندوق IVA' },
+  { id: 'security', fa: 'امنیت',        en: 'Security',   icon: '🔐', desc: 'هش، رمزساز و گاوصندوق IR' },
   { id: 'fun',      fa: 'سرگرمی',       en: 'Fun',        icon: '🎉', desc: 'جوک، ایده و چالش — کاملاً آفلاین' },
   { id: 'brain',    fa: 'بازی فکری',    en: 'Brain',      icon: '🧠', desc: 'بازی‌های حافظه و سرعت با رکورد محلی' },
 ];

@@ -1,4 +1,4 @@
-/* IVA — clipboard with graceful fallback for insecure contexts. */
+/* IR-Toolbox — clipboard with graceful fallback for insecure contexts. */
 
 export async function copyText(text) {
   try {
