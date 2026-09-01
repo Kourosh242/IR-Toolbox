@@ -29,10 +29,24 @@ IR-Toolbox/
 │  ├─ clipboard.js       کپی با fallback
 │  └─ helpers.js         توابع مشترک (faNum، escapeHTML، download…)
 ├─ tools/                ماژول‌های ابزار (خودثبت)
+│  ├─ text.js            متن (شمارنده، تبدیل، پاک‌سازی، جستجو، لورم)
+│  ├─ dev.js             توسعه‌دهنده (JSON، Base64، URL، UUID، JWT، Regex، Timestamp)
+│  ├─ design.js          طراحی (رنگ، کنتراست، گرادیان، سایه، px/rem)
+│  ├─ files.js           فایل (اطلاعات، تصویر↔Base64، Markdown، CSV)
+│  ├─ math.js            محاسبات (ماشین‌حساب، درصد، واحد، BMI، تصادفی)
+│  ├─ time.js            زمان (تاریخ، سن، کرنومتر، تایمر)
+│  ├─ security.js        امنیت (هش، رمزساز، توکن)
+│  ├─ fun.js             سرگرمی (جوک، ایده، سوال، ایموجی، شیر/خط)
+│  ├─ brain.js           بازی فکری (حافظه، واکنش، ریاضی)
+│  ├─ qr.js              QR‌کدساز آفلاین (v1.3.3)
+│  ├─ cron.js            مترجم Cron (v1.3.3)
+│  ├─ pomodoro.js        پومودورو (v1.3.3)
+│  ├─ lorem.js           لورم فارسی (v1.3.3)
+│  ├─ passman.js         مدیر رمز عبور (v1.3.3)
+│  └─ fun-data.js        داده‌های سرگرمی (جوک، ایده، ایموجی و…)
 ├─ vault/                crypto-utils، file-format و UI گاوصندوق
-├─ assets/               فونت وزیرمتن + آیکون‌ها
-├─ scripts/make-icons.mjs  تولید آیکون PNG بدون وابستگی
-└─ e2e/                  تست‌های Playwright
+├─ vendor/               کتابخانه‌های خارجی (qrcode-generator)
+└─ assets/               فونت وزیرمتن + آیکون‌ها
 ```
 
 ## رجیستری ماژولار
