@@ -8,11 +8,11 @@
 
 <p align="center">
   <a href="https://kourosh242.github.io/IR-Toolbox/"><img alt="GitHub Pages" src="https://img.shields.io/badge/%D9%86%D8%B3%D8%AE%D9%87%20%D8%A2%D9%86%D9%84%D8%A7%DB%8C%D9%86-GitHub%20Pages-2ea44f"></a>
-  <a href="LICENSE"><img alt="مجوز MIT" src="https://img.shields.io/badge/%D9%85%D8%AC%D9%88%D8%B2-MIT-blue"></a>
+  <a href="LICENSE"><img alt="licence MIT" src="https://img.shields.io/badge/%D9%85%D8%AC%D9%88%D8%B2-MIT-blue"></a>
 </p>
 
 <p align="center">
-  <a href="https://kourosh242.github.io/IR-Toolbox/"><strong>🌐 مشاهده offline </strong></a>
+  <a href="https://kourosh242.github.io/IR-Toolbox/"><strong>🌐 offline </strong></a>
   ·
   <a href="https://github.com/Kourosh242/IR-Toolbox/wiki">📚 ویکی پروژه</a>
   ·
