@@ -7,9 +7,15 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/Kourosh242/IR-Toolbox/releases/tag/v1.3.4"><img alt="نسخه" src="https://img.shields.io/badge/%D9%86%D8%B3%D8%AE%D9%87-1.3.4-0a6e57"></a>
+  <a href="https://kourosh242.github.io/IR-Toolbox/"><img alt="GitHub Pages" src="https://img.shields.io/badge/%D9%86%D8%B3%D8%AE%D9%87%20%D8%A2%D9%86%D9%84%D8%A7%DB%8C%D9%86-GitHub%20Pages-2ea44f"></a>
+  <a href="LICENSE"><img alt="مجوز MIT" src="https://img.shields.io/badge/%D9%85%D8%AC%D9%88%D8%B2-MIT-blue"></a>
+</p>
+
+<p align="center">
   <a href="https://kourosh242.github.io/IR-Toolbox/"><strong>🌐 مشاهده نسخه آنلاین</strong></a>
   ·
-  <a href="docs/">📚 ویکی پروژه</a>
+  <a href="https://github.com/Kourosh242/IR-Toolbox/wiki">📚 ویکی پروژه</a>
   ·
   <a href="LICENSE">📄 مجوز MIT</a>
 </p>
@@ -28,6 +34,22 @@
 - ⌨️ **پالت فرمان** — جستجوی سریع ابزار با `Ctrl+K` / `Cmd+K`.
 
 ## 🗂️ تغییرات نسخه
+
+### v1.3.4
+- مدیر رمز عبور: **بازیابی پشتیبان رمزنگاری‌شده** (جایگزین ورودی‌های فعلی) + رفع کرش هنگام ذخیرهٔ ورودی‌های بزرگ.
+- QR‌کدساز: رفع دانلود PNG و SVG — فایل SVG حالا معتبر است (حذف xmlns تکراری).
+- تایمرها (پومودورو/کرنومتر/تایمر/ریاضی سرعتی) هنگام ترک صفحه به‌درستی متوقف می‌شوند.
+- «تغییرات ورژن» به ناوبری پایین موبایل افزوده شد.
+- ورود `ir-settings.json` دیگر «اخیراً استفاده‌شده‌ها» را خراب نمی‌کند.
+- مترجم Cron: قیدهای تاریخ (روز/ماه/روز هفته) در همهٔ حالت‌ها ذکر می‌شوند.
+- ورودی غیرعددی/بی‌نهایت در درصد، تبدیل واحد، px↔rem و BMI پیام خطای واضح می‌گیرد.
+- جستجو/جایگزینی: نویسه‌های `$` در متن جایگزین literal رفتار می‌کنند.
+- در محیط ناامن (`file://` یا http بدون TLS) ابزارهای رمزی به‌جای سکوت هشدار واضح می‌دهند.
+- همگام‌سازی پوسته و تنظیمات میان تب‌های باز؛ تاریخ محلی ایران در رکورد روزانهٔ پومودورو.
+- دسترس‌پذیری: کنتراست رنگ پوسته‌های روشن/شیشه‌ای + حذف تودرتویی کنترل‌ها در کارت ابزار.
+- لینک «باز کردن» مدیر رمز فقط `http/https` را می‌پذیرد؛ پیش‌نمایش اشتراک (og:image) با آدرس مطلق.
+- سرگرمی: سوالات دورهمی به ۱۰۰ مورد رسید و ایموجی تکراری حذف شد.
+- Service Worker: کش `ir-v4` با به‌روزرسانی خودکار.
 
 ### v1.3.3
 - **ابزار جدید:** QR‌کدساز آفلاین با UTF-8 (فارسی/انگلیسی/هر زبانی/اموجی) + خروجی SVG/PNG.
@@ -68,7 +90,7 @@
 ### v1.0
 - انتشار نخست: ۴۵ ابزار در ۹ دسته + گاوصندوق IR + PWA آفلاین.
 
-> فهرست کامل و تفصیلی در [docs/changelog.md](docs/changelog.md) آمده است.
+> فهرست کامل و تفصیلی هر نسخه در [تغییرات نسخه](https://github.com/Kourosh242/IR-Toolbox/wiki/تغییرات-نسخه) در ویکی آمده است.
 
 ## 🚀 اجرای سریع
 
@@ -80,17 +102,22 @@ python3 -m http.server 8000
 # سپس: http://localhost:8000
 ```
 
-جزئیات استقرار و نصب PWA در ویکی: [شروع به کار](docs/start.md).
+جزئیات استقرار و نصب PWA در ویکی: [شروع به کار](https://github.com/Kourosh242/IR-Toolbox/wiki/شروع-به-کار).
 
 ## 📚 ویکی
 
-- [صفحه اصلی ویکی](docs/index.md)
-- [فهرست ابزارها](docs/tools.md)
-- [گاوصندوق و امنیت](docs/vault.md)
-- [PWA و آفلاین](docs/pwa.md)
-- [معماری و کد](docs/architecture.md)
-- [توسعه‌دهندگان](docs/dev.md)
-- [تغییرات نسخه](docs/changelog.md)
+ویکی کامل پروژه در [GitHub Wiki](https://github.com/Kourosh242/IR-Toolbox/wiki) میزبانی می‌شود:
+
+- [صفحه اصلی ویکی](https://github.com/Kourosh242/IR-Toolbox/wiki)
+- [شروع به کار](https://github.com/Kourosh242/IR-Toolbox/wiki/شروع-به-کار)
+- [فهرست ابزارها](https://github.com/Kourosh242/IR-Toolbox/wiki/فهرست-ابزارها)
+- [گاوصندوق IR و امنیت](https://github.com/Kourosh242/IR-Toolbox/wiki/گاوصندوق-IR-و-امنیت)
+- [PWA و آفلاین](https://github.com/Kourosh242/IR-Toolbox/wiki/PWA-و-آفلاین)
+- [ذخیره‌سازی محلی](https://github.com/Kourosh242/IR-Toolbox/wiki/ذخیره‌سازی-محلی)
+- [معماری و کد](https://github.com/Kourosh242/IR-Toolbox/wiki/معماری-و-کد)
+- [توسعه‌دهندگان](https://github.com/Kourosh242/IR-Toolbox/wiki/توسعه‌دهندگان)
+- [تست و کنترل کیفیت](https://github.com/Kourosh242/IR-Toolbox/wiki/تست-و-کنترل-کیفیت)
+- [تغییرات نسخه](https://github.com/Kourosh242/IR-Toolbox/wiki/تغییرات-نسخه)
 
 ## 📄 مجوز
 
