@@ -1,0 +1,173 @@
+/* ═══ IR-Toolbox — Design System v2 tokens (v1.3.5) ═══ */
+
+:root {
+  --font: 'Vazirmatn', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: ui-monospace, 'JetBrains Mono', 'Cascadia Mono', 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  --r-xs: 8px; --r-sm: 12px; --r-md: 18px; --r-lg: 24px; --r-xl: 32px;
+  --ease: cubic-bezier(.32,.72,0,1);
+  --spring: cubic-bezier(.34,1.56,.64,1);
+  --dur: .35s;
+  --nav-h: 66px;
+  --maxw: 1240px;
+  --sidebar-w: 268px;
+}
+
+/* ─── Light ─── */
+:root, [data-theme="light"] {
+  --bg: #f3f6f4;
+  --bg-2: #e9efeb;
+  --surface: rgba(255,255,255,.82);
+  --surface-solid: #ffffff;
+  --surface-2: #eef3f0;
+  --surface-3: #e2eae5;
+  --text: #0f1a15;
+  --text-2: #2b3a33;
+  --muted: #5c6c64;
+  --line: rgba(15,26,21,.08);
+  --line-2: rgba(15,26,21,.14);
+
+  --primary: #0b7a5f;
+  --primary-2: #0aa07a;
+  --primary-3: #35c7a0;
+  --on-primary: #ffffff;
+  --accent: #d2941f;
+  --accent-2: #f0b84a;
+  --danger: #d43d5b;
+  --info: #1f7aae;
+  --warn: #8a6300;
+  --ok: #0b7a5f;
+
+  --glow: rgba(11,122,95,.22);
+  --shadow-1: 0 1px 2px rgba(10,20,16,.05), 0 6px 20px rgba(10,20,16,.06);
+  --shadow-2: 0 12px 40px rgba(10,20,16,.12);
+  --shadow-3: 0 30px 80px -20px rgba(10,20,16,.25);
+  --orb-1: rgba(53,199,160,.35);
+  --orb-2: rgba(240,184,74,.28);
+  --orb-3: rgba(31,122,174,.22);
+  --grid-line: rgba(15,26,21,.045);
+  color-scheme: light;
+}
+
+/* ─── Dark ─── */
+[data-theme="dark"] {
+  --bg: #07100c;
+  --bg-2: #0b1611;
+  --surface: rgba(18,30,24,.72);
+  --surface-solid: #111d17;
+  --surface-2: rgba(255,255,255,.045);
+  --surface-3: rgba(255,255,255,.08);
+  --text: #eaf3ee;
+  --text-2: #c3d2ca;
+  --muted: #8ea39a;
+  --line: rgba(234,243,238,.08);
+  --line-2: rgba(234,243,238,.14);
+
+  --primary: #34d1a3;
+  --primary-2: #1fb388;
+  --primary-3: #7ef0cc;
+  --on-primary: #04231a;
+  --accent: #f2b850;
+  --accent-2: #ffd58a;
+  --danger: #ff6f8c;
+  --info: #62b4e8;
+  --warn: #f0c56a;
+  --ok: #34d1a3;
+
+  --glow: rgba(52,209,163,.35);
+  --shadow-1: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+  --shadow-2: 0 16px 48px rgba(0,0,0,.45);
+  --shadow-3: 0 40px 100px -20px rgba(0,0,0,.7);
+  --orb-1: rgba(52,209,163,.28);
+  --orb-2: rgba(242,184,80,.16);
+  --orb-3: rgba(98,180,232,.18);
+  --grid-line: rgba(234,243,238,.035);
+  color-scheme: dark;
+}
+
+/* ─── Midnight ─── */
+[data-theme="midnight"] {
+  --bg: #060a16;
+  --bg-2: #0a1020;
+  --surface: rgba(16,24,44,.72);
+  --surface-solid: #101a2e;
+  --surface-2: rgba(255,255,255,.045);
+  --surface-3: rgba(255,255,255,.08);
+  --text: #e9eefb;
+  --text-2: #c2cbe3;
+  --muted: #8b97b8;
+  --line: rgba(233,238,251,.08);
+  --line-2: rgba(233,238,251,.14);
+
+  --primary: #5cc8f0;
+  --primary-2: #3aa3d6;
+  --primary-3: #9be3ff;
+  --on-primary: #04202c;
+  --accent: #c99bff;
+  --accent-2: #e2c8ff;
+  --danger: #ff6f8c;
+  --info: #7fb3e8;
+  --warn: #f0c56a;
+  --ok: #5cc8f0;
+
+  --glow: rgba(92,200,240,.35);
+  --shadow-1: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.3);
+  --shadow-2: 0 16px 48px rgba(0,0,0,.5);
+  --shadow-3: 0 40px 100px -20px rgba(0,0,0,.75);
+  --orb-1: rgba(92,200,240,.28);
+  --orb-2: rgba(201,155,255,.22);
+  --orb-3: rgba(255,111,140,.14);
+  --grid-line: rgba(233,238,251,.035);
+  color-scheme: dark;
+}
+
+/* ─── Glass ─── */
+[data-theme="glass"] {
+  --bg: #e7f1ec;
+  --bg-2: #dbe9e2;
+  --surface: rgba(255,255,255,.52);
+  --surface-solid: #f7fbf9;
+  --surface-2: rgba(255,255,255,.55);
+  --surface-3: rgba(255,255,255,.75);
+  --text: #12211a;
+  --text-2: #2f4038;
+  --muted: #56675f;
+  --line: rgba(18,33,26,.09);
+  --line-2: rgba(18,33,26,.16);
+
+  --primary: #0a6e57;
+  --primary-2: #0d8f70;
+  --primary-3: #35c7a0;
+  --on-primary: #ffffff;
+  --accent: #c98a1b;
+  --accent-2: #ecb85a;
+  --danger: #ce3e58;
+  --info: #1f7aae;
+  --warn: #7d5a00;
+  --ok: #0a6e57;
+
+  --glow: rgba(10,110,87,.25);
+  --shadow-1: 0 1px 2px rgba(10,20,16,.05), 0 8px 24px rgba(10,20,16,.07);
+  --shadow-2: 0 16px 48px rgba(10,20,16,.14);
+  --shadow-3: 0 40px 100px -20px rgba(10,20,16,.3);
+  --orb-1: rgba(53,199,160,.55);
+  --orb-2: rgba(236,184,90,.45);
+  --orb-3: rgba(31,122,174,.35);
+  --grid-line: rgba(18,33,26,.05);
+  color-scheme: light;
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+[data-motion="reduced"] *, [data-motion="reduced"] *::before, [data-motion="reduced"] *::after {
+  animation-duration: .01ms !important;
+  transition-duration: .01ms !important;
+  scroll-behavior: auto !important;
+}

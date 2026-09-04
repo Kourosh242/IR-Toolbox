@@ -1,0 +1,90 @@
+/* ═══ IR-Toolbox — responsive (mobile-first) ═══ */
+
+/* Mobile: hide sidebar, show bottom nav */
+@media (max-width: 719px) {
+  .sidebar { display: none; }
+  .bottomnav { display: block; }
+  .topbar kbd { display: none; }
+  .view { padding-bottom: calc(var(--nav-h) + 20px + env(safe-area-inset-bottom)); }
+  .tool-head .actions { flex-direction: column; }
+  .dash-actions .btn { flex: 1; }
+
+  /* نوار بالا روی موبایل: بدون blur (اسکرول روان)، پس‌زمینهٔ تقریباً مات */
+  .topbar {
+    gap: 8px;
+    padding-inline: 12px;
+    background: color-mix(in srgb, var(--bg) 94%, transparent);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    will-change: auto;
+  }
+  .searchbox { padding: 9px 12px; border-radius: 14px; }
+  .topbar-actions { gap: 6px; }
+  .topbar-actions .btn.sm { padding-inline: 10px; }
+
+  /* دسته‌ها دو ستونه و جمع‌وجور */
+  .cat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .cat-card { padding: 13px; gap: 6px; }
+  .cat-card .ico { width: 40px; height: 40px; font-size: 1.25rem; }
+  .cat-card h3 { font-size: .92rem; }
+  .cat-card p { font-size: .72rem; }
+  .tool-grid { gap: 10px; }
+  .tool-card { padding: 14px; contain-intrinsic-size: auto 148px; }
+
+  /* سرصفحهٔ ابزار */
+  .tool-head { gap: 12px; margin-bottom: 16px; }
+  .tool-head .ico { width: 48px; height: 48px; border-radius: 15px; font-size: 1.35rem; }
+  .tool-head h1 { font-size: 1.2rem; }
+  .tool-body > .card, .tool-body .card { padding: 16px; }
+  .tool-body .card .card { padding: 12px; }
+  .section-title { margin: 28px 0 12px; }
+
+  /* ردیف تنظیمات: کنترل‌ها زیر متن */
+  .set-row { padding: 14px 0; gap: 10px; }
+  .set-row .ctrl { margin-inline-start: 0; width: 100%; }
+
+  /* پالت جستجو */
+  .modal-back { padding: max(6vh, env(safe-area-inset-top)) 10px 10px; }
+  .modal { width: 100%; }
+  .modal .m-list { max-height: min(52dvh, 420px); }
+
+  /* انیمیشن‌های ورود کوتاه‌تر */
+  .tool-card, .cat-card { animation-duration: .35s; }
+  .rise { animation-duration: .4s; }
+}
+
+/* Desktop: show sidebar, hide bottom nav */
+@media (min-width: 720px) {
+  .bottomnav { display: none; }
+}
+
+/* Prevent horizontal overflow anywhere */
+.view, .card, .tool-body { min-width: 0; }
+.tool-body pre, .tool-body .readout { max-width: 100%; }
+
+/* Very small screens */
+@media (max-width: 400px) {
+  body { font-size: 14.5px; }
+  .hero-dash h1 { font-size: 1.45rem; }
+  .tool-grid { grid-template-columns: 1fr; }
+  .view { padding: 14px 12px; padding-bottom: calc(var(--nav-h) + 20px + env(safe-area-inset-bottom)); }
+  .topbar-actions .btn.sm { padding-inline: 8px; font-size: .72rem; }
+  .btn { padding-inline: 14px; }
+}
+
+/* Touch targets & touch behaviour */
+@media (pointer: coarse) {
+  .btn { min-height: 46px; }
+  .chip { padding: 10px 16px; }
+  .tool-card .fav { width: 36px; height: 36px; }
+  /* جلوگیری از زوم خودکار iOS هنگام فوکوس (فونت کمتر از 16px) */
+  .input, select.input, textarea.input, textarea.code, .input.code, .modal .m-input { font-size: 16px; }
+  /* اسکرول لمسی نرم برای بخش‌های اسکرول‌شونده */
+  .m-list, pre, .sidebar { -webkit-overflow-scrolling: touch; }
+}
+
+/* Print: only the tool content */
+@media print {
+  .sidebar, .bottomnav, .topbar, #toasts { display: none !important; }
+  body { background: #fff; color: #000; }
+}
