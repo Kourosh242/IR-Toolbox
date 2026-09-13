@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 سوال یا گفتگو (Questions / Discussions)
+    url: https://github.com/Kourosh242/IR-Toolbox/discussions
+    about: سوالات عمومی، ایده‌ها و گفتگو درباره ابزارها
+  - name: 📚 ویکی پروژه (Project Wiki)
+    url: https://github.com/Kourosh242/IR-Toolbox/wiki
+    about: مستندات، راهنمای نصب و استقرار
+  - name: 🔒 گزارش مشکل امنیتی (Security report)
+    url: https://github.com/Kourosh242/IR-Toolbox/blob/main/SECURITY.md
+    about: لطفاً آسیب‌پذیری‌ها را علنی گزارش نکنید — SECURITY.md را بخوانید

@@ -1,0 +1,27 @@
+name: 💡 پیشنهاد ویژگی (Feature request)
+description: ایده‌ای برای ابزار یا بهبود دارید
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: چه نیازی را حل می‌کند؟ (What problem does it solve?)
+      description: سناریوی استفاده را توضیح دهید
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: راه‌حل پیشنهادی (Proposed solution)
+    validations:
+      required: true
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: قوانین پروژه (Project constraints)
+      description: هر ابزار جدید باید با این قوانین سازگار باشد
+      options:
+        - label: کاملاً آفلاین و بدون ارسال داده اجرا می‌شود
+          required: true
+        - label: رابط فارسی و راست‌چین دارد
+          required: true

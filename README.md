@@ -1,5 +1,16 @@
 <p align="center">
-  <img src="assets/brand/ir-banner.png" alt="IR-Toolbox — جعبه ابزار IR" width="100%">
+  <img src="assets/brand/ir-banner.png" alt="IR-Toolbox — جعبه ابزار آفلاین فارسی: ۵۲ ابزار رایگان وب در قالب یک PWA" width="100%">
+</p>
+
+# IR-Toolbox — جعبه ابزار آفلاین فارسی | Offline-First Web Toolbox (PWA)
+
+<p align="center">
+  <a href="https://github.com/Kourosh242/IR-Toolbox/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="لایسنس MIT"></a>
+  <img src="https://img.shields.io/badge/version-v1.3.6-blue.svg" alt="نسخه v1.3.6">
+  <img src="https://img.shields.io/badge/PWA-installable-5A0FC8.svg" alt="PWA قابل نصب">
+  <img src="https://img.shields.io/badge/works%20offline-100%25-success.svg" alt="کاملاً آفلاین">
+  <img src="https://img.shields.io/badge/privacy-no%20tracking%2C%20no%20server-0A6E57.svg" alt="بدون ردیابی و بدون سرور">
+  <a href="https://kourosh242.github.io/IR-Toolbox/"><img src="https://img.shields.io/website-up-down/https/kourosh242.github.io/IR-Toolbox.svg" alt="وضعیت وبسایت"></a>
 </p>
 
 <p align="center">
@@ -11,8 +22,45 @@
   ·
   <a href="https://github.com/Kourosh242/IR-Toolbox/wiki">📚 ویکی پروژه</a>
   ·
-  <a href="LICENSE">📄 licence MIT</a>
+  <a href="https://github.com/Kourosh242/IR-Toolbox/issues/new/choose">🐞 گزارش باگ یا پیشنهاد</a>
+  ·
+  <a href="LICENSE">📄 لایسنس MIT</a>
 </p>
+
+---
+
+**IR-Toolbox** (جعبه ابزار IR) is a **free, open-source, offline-first Progressive Web App (PWA)** with **52 privacy-first web tools in 9 categories** — text tools, developer utilities, design tools, file tools, calculators, time tools (Jalali/Shamsi calendar), security tools (AES-256-GCM encrypted vault, password manager, hash checker), QR code generator & scanner, and offline games. Everything runs **100% locally in your browser: no server, no database, no upload, no tracking** — built for Persian (Farsi) users with full RTL support, and it works anywhere.
+
+**جعبه ابزار IR** یک وب‌اپلیکیشن **رایگان، متن‌باز و کاملاً آفلاین** است: ۵۲ ابزار کاربردی فارسی در ۹ دسته — از ابزارهای متن و توسعه‌دهنده تا رمزنگاری AES-256، مدیر رمز عبور، QR‌خوان و تقویم شمسی. همه‌ی پردازش‌ها **روی دستگاه شما** انجام می‌شود؛ هیچ داده‌ای به سرور ارسال نمی‌شود و بدون اینترنت هم کامل کار می‌کند.
+
+## 🚀 شروع سریع (Quick Start)
+
+### 🌐 استفاده آنلاین — بدون نصب
+
+فقط کافیست آدرس زیر را باز کنید؛ همیشه آخرین نسخه را دارید:
+
+**➡️ https://kourosh242.github.io/IR-Toolbox/**
+
+### 📲 نصب به‌عنوان اپلیکیشن (PWA)
+
+- **اندروید / کروم:** آیکون «نصب» (Install) در نوار آدرس را بزنید یا منوی ⋮ ← «Add to Home screen».
+- **ویندوز / مک / لینوکس (کروم، اج):** آیکون نصب در نوار آدرس، یا منوی ⋮ ← «Install IR-Toolbox…».
+- **iOS / سافاری:** دکمه Share ⬆️ ← «Add to Home Screen».
+- پس از نصب، اپ **کاملاً آفلاین** اجرا می‌شود و به‌روزرسانی‌ها خودکار اعمال می‌شوند.
+
+### 💻 اجرای محلی از سورس (Local Development)
+
+پیش‌نیاز: فقط [Git](https://git-scm.com/) و یک مرورگر مدرن. (برای سرویس‌ورکر، فایل باید از طریق HTTP سرو شود؛ `file://` فقط بخشی از ابزارها را اجرا می‌کند.)
+
+```bash
+git clone https://github.com/Kourosh242/IR-Toolbox.git
+cd IR-Toolbox
+python3 -m http.server 8080
+```
+
+سپس `http://localhost:8080` را در مرورگر باز کنید. (یا از هر سرور استاتیک دیگری مثل `npx serve` استفاده کنید.)
+
+> به فایل‌های `.ir256` (خروجی گاوصندوق IR) نیاز دارید؟ همان فایل‌ها با هر نسخه‌ای از اپ باز می‌شوند — رمزنگاری AES-256-GCM استاندارد است و هیچ سروری در کار نیست.
 
 ---
 
@@ -28,6 +76,64 @@
 - 🎨 **پوسته‌های متنوع** — روشن، تاریک، سیستم، نیمه‌شب و شیشه‌ای.
 - 🌌 **طراحی نو (Design System v2)** — پس‌زمینه‌ی aurora، سطوح شیشه‌ای، هاله‌ی نور دنبال‌کننده‌ی نشانگر و کاشی آیکون رنگی برای هر دسته.
 - ⌨️ **پالت فرمان** — جستجوی سریع ابزار با `Ctrl+K` / `Cmd+K`.
+
+## 🧰 ۵۲ ابزار در ۹ دسته
+
+| دسته | Category | نمونه ابزارها |
+|------|----------|----------------|
+| 📝 متن | Text | جست‌وجو/جایگزینی، شمارنده، اسلاگ‌ساز، پاک‌سازی متن، جداکننده ۳ رقمی |
+| 💻 توسعه‌دهنده | Developer | فرمت‌کننده JSON، Base64، CSV ↔ JSON، تبدیل Timestamp، مترجم Cron، px ↔ rem |
+| 🎨 طراحی | Design | رنگ‌ساز و مبدل رنگ، بررسی کنتراست، لورم فارسی، تایپوگرافی |
+| 📁 فایل | Files | بررسی هش فایل، تبدیل Base64 ← فایل، Data URL، تغییر اندازه تصویر |
+| 🧮 محاسبات | Math | ماشین‌حساب علمی، درصد، تبدیل واحد، BMI، ریاضی سرعتی |
+| ⏰ زمان | Time | تقویم شمسی/جلالی، محاسبه سن، پومودورو، کرنومتر و تایمر |
+| 🔐 امنیت | Security | گاوصندوق IR (AES-256-GCM)، مدیر رمز عبور، رمزساز، QR‌خوان با بررسی ایمنی لینک |
+| 🎉 سرگرمی | Fun | جوک، ایده‌ساز، دورهمی، چالش‌های آفلاین |
+| 🧠 بازی فکری | Brain | بازی‌های حافظه و سرعت با رکورد محلی |
+
+همراه با ابزارهای محبوب: **QR‌کدساز آفلاین**، **مدیر رمز عبور رمزنگاری‌شده**، **پیکر تقویم شمسی**، **مترجم Cron فارسی** و **گاوصندوق IR** با فشرده‌سازی و رمزنگاری استاندارد.
+
+## 📸 اسکرین‌شات‌ها (Screenshots)
+
+<p align="center">
+  <img src="assets/brand/og-image.png" alt="نمای کلی IR-Toolbox — جعبه ابزار آفلاین فارسی با پوسته تاریک و رابط شیشه‌ای" width="600">
+</p>
+
+*(اسکرین‌شات‌های بیشتر از هر ابزار در [ویکی پروژه](https://github.com/Kourosh242/IR-Toolbox/wiki) قرار می‌گیرند.)*
+
+## ❓ سوالات متداول (FAQ)
+
+**۱. آیا IR-Toolbox رایگان و متن‌باز است؟**
+بله. IR-Toolbox تحت لایسنس **MIT** کاملاً رایگان و متن‌باز است؛ می‌توانید از آن استفاده، تغییر و منتشر کنید.
+
+**۲. داده‌های من کجا ذخیره می‌شود؟ آیا به سروری ارسال می‌شود؟**
+خیر — هیچ‌وقت. همه‌ی پردازش‌ها و ذخیره‌سازی (تنظیمات، مدیر رمز، تاریخچه) **روی دستگاه شما** انجام می‌شود. اپ هیچ سرور، دیتابیس، آنالیتیکس یا ردیابی ندارد.
+
+**۳. آیا بدون اینترنت هم کار می‌کند؟**
+بله. IR-Toolbox یک **PWA واقعی** است؛ یک‌بار باز کنید یا نصبش کنید، بعد از آن حتی با قطع اینترنت کامل اجرا می‌شود (Service Worker همه‌ی فایل‌ها را کش می‌کند).
+
+**۴. چطور IR-Toolbox را روی گوشی یا کامپیوتر نصب کنم؟**
+آدرس [kourosh242.github.io/IR-Toolbox](https://kourosh242.github.io/IR-Toolbox/) را در کروم/اج/سافاری باز کنید و از نوار آدرس «نصب» را بزنید (iOS: دکمه Share ← Add to Home Screen). راهنمای کامل در بخش «شروع سریع» همین صفحه است.
+
+**۵. فرمت `.ir256` گاوصندوق IR چگونه کار می‌کند؟**
+متن یا فایل شما ابتدا فشرده (gzip) و سپس با **AES-256-GCM** رمزنگاری می‌شود؛ کلید با **PBKDF2** از رمز اصلی شما مشتق می‌شود و هیچ‌جا ذخیره نمی‌شود. فایل خروجی فقط با همان رمز باز می‌شود.
+
+**۶. آیا می‌توانم ابزار جدید اضافه کنم؟**
+بله — معماری **رجیستری ماژولار** دارد و افزودن ابزار جدید بدون دست‌کاری هسته اپ ممکن است. بخش «مشارکت» را ببینید؛ PR‌های شما خوش‌آمد است. 🙌
+
+## 🤝 مشارکت و پشتیبانی
+
+مشارکت‌ها خوش‌آمد است! 🎉
+
+- 🐞 **گزارش باگ یا پیشنهاد ویژگی:** [ایجاد Issue](https://github.com/Kourosh242/IR-Toolbox/issues/new/choose)
+- 🔧 **ارسال تغییرات:** [CONTRIBUTING.md](CONTRIBUTING.md) را بخوانید و Pull Request بفرستید.
+- 💬 **سوال و گفتگو:** [Discussions](https://github.com/Kourosh242/IR-Toolbox/discussions)
+- 🔒 **گزارش مشکل امنیتی:** لطفاً علنی گزارش نکنید — [SECURITY.md](SECURITY.md) را ببینید.
+- ⭐ اگر این پروژه برایتان مفید بود، دادن **Star** بهترین حمایت است!
+
+## 📄 لایسنس
+
+این پروژه تحت لایسنس [MIT](LICENSE) منتشر شده است — رایگان برای استفاده شخصی و تجاری.
 
 ## 🗂️ تغییرات نسخه
 
@@ -120,18 +226,6 @@
 - انتشار نخست: ۴۵ ابزار در ۹ دسته + گاوصندوق IR + PWA آفلاین.
 
 > فهرست کامل و تفصیلی هر نسخه در [تغییرات نسخه](https://github.com/Kourosh242/IR-Toolbox/wiki/تغییرات-نسخه) در ویکی آمده است.
-
-## 🚀 اجرای سریع
-
-سایت استاتیک است و **نیازی به build ندارد**:
-
-```bash
-cd IR-Toolbox
-python3 -m http.server 8000
-# سپس: http://localhost:8000
-```
-
-جزئیات استقرار و نصب PWA در ویکی: [شروع به کار](https://github.com/Kourosh242/IR-Toolbox/wiki/شروع-به-کار).
 
 ## 📚 ویکی
 

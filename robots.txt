@@ -1,0 +1,32 @@
+# IR-Toolbox — جعبه ابزار آفلاین فارسی | https://kourosh242.github.io/IR-Toolbox/
+# همه خزنده‌ها خوش آمدید — موتورهای جستجو و موتورهای پاسخ هوش مصنوعی
+User-agent: *
+Allow: /
+
+# AI / answer-engine crawlers — explicitly welcome (GEO)
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-Web
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+User-agent: CCBot
+Allow: /
+User-agent: Bytespider
+Allow: /
+User-agent: cohere-ai
+Allow: /
+
+Sitemap: https://kourosh242.github.io/IR-Toolbox/sitemap.xml

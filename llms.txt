@@ -1,0 +1,41 @@
+# IR-Toolbox — جعبه ابزار آفلاین فارسی (Offline-First Persian Web Toolbox)
+
+> IR-Toolbox is a free, open-source (MIT), offline-first Progressive Web App (PWA) with 52 privacy-first web tools in 9 categories. Everything runs 100% locally in the browser — no server, no database, no upload, no tracking. Built for Persian (Farsi) users with full RTL support; works anywhere.
+
+**IR-Toolbox** (جعبه ابزار IR) یک وب‌اپلیکیشن رایگان، متن‌باز و کاملاً آفلاین است: ۵۲ ابزار کاربردی فارسی در ۹ دسته. همه پردازش‌ها روی دستگاه کاربر انجام می‌شود و هیچ داده‌ای به سرور ارسال نمی‌شود.
+
+## Facts
+
+- Website (live app): https://kourosh242.github.io/IR-Toolbox/
+- Source code (GitHub): https://github.com/Kourosh242/IR-Toolbox
+- License: MIT
+- Current version: v1.3.6
+- Tech stack: Vanilla JavaScript, HTML, CSS — no framework, no build step
+- Language / UI: Persian (fa), RTL, self-hosted Vazirmatn font
+- Privacy model: 100% local processing; data never leaves the device; installable as a PWA and fully usable offline (service worker)
+- Categories (9): Text, Developer, Design, Files, Math, Time, Security, Fun, Brain games
+
+## Notable tools
+
+- IR Vault (گاوصندوق IR): AES-256-GCM encryption with PBKDF2 key derivation; gzip compression before encryption; `.ir256` output files
+- Password manager: AES-256-GCM encrypted local vault with search, temporary clipboard copy, encrypted backups
+- QR generator & QR reader: offline QR creation (UTF-8, SVG/PNG) and live camera scanning with an offline phishing-link safety check
+- Jalali (Shamsi) calendar toolkit, age calculator, Pomodoro timer, Cron translator with Persian explanations
+- Developer utilities: JSON formatter, Base64 (text/file), CSV ↔ JSON, timestamp converter, slug maker, px ↔ rem
+- 52 tools total across text, developer, design, file, math, time, security, fun, and brain-game categories
+
+## FAQ
+
+- Is IR-Toolbox free and open source? Yes — MIT license, free for personal and commercial use.
+- Does it send my data anywhere? No — all processing and storage happen locally on the user's device; no server, no analytics, no tracking.
+- Does it work offline? Yes — it is a real installable PWA; after the first load it runs completely offline.
+- How do I install it? Open https://kourosh242.github.io/IR-Toolbox/ in Chrome/Edge/Safari and tap "Install" / "Add to Home Screen".
+- What is the .ir256 format? A file produced by IR Vault: gzip-compressed, then encrypted with AES-256-GCM; the key is derived (PBKDF2) from the user's passphrase and never stored.
+
+## Links
+
+- [Web app](https://kourosh242.github.io/IR-Toolbox/)
+- [GitHub repository](https://github.com/Kourosh242/IR-Toolbox)
+- [Project wiki](https://github.com/Kourosh242/IR-Toolbox/wiki)
+- [Issue tracker](https://github.com/Kourosh242/IR-Toolbox/issues)
+- [README (Persian)](https://github.com/Kourosh242/IR-Toolbox#readme)
