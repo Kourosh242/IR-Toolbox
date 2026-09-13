@@ -386,6 +386,10 @@ function renderCurrent(opts) {
 
 let search;
 function boot() {
+  // سئو/جی‌ای‌او: محتوای استاتیک #seo-static برای خزنده‌های بدون جاوااسکریپت
+  // (GPTBot، CCBot، Bytespider و…) و کاربران بدون JS در خود HTML آمده است؛
+  // در اجرای تعاملی، پوسته‌ی اپ جایگزین آن می‌شود.
+  document.getElementById('seo-static')?.remove();
   applyPrefs();
   buildShell();
   search = initSearch();

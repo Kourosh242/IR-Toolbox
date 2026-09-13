@@ -1,0 +1,55 @@
+# IndexNow — پینگ خودکار موتورهای جستجو هنگام هر آپدیت محتوا
+#
+# چرا؟ موتورهای جستجوی بسیاری (از جمله جستجوی چت‌بات‌های هوش مصنوعی مثل
+# ChatGPT Search) به ایندکس Bing متکی‌اند و IndexNow سریع‌ترین راه برای
+# خبر دادن به آن‌هاست. کلید در secrets مخزن (INDEXNOW_KEY) نگهداری می‌شود
+# و باید با محتوای فایل <key>.txt در ریشه‌ی سایت یکسان باشد.
+#
+# مسیر کلید: https://kourosh242.github.io/IR-Toolbox/<key>.txt
+name: IndexNow ping
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'llms.txt'
+      - 'sitemap.xml'
+      - 'README.md'
+  workflow_dispatch:
+
+jobs:
+  ping-indexnow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for GitHub Pages deployment
+        run: sleep 120
+
+      - name: Ping IndexNow API
+        env:
+          # ترجیحاً از Secret مخزن استفاده می‌شود؛ در نبودِ آن، همان کلیدِ
+          # نیمه‌عمومیِ فایل <key>.txt (که طبق مشخصات IndexNow باید عمومی سرو شود)
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY || 'f73c3a4984e3d77b8b0f146423a09ab4' }}
+        run: |
+          if [ -z "$INDEXNOW_KEY" ]; then
+            echo "::warning::کلید IndexNow در دسترس نیست — پینگ انجام نشد."
+            exit 0
+          fi
+          RESPONSE=$(curl -sS -o /tmp/indexnow-response.txt -w "%{http_code}" -X POST \
+            "https://api.indexnow.org/IndexNow" \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d '{
+              "host": "kourosh242.github.io",
+              "key": "'"$INDEXNOW_KEY"'",
+              "keyLocation": "https://kourosh242.github.io/IR-Toolbox/'"$INDEXNOW_KEY"'.txt",
+              "urlList": [
+                "https://kourosh242.github.io/IR-Toolbox/"
+              ]
+            }')
+          echo "IndexNow HTTP status: $RESPONSE"
+          cat /tmp/indexnow-response.txt || true
+          if [ "$RESPONSE" != "200" ] && [ "$RESPONSE" != "202" ]; then
+            echo "::warning::پینگ IndexNow با کد $RESPONSE برگشت (کلید/فایل کلید را بررسی کنید)"
+          else
+            echo "✅ آدرس سایت با موفقیت به موتورهای جستجو اعلام شد."
+          fi
