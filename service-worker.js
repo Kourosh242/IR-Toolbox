@@ -2,7 +2,7 @@
  * Versioned cache, safe update, old-cache cleanup.
  * Never caches sensitive/decrypted content (those live only in memory).
  */
-const VERSION = 'ir-v7'; // v1.3.6 — کلاینت‌ها کش قدیمی را دور می‌اندازند و خودکار به‌روز می‌شوند
+const VERSION = 'ir-v8'; // نسخه SEO — کلاینت‌ها کش قدیمی را دور می‌اندازند و خودکار به‌روز می‌شوند
 const CORE = [
   './',
   './index.html',
