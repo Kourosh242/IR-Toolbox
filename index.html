@@ -17,6 +17,9 @@
   <meta property="og:description" content="جعبه ابزار همه‌کاره‌ی وب با ۵۲ ابزار — متن، کد، فایل، امنیت، زمان، محاسبات و سرگرمی. کاملاً محلی و آفلاین.">
   <meta property="og:image" content="https://kourosh242.github.io/IR-Toolbox/assets/brand/og-image.png">
   <meta property="og:image:alt" content="IR-Toolbox — جعبه ابزار آفلاین فارسی">
+  <meta property="og:image:width" content="1376">
+  <meta property="og:image:height" content="768">
+  <meta property="og:image:type" content="image/png">
   <meta property="og:url" content="https://kourosh242.github.io/IR-Toolbox/">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="IR-Toolbox — جعبه ابزار آفلاین فارسی | ۵۲ ابزار رایگان (PWA)">
@@ -32,11 +35,14 @@
     "description": "جعبه ابزار آفلاین، رایگان و متن‌باز با ۵۲ ابزار فارسی در ۹ دسته: متن، توسعه‌دهنده، طراحی، فایل، محاسبات، زمان و تقویم شمسی، امنیت، سرگرمی و بازی فکری. کاملاً محلی؛ بدون سرور و بدون ردیابی.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
-    "browserRequirements": "Requires JavaScript",
+    "browserRequirements": "Requires JavaScript for interactive tools (full content readable without JavaScript)",
     "inLanguage": "fa",
     "isAccessibleForFree": true,
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
     "license": "https://opensource.org/licenses/MIT",
+    "softwareVersion": "1.3.6",
+    "datePublished": "2026-08-30",
+    "dateModified": "2026-09-13",
     "author": { "@type": "Person", "name": "Kourosh242", "url": "https://github.com/Kourosh242" },
     "sameAs": ["https://github.com/Kourosh242/IR-Toolbox"],
     "screenshot": "https://kourosh242.github.io/IR-Toolbox/assets/brand/og-image.png",
@@ -53,44 +59,6 @@
     ]
   }
   </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "آیا IR-Toolbox رایگان و متن‌باز است؟",
-        "acceptedAnswer": { "@type": "Answer", "text": "بله. IR-Toolbox تحت لایسنس MIT کاملاً رایگان و متن‌باز است و برای استفاده شخصی و تجاری آزاد است." }
-      },
-      {
-        "@type": "Question",
-        "name": "آیا داده‌های من به سروری ارسال می‌شود؟",
-        "acceptedAnswer": { "@type": "Answer", "text": "خیر — هیچ‌وقت. همه پردازش‌ها و ذخیره‌سازی روی دستگاه کاربر انجام می‌شود؛ اپ هیچ سرور، دیتابیس، آنالیتیکس یا ردیابی ندارد." }
-      },
-      {
-        "@type": "Question",
-        "name": "آیا IR-Toolbox بدون اینترنت کار می‌کند؟",
-        "acceptedAnswer": { "@type": "Answer", "text": "بله. IR-Toolbox یک PWA واقعی است؛ پس از بارگذاری اول یا نصب، حتی با قطع اینترنت کامل اجرا می‌شود." }
-      },
-      {
-        "@type": "Question",
-        "name": "چطور IR-Toolbox را نصب کنم؟",
-        "acceptedAnswer": { "@type": "Answer", "text": "آدرس kourosh242.github.io/IR-Toolbox را در کروم، اج یا سافاری باز کنید و دکمه نصب (Install / Add to Home Screen) را بزنید." }
-      },
-      {
-        "@type": "Question",
-        "name": "فرمت .ir256 گاوصندوق IR چگونه کار می‌کند؟",
-        "acceptedAnswer": { "@type": "Answer", "text": "متن یا فایل ابتدا با gzip فشرده و سپس با AES-256-GCM رمزنگاری می‌شود؛ کلید با PBKDF2 از رمز اصلی مشتق و هیچ‌جا ذخیره نمی‌شود." }
-      },
-      {
-        "@type": "Question",
-        "name": "چند ابزار دارد و شامل چه دسته‌هایی است؟",
-        "acceptedAnswer": { "@type": "Answer", "text": "۵۲ ابزار در ۹ دسته: متن، توسعه‌دهنده، طراحی، فایل، محاسبات، زمان، امنیت، سرگرمی و بازی فکری." }
-      }
-    ]
-  }
-  </script>
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
   <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
@@ -98,32 +66,169 @@
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    /* محتوای استاتیک سئو/جی‌ای‌او — برای خزنده‌های بدون جاوااسکریپت و کاربرانِ بدون JS.
+       اپلیکیشن هنگام بوت این بخش را حذف می‌کند و پوسته‌ی تعاملی را می‌سازد. */
+    #seo-static{max-width:860px;margin:0 auto;padding:48px 20px 80px;line-height:2;font-size:15px;color:var(--text,#0f1a15)}
+    #seo-static h1{font-size:1.65rem;line-height:1.6;margin:0 0 12px}
+    #seo-static h2{font-size:1.22rem;margin:40px 0 8px;border-inline-start:4px solid var(--primary,#0b7a5f);padding-inline-start:10px}
+    #seo-static h3{font-size:1.02rem;margin:16px 0 2px;color:var(--primary,#0b7a5f)}
+    #seo-static p{margin:4px 0 8px}
+    #seo-static ul{list-style:none;padding:0;margin:8px 0 0}
+    #seo-static li{margin:0 0 8px}
+    #seo-static .lead{font-size:1.05rem}
+    #seo-static .badges{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0;padding:0}
+    #seo-static .badges li{background:color-mix(in srgb, var(--primary,#0b7a5f) 8%, transparent);border:1px solid color-mix(in srgb, var(--primary,#0b7a5f) 30%, transparent);border-radius:999px;padding:3px 14px;font-size:.8rem;margin:0}
+    #seo-static a{color:var(--primary,#0b7a5f)}
+    #seo-static .cat-en{color:var(--muted,#5c6c64);font-size:.85rem;font-weight:400}
+  </style>
 </head>
 <body>
   <div class="ambient" aria-hidden="true">
     <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
   </div>
+
+  <!-- ══════════ محتوای استاتیک (سئو/جی‌ای‌او) ══════════
+       این متن مستقیم در HTML است و بدون جاوااسکریپت هم دیده می‌شود؛
+       خزنده‌هایی مثل GPTBot، CCBot و Bytespider آن را کامل می‌خوانند. -->
+  <section id="seo-static">
+    <h1>IR-Toolbox — جعبه ابزار آفلاین فارسی با ۵۲ ابزار رایگان</h1>
+    <p class="lead"><strong>IR-Toolbox (جعبه ابزار IR)</strong> یک وب‌اپلیکیشن رایگان و متن‌باز (لایسنس MIT) است که ۵۲ ابزار کاربردی فارسی را در ۹ دسته — متن، توسعه‌دهنده، طراحی، فایل، محاسبات، زمان و تقویم شمسی، امنیت، سرگرمی و بازی فکری — مستقیم داخل مرورگر اجرا می‌کند. همه‌ی پردازش‌ها ۱۰۰٪ روی دستگاه شما انجام می‌شود: هیچ سرور، دیتابیس، ثبت‌نام، آپلود یا ردیابی وجود ندارد. این جعبه ابزار به‌صورت PWA نصب می‌شود و پس از بارگذاری اول، کاملاً بدون اینترنت کار می‌کند؛ از تقویم شمسی و ماشین‌حساب علمی گرفته تا رمزنگاری AES-256-GCM، مدیر رمز عبور و QR‌کدساز/خوان — همه فارسی، سریع و خصوصی.</p>
+    <ul class="badges">
+      <li>📴 کارکرد کامل آفلاین</li>
+      <li>🔒 بدون سرور، بدون ردیابی</li>
+      <li>📲 قابل نصب به‌عنوان اپ (PWA)</li>
+      <li>🆓 رایگان و متن‌باز — MIT</li>
+      <li>🇮🇷 فارسی و راست‌به‌چپ</li>
+    </ul>
+
+    <h2>دسته‌های ابزار: ۹ دسته، ۵۲ ابزار</h2>
+    <p>هر ابزار کاملاً محلی اجرا می‌شود و برای استفاده‌ی روزمره‌ی کاربران فارسی‌زبان طراحی شده است. فهرست کامل ابزارها با توضیح هرکدام:</p>
+
+    <h2 id="cat-text">📝 ابزارهای متن <span class="cat-en">Text</span></h2>
+    <p>شمارش، تبدیل و پاک‌سازی متن فارسی و انگلیسی — مستقیم در مرورگر، بدون ارسال داده.</p>
+    <ul>
+      <li><h3>شمارنده متن (Text Counter)</h3><p>تعداد کاراکتر، کلمه، جمله، خط، حجم UTF-8 و زمان تقریبی مطالعه‌ی متن را هم‌زمان با تایپ نشان می‌دهد؛ مناسب کپشن، مقاله و محدودیت کاراکتر شبکه‌های اجتماعی.</p></li>
+      <li><h3>تبدیل حروف (Case Converter)</h3><p>حروف متن لاتین را به بزرگ (UPPER)، کوچک (lower)، عنوانی (Title) یا معکوس تبدیل می‌کند.</p></li>
+      <li><h3>پاک‌سازی متن (Text Cleaner)</h3><p>متن‌های کپی‌شده از وب یا PDF را مرتب می‌کند: حذف فاصله‌های اضافه و خطوط خالی، حذف خطوط تکراری و مرتب‌سازی الفبایی فارسی.</p></li>
+      <li><h3>جستجو و جایگزینی (Find &amp; Replace)</h3><p>جست‌وجو و جایگزینی عبارت در متن با نمایش تعداد موارد جایگزین‌شده.</p></li>
+      <li><h3>لورم فارسی (Persian Lorem Ipsum)</h3><p>متن جای‌نگهدار (لورم) فارسی با تعداد پاراگراف و جمله‌ی دلخواه برای طراحی قالب و رابط کاربری تولید می‌کند.</p></li>
+    </ul>
+
+    <h2 id="cat-dev">💻 ابزارهای توسعه‌دهنده <span class="cat-en">Developer</span></h2>
+    <p>ابزارهای روزمره‌ی برنامه‌نویسان: JSON، کدگذاری، شناسه، زمان‌بندی و QR — همه آفلاین.</p>
+    <ul>
+      <li><h3>فرمت‌کننده JSON (JSON Formatter)</h3><p>زیباسازی، فشرده‌سازی و اعتبارسنجی JSON با نمایش خطای دقیق شامل شماره‌ی خط و ستون.</p></li>
+      <li><h3>Base64 (Encode/Decode)</h3><p>کدگذاری و رمزگشایی متن به Base64 با پشتیبانی کامل از UTF-8 و متن فارسی.</p></li>
+      <li><h3>کدگذاری URL (URL Encode/Decode)</h3><p>کدگذاری و دکد کاراکترهای خاص لینک و کوئری‌استرینگ با encodeURIComponent.</p></li>
+      <li><h3>اسلاگ‌ساز (Slug Generator)</h3><p>عنوان فارسی یا انگلیسی را به آدرس خوانا (اسلاگ) تبدیل می‌کند؛ حروف فارسی به فینگلیش برمی‌گردند و به‌صورت زنده به‌روز می‌شود.</p></li>
+      <li><h3>تولیدکننده UUID (UUID v4 Generator)</h3><p>شناسه‌ی یکتای UUID نسخه ۴ با مولد تصادفی امن مرورگر (crypto) می‌سازد؛ تکی یا ده‌تایی.</p></li>
+      <li><h3>رمزگشای JWT (JWT Decoder)</h3><p>بخش‌های header و payload توکن JWT را به‌صورت محلی نمایش می‌دهد (بدون اعتبارسنجی امضا).</p></li>
+      <li><h3>آزمایش Regex (Regex Tester)</h3><p>الگوی عبارت باقاعده را با پرچم‌ها روی متن آزمایش می‌کند و تعداد و فهرست تطبیق‌ها را زنده نشان می‌دهد.</p></li>
+      <li><h3>HTML Entities (Escape/Unescape)</h3><p>کاراکترهای خاص مثل ‹ و › و & را به موجودیت امن HTML تبدیل می‌کند و برعکس.</p></li>
+      <li><h3>تبدیل Timestamp (Unix Timestamp Converter)</h3><p>زمان یونیکس (ثانیه یا میلی‌ثانیه) را به تاریخ شمسی، میلادی و ISO تبدیل می‌کند و برعکس.</p></li>
+      <li><h3>مترجم Cron (Cron Translator)</h3><p>عبارت زمان‌بندی کرون سرور را به توضیح فارسی تبدیل و ۵ اجرای بعدی را با تاریخ شمسی نشان می‌دهد.</p></li>
+      <li><h3>QR‌کدساز (QR Code Generator)</h3><p>متن، لینک، شماره تماس یا هر محتوای فارسی و انگلیسی را با کدگذاری UTF-8 به QR تبدیل می‌کند؛ خروجی SVG/PNG با سطح تصحیح خطای دلخواه — کاملاً آفلاین.</p></li>
+      <li><h3>QR‌خوان (QR Reader)</h3><p>QR را از آپلود تصویر یا اسکن زنده‌ی دوربین می‌خواند، نوع محتوا (لینک، تماس، ایمیل، WiFi، کارت ویزیت) را تشخیص می‌دهد و لینک‌ها را با موتور آفلاین ضدفیشینگ بررسی می‌کند.</p></li>
+    </ul>
+
+    <h2 id="cat-design">🎨 ابزارهای طراحی <span class="cat-en">Design</span></h2>
+    <p>رنگ، کنتراست و تایپوگرافی برای طراحان وب — با خروجی CSS آماده.</p>
+    <ul>
+      <li><h3>تبدیل رنگ (Color Converter)</h3><p>تبدیل دوطرفه‌ی رنگ بین HEX، RGB و HSL با چرخه‌ی رنگ و پیش‌نمایش زنده.</p></li>
+      <li><h3>بررسی کنتراست (WCAG Contrast Checker)</h3><p>نسبت کنتراست رنگ متن و پس‌زمینه را حساب و قبولی استانداردهای دسترس‌پذیری WCAG (AA و AAA) را برای متن معمولی و بزرگ نشان می‌دهد.</p></li>
+      <li><h3>گرادیان‌ساز CSS (Gradient Builder)</h3><p>با انتخاب دو رنگ و زاویه، پیش‌نمایش زنده و کد گرادیان CSS آماده‌ی کپی می‌سازد.</p></li>
+      <li><h3>سایه‌ساز CSS (Box Shadow Builder)</h3><p>افکت سایه (box-shadow) را با اسلایدرها تنظیم و کد CSS آن را با پیش‌نمایش روی کارت تحویل می‌دهد.</p></li>
+      <li><h3>تبدیل px ↔ rem (PX/REM Converter)</h3><p>پیکسل را به rem و برعکس تبدیل می‌کند؛ با پایه‌ی قابل‌تنظیم (پیش‌فرض ۱۶ پیکسل) برای تایپوگرافی مقیاس‌پذیر.</p></li>
+    </ul>
+
+    <h2 id="cat-files">📁 ابزارهای فایل <span class="cat-en">Files</span></h2>
+    <p>بررسی هش، تصویر و داده — فایل‌ها هرگز آپلود نمی‌شوند و فقط در حافظه‌ی مرورگر خوانده می‌شوند.</p>
+    <ul>
+      <li><h3>اطلاعات فایل (File Info)</h3><p>نام، حجم، نوع و تاریخ تغییر فایل را بدون هیچ آپلودی نمایش می‌دهد.</p></li>
+      <li><h3>تصویر به Base64 (Image → Data URL)</h3><p>تصویر را به Data URL/Base64 تبدیل می‌کند تا مستقیم در HTML یا CSS جاسازی شود؛ با پیش‌نمایش.</p></li>
+      <li><h3>Base64 به فایل (Base64 → File)</h3><p>Base64 یا Data URL (حتی خط‌شکسته) را می‌گیرد، پیش‌نمایش زنده می‌دهد و با نام دلخواه دانلود می‌کند.</p></li>
+      <li><h3>پیش‌نمایش Markdown (Markdown Preview)</h3><p>متن مارک‌داون را به‌صورت محلی و امن (خروجی اِسکیپ‌شده) رندر می‌کند؛ تیتر، لیست، نقل‌قول و لینک.</p></li>
+      <li><h3>CSV ↔ JSON (CSV/JSON Converter)</h3><p>جدول CSV با سرستون را به آرایه‌ی JSON و برعکس تبدیل می‌کند؛ مناسب انتقال داده بین اکسل و کد.</p></li>
+    </ul>
+
+    <h2 id="cat-math">🧮 ابزارهای محاسبات <span class="cat-en">Math</span></h2>
+    <p>ماشین‌حساب، درصد، تبدیل واحد و اعداد — با ارزیابی امن و اعداد فارسی.</p>
+    <ul>
+      <li><h3>ماشین‌حساب علمی (Scientific Calculator)</h3><p>عبارت‌های ریاضی با توان، پرانتز و توابعی مثل sqrt، sin و pow را با ارزیابی امن (فقط توکن‌های ریاضی) محاسبه می‌کند.</p></li>
+      <li><h3>ماشین‌حساب درصد (Percentage Calculator)</h3><p>چهار محاسبه‌ی هم‌زمان: X٪ از Y، افزایش، کاهش و درصد تغییر — با جداکننده‌ی هزارگان.</p></li>
+      <li><h3>تبدیل واحد (Unit Converter)</h3><p>تبدیل واحدهای طول، وزن، داده و دما (سلسیوس/فارنهایت/کلوین) به‌صورت زنده.</p></li>
+      <li><h3>شاخص توده بدنی (BMI Calculator)</h3><p>BMI را از وزن و قد محاسبه و دسته‌بندی سازمان جهانی بهداشت (WHO) را نمایش می‌دهد.</p></li>
+      <li><h3>عدد تصادفی (Random Number)</h3><p>عدد تصادفی در بازه‌ی دلخواه با مولد امن رمزنگاری (نه Math.random) تولید می‌کند.</p></li>
+      <li><h3>جداکننده‌ی ۳ رقمی (Digit Grouping)</h3><p>عدد را با جداکننده‌ی هزارگان نمایش می‌دهد (150000 ← 150,000) و نسخه‌ی فارسی (۱۵۰٬۰۰۰) هم می‌سازد.</p></li>
+    </ul>
+
+    <h2 id="cat-time">⏰ ابزارهای زمان و تقویم شمسی <span class="cat-en">Time</span></h2>
+    <p>تبدیل تاریخ جلالی/میلادی، سن، کرنومتر و تایمر — با پیکر تاریخ شمسی.</p>
+    <ul>
+      <li><h3>تبدیل تاریخ شمسی ↔ میلادی (Jalali ↔ Gregorian)</h3><p>تبدیل دوطرفه‌ی دقیق تاریخ جلالی (شمسی) و میلادی با نمایش نام روز هفته و قالب کامل فارسی.</p></li>
+      <li><h3>محاسبه سن (Age Calculator)</h3><p>با تاریخ تولد شمسی یا میلادی، سن دقیق به سال، ماه و روز شمسی به‌همراه کل روزهای زندگی را حساب می‌کند.</p></li>
+      <li><h3>اختلاف دو تاریخ (Date Difference)</h3><p>فاصله‌ی بین دو تاریخ شمسی یا میلادی را به روز، هفته و ماه محاسبه می‌کند.</p></li>
+      <li><h3>کرنومتر (Stopwatch)</h3><p>زمان‌سنج دقیق با شروع/توقف و ثبت دورهای میانی (lap).</p></li>
+      <li><h3>تایمر شمارش معکوس (Countdown Timer)</h3><p>شمارش معکوس با دقیقه و ثانیه‌ی دلخواه و هشدار صوتی و لرزشی در پایان.</p></li>
+      <li><h3>پومودورو (Pomodoro Focus Timer)</h3><p>چرخه‌ی تمرکز و استراحت پومودورو با زمان‌های قابل‌تنظیم، شمارنده‌ی دور و ثبت رکورد روزانه روی دستگاه.</p></li>
+    </ul>
+
+    <h2 id="cat-security">🔐 ابزارهای امنیت <span class="cat-en">Security</span></h2>
+    <p>هش، تولید رمز امن و رمزنگاری واقعی — کلیدها هرگز ذخیره یا ارسال نمی‌شوند.</p>
+    <ul>
+      <li><h3>بررسی هش (Hash Checker)</h3><p>هش متن یا فایل را با الگوریتم‌های SHA-256/384/512 و SHA-1 می‌سازد، با هش مورد انتظار تطبیق می‌دهد و الگوریتم هر هش را از روی طول شناسایی می‌کند.</p></li>
+      <li><h3>تولید رمز عبور (Password Generator)</h3><p>رمز عبور امن با مولد تصادفی رمزنگاری (crypto) می‌سازد و قدرت آن را با تخمین آنتروپی نشان می‌دهد.</p></li>
+      <li><h3>توکن امن (Secure Token Generator)</h3><p>توکن تصادفی غیرقابل‌حدس در قالب Hex یا Base64 با crypto.getRandomValues برای session، لینک دعوت یا کلید یک‌بارمصرف تولید می‌کند.</p></li>
+      <li><h3>مدیر رمز عبور (Password Manager)</h3><p>مدیر رمز عبور کاملاً محلی: ورودی‌ها با AES-256-GCM و رمز اصلی رمزنگاری و فقط روی دستگاه شما ذخیره می‌شوند؛ با جست‌وجو، تولید رمز امن، کپی موقت ۲۰ ثانیه‌ای و پشتیبان رمزنگاری‌شده.</p></li>
+      <li><h3>گاوصندوق IR (IR Vault)</h3><p>رمزنگاری متن و فایل با AES-256-GCM و فشرده‌سازی gzip؛ کلید با PBKDF2 از رمز عبور مشتق می‌شود، هرگز ذخیره نمی‌شود و خروجی فایل .ir256 است.</p></li>
+    </ul>
+
+    <h2 id="cat-fun">🎉 ابزارهای سرگرمی <span class="cat-en">Fun</span></h2>
+    <p>جوک، ایده و چالش — کاملاً آفلاین و بدون اینترنت.</p>
+    <ul>
+      <li><h3>جوک‌سرا (Jokes)</h3><p>بیش از ۹۰ جوک آفلاین فارسی (عمدتاً برنامه‌نویسی) با نمایش تصادفی و دکمه‌ی کپی.</p></li>
+      <li><h3>ایده‌پرداز (Idea Generator)</h3><p>حدود ۱۰۰ ایده‌ی پروژه و سرگرمی برای وقتی که نمی‌دانید چه کار کنید.</p></li>
+      <li><h3>سوالات دورهمی (Icebreakers)</h3><p>۱۰۰ سوال یخ‌شکن تصادفی برای دورهمی، کلاس و آشنا شدن.</p></li>
+      <li><h3>ایموجی تصادفی (Random Emoji)</h3><p>از میان بیش از ۱۳۰ ایموجی یکی را تصادفی انتخاب و برای کپی آماده می‌کند.</p></li>
+      <li><h3>شیر یا خط + تاس (Coin &amp; Dice)</h3><p>پرتاب سکه و تاس شش‌وجهی با تصادفی امن برای تصمیم‌های شانسی و بازی.</p></li>
+    </ul>
+
+    <h2 id="cat-brain">🧠 بازی‌های فکری <span class="cat-en">Brain Games</span></h2>
+    <p>بازی‌های حافظه و سرعت با ثبت رکورد محلی — بدون حساب کاربری.</p>
+    <ul>
+      <li><h3>بازی حافظه (Memory Match)</h3><p>جفت‌یابی ۱۶ کارت ایموجی؛ بهترین رکورد (کمترین حرکت) به‌صورت محلی ثبت می‌شود.</p></li>
+      <li><h3>سرعت واکنش (Reaction Time)</h3><p>به‌محض سبز شدن کلیک کنید؛ بهترین زمان واکنش به میلی‌ثانیه ثبت و قابل‌شکستن است.</p></li>
+      <li><h3>ریاضی سرعتی (Math Sprint)</h3><p>در ۳۰ ثانیه به بیشترین جمع و ضرب پاسخ درست بدهید؛ رکورد امتیاز محلی است.</p></li>
+    </ul>
+
+    <h2>حریم خصوصی و امنیت: هیچ داده‌ای از دستگاه شما خارج نمی‌شود</h2>
+    <p>برخلاف بیشتر ابزارهای آنلاین، IR-Toolbox هیچ سرور پشتی ندارد: همه‌ی محاسبات — از هش فایل و رمزنگاری گرفته تا تبدیل تاریخ — داخل مرورگر خودتان اجرا می‌شود. هیچ آنالیتیکس، ردیاب، کوکی تبلیغاتی یا ثبت‌نامی وجود ندارد. فایل‌هایی که انتخاب می‌کنید فقط در حافظه‌ی مرورگر خوانده می‌شوند و هرگز آپلود نمی‌شوند. سورس کامل پروژه تحت لایسنس MIT در گیت‌هاب منتشر شده و هرکس می‌تواند آن را بازبینی کند: <a href="https://github.com/Kourosh242/IR-Toolbox" rel="noopener">github.com/Kourosh242/IR-Toolbox</a></p>
+
+    <h2>نصب به‌عنوان اپلیکیشن (PWA) و استفاده‌ی آفلاین</h2>
+    <p>IR-Toolbox یک Progressive Web App واقعی است. کافی است آدرس <a href="https://kourosh242.github.io/IR-Toolbox/">kourosh242.github.io/IR-Toolbox</a> را در کروم، اج یا سافاری باز کنید و گزینه‌ی «نصب» (Install / Add to Home Screen) را بزنید. پس از بارگذاری اول، اپلیکیشن حتی با قطع کامل اینترنت اجرا می‌شود و روی موبایل و دسکتاپ در دسترس است.</p>
+
+    <h2>سوالات متداول</h2>
+    <h3>آیا IR-Toolbox رایگان و متن‌باز است؟</h3>
+    <p>بله. IR-Toolbox تحت لایسنس MIT کاملاً رایگان و متن‌باز است و استفاده‌ی شخصی و تجاری از آن آزاد است.</p>
+    <h3>آیا داده‌های من به سروری ارسال می‌شود؟</h3>
+    <p>خیر — هیچ‌وقت. همه‌ی پردازش‌ها و ذخیره‌سازی روی دستگاه کاربر انجام می‌شود؛ اپ هیچ سرور، دیتابیس، آنالیتیکس یا ردیابی ندارد.</p>
+    <h3>آیا IR-Toolbox بدون اینترنت کار می‌کند؟</h3>
+    <p>بله. این جعبه ابزار یک PWA واقعی است؛ پس از بارگذاری اول یا نصب، حتی با قطع اینترنت کامل اجرا می‌شود.</p>
+    <h3>چطور IR-Toolbox را نصب کنم؟</h3>
+    <p>آدرس kourosh242.github.io/IR-Toolbox را در کروم، اج یا سافاری باز کنید و دکمه‌ی نصب (Install / Add to Home Screen) را بزنید.</p>
+    <h3>فرمت .ir256 گاوصندوق IR چگونه کار می‌کند؟</h3>
+    <p>متن یا فایل ابتدا با gzip فشرده و سپس با AES-256-GCM رمزنگاری می‌شود؛ کلید با PBKDF2 از رمز اصلی مشتق شده و هیچ‌جا ذخیره نمی‌شود.</p>
+    <h3>چند ابزار دارد و شامل چه دسته‌هایی است؟</h3>
+    <p>۵۲ ابزار در ۹ دسته: متن، توسعه‌دهنده، طراحی، فایل، محاسبات، زمان و تقویم شمسی، امنیت، سرگرمی و بازی فکری.</p>
+  </section>
+
   <noscript>
-    <div style="padding:40px;text-align:center;font-family:sans-serif">
-      IR-Toolbox برای کار کردن به جاوااسکریپت نیاز دارد. لطفاً آن را فعال کنید.
-    </div>
-    <div style="max-width:800px;margin:0 auto;padding:0 20px 40px;font-family:sans-serif;line-height:1.8">
-      <h1>IR-Toolbox — جعبه ابزار آفلاین فارسی | Offline-First Web Toolbox (PWA)</h1>
-      <p>IR-Toolbox (جعبه ابزار IR) یک وب‌اپلیکیشن رایگان، متن‌باز (MIT) و کاملاً آفلاین است با ۵۲ ابزار کاربردی فارسی در ۹ دسته. همه پردازش‌ها روی دستگاه شما انجام می‌شود؛ هیچ داده‌ای به سرور ارسال نمی‌شود.</p>
-      <h2>دسته‌بندی ابزارها</h2>
-      <ul>
-        <li>📝 متن: جست‌وجو/جایگزینی، شمارنده، اسلاگ‌ساز، پاک‌سازی متن</li>
-        <li>💻 توسعه‌دهنده: JSON، Base64، CSV ↔ JSON، Timestamp، مترجم Cron</li>
-        <li>🎨 طراحی: رنگ‌ساز، کنتراست، لورم فارسی</li>
-        <li>📁 فایل: بررسی هش، Base64 ← فایل، Data URL</li>
-        <li>🧮 محاسبات: ماشین‌حساب علمی، درصد، تبدیل واحد، BMI</li>
-        <li>⏰ زمان: تقویم شمسی، محاسبه سن، پومودورو، کرنومتر</li>
-        <li>🔐 امنیت: گاوصندوق IR (AES-256-GCM)، مدیر رمز عبور، رمزساز، QR‌خوان با بررسی ایمنی لینک</li>
-        <li>🎉 سرگرمی و 🧠 بازی فکری</li>
-      </ul>
-      <p>نصب به‌عنوان اپلیکیشن (PWA) و کار کامل بدون اینترنت. مخزن سورس: <a href="https://github.com/Kourosh242/IR-Toolbox">GitHub — Kourosh242/IR-Toolbox</a></p>
+    <div style="max-width:860px;margin:24px auto 0;padding:12px 16px;text-align:center;font-family:sans-serif;background:#fff7e6;border:1px solid #e6c86e;border-radius:12px">
+      ⚠️ برای اجرای تعاملی ابزارها به جاوااسکریپت نیاز است؛ اما فهرست کامل ۵۲ ابزار و راهنمای بالا بدون جاوااسکریپت هم قابل مطالعه است.
     </div>
   </noscript>
+
   <script src="vendor/jsQR.js"></script>
   <script type="module" src="js/app.js"></script>
 </body>
