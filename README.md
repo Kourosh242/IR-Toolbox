@@ -227,19 +227,6 @@ python3 -m http.server 8080
 
 > فهرست کامل و تفصیلی هر نسخه در [تغییرات نسخه](https://github.com/Kourosh242/IR-Toolbox/wiki/تغییرات-نسخه) در ویکی آمده است.
 
-## 🚀 اجرای سریع
-
-سایت استاتیک است و **نیازی به build ندارد**:
-
-```bash
-cd IR-Toolbox
-python3 -m http.server 8000
-```
-
-سپس `http://localhost:8000` را باز کنید.
-
-جزئیات استقرار و نصب PWA در ویکی: [شروع به کار](https://github.com/Kourosh242/IR-Toolbox/wiki/شروع-به-کار).
-
 ## 📚 ویکی
 
 ویکی کامل پروژه در [GitHub Wiki](https://github.com/Kourosh242/IR-Toolbox/wiki) میزبانی می‌شود:
