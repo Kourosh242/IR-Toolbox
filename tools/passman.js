@@ -89,7 +89,7 @@ function screenSetup(box, rerender) {
     rerender();
   } }, '🔑 ساخت گاوصندوق رمزها');
   box.append(
-    el('div', { class: 'tool-head' }, el('div', { class: 'ico' }, '🔑'), el('div', {}, el('h1', {}, 'مدیر رمز عبور'), el('div', { class: 'en' }, 'اولین استفاده — رمز اصلی را بسازید'))),
+    el('div', { class: 'hint', style: 'margin:0 0 12px' }, '🔑 اولین استفاده — رمز اصلی را بسازید'),
     el('div', { class: 'warn-box', style: 'margin-bottom:12px' }, '🛡️ رمز اصلی هرگز ذخیره نمی‌شود و بدون آن داده‌ها قابل بازیابی نیستند. جای امن نگه‌ش دارید.'),
     field('رمز اصلی', pw), meter, mLbl, field('تکرار رمز اصلی', pw2), btn,
   );
@@ -112,7 +112,7 @@ function screenUnlock(box, rerender) {
   } }, '🔓 باز کردن');
   pw.addEventListener('keydown', (e) => { if (e.key === 'Enter') btn.click(); });
   box.append(
-    el('div', { class: 'tool-head' }, el('div', { class: 'ico' }, '🔒'), el('div', {}, el('h1', {}, 'مدیر رمز عبور'), el('div', { class: 'en' }, 'قفل است — رمز اصلی را وارد کنید'))),
+    el('div', { class: 'hint', style: 'margin:0 0 12px' }, '🔒 قفل است — رمز اصلی را وارد کنید'),
     field('رمز اصلی', pw), btn,
     el('div', { class: 'hint', style: 'margin-top:10px' }, 'بعد از هر بار بستن/رفرش صفحه، گنجینه قفل می‌شود — این یک ویژگی امنیتی است.'),
   );
@@ -256,10 +256,9 @@ function screenMain(box, rerender) {
 
   q.addEventListener('input', draw);
   box.append(
-    el('div', { class: 'tool-head' },
-      el('div', { class: 'ico' }, '🔑'),
-      el('div', {}, el('h1', {}, 'مدیر رمز عبور'), el('div', { class: 'en' }, 'رمزنگاری‌شده — فقط روی دستگاه شما')),
-      el('div', { class: 'actions' },
+    el('div', { style: 'display:flex;gap:8px;flex-wrap:wrap;align-items:center' },
+      el('span', { class: 'badge ok' }, '🔒 رمزنگاری‌شده — فقط روی دستگاه شما'),
+      el('span', { style: 'flex:1' }),
         el('button', { class: 'btn tonal sm', onclick: () => { chBox.style.display = chBox.style.display === 'none' ? 'block' : 'none'; } }, '🔁 تغییر رمز اصلی'),
         el('button', { class: 'btn tonal sm', onclick: () => { download('ir-passman-backup.json', textBlob(localStorage.getItem(LS) || '{}', 'application/json')); toast('⬇ پشتیبان رمزنگاری‌شده دانلود شد', 'ok'); } }, '⬇ پشتیبان'),
         el('button', { class: 'btn tonal sm', onclick: () => { rsBox.style.display = rsBox.style.display === 'none' ? 'block' : 'none'; } }, '⬆ بازیابی پشتیبان'),
@@ -268,7 +267,7 @@ function screenMain(box, rerender) {
           localStorage.removeItem(LS); master = null; entries = null;
           toast('🗑 همه داده‌های مدیر رمز حذف شد', 'ok'); rerender();
         } }, '🗑 حذف همه'),
-        el('button', { class: 'btn danger sm', onclick: () => { master = null; entries = null; toast('🔒 قفل شد', 'ok'); rerender(); } }, '🔒 قفل'))),
+        el('button', { class: 'btn danger sm', onclick: () => { master = null; entries = null; toast('🔒 قفل شد', 'ok'); rerender(); } }, '🔒 قفل')),
     el('div', { class: 'warn-box', style: 'margin-bottom:10px' }, '🛡️ همه‌چیز با رمز اصلی شما رمزنگاری می‌شود؛ هیچ‌چیز جایی فرستاده نمی‌شود.'),
     stats,
     el('div', { class: 'dash-actions' },

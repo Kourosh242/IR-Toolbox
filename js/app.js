@@ -20,6 +20,7 @@ import '../tools/security.js';
 import '../tools/fun.js';
 import '../tools/brain.js';
 import '../tools/qr.js';
+import '../tools/qr-reader.js';
 import '../tools/cron.js';
 import '../tools/pomodoro.js';
 import '../tools/lorem.js';

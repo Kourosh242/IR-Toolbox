@@ -79,17 +79,21 @@ register({
   mount(root) {
     const ta = areaInput({ rows: 6, placeholder: 'متن نامرتب…' });
     const out = readout();
+    const stats = el('div', { class: 'hint' });
+    let cur = null; // v1.3.6: عملیات زنجیره‌ای — هر دکمه روی نتیجهٔ قبلی اثر می‌کند
     const apply = (mode) => {
-      let lines = ta.value.split('\n');
-      if (mode === 'spaces') lines = lines.map((l) => l.replace(/[ \t]+/g, ' ').trim());
-      if (mode === 'empty') lines = lines.filter((l) => l.trim() !== '');
-      if (mode === 'both') lines = lines.map((l) => l.replace(/[ \t]+/g, ' ').trim()).filter((l) => l);
+      const before = (cur ?? ta.value).split('\n');
+      // همهٔ حالت‌ها اول نرمال می‌کنند: فاصله‌های اضافه یکی + trim + حذف خط خالی
+      let lines = before.map((l) => l.replace(/[ \t]+/g, ' ').trim()).filter((l) => l !== '');
       if (mode === 'dup') lines = [...new Set(lines)];
       if (mode === 'sort') lines.sort((a, b) => a.localeCompare(b, 'fa'));
       if (mode === 'rsort') lines.sort((a, b) => b.localeCompare(a, 'fa'));
-      out.set(lines.join('\n'));
+      cur = lines.join('\n');
+      out.set(cur);
+      const removed = before.length - lines.length;
+      stats.textContent = `${faNum(lines.length)} خط ماند` + (removed > 0 ? ` · ${faNum(removed)} خط حذف شد` : '');
     };
-    ta.addEventListener('input', () => { if (!ta.value) out.clear(); });
+    ta.addEventListener('input', () => { cur = null; stats.textContent = ''; if (!ta.value) out.clear(); });
     root.append(
       field('متن', ta),
       el('div', { class: 'dash-actions' },
@@ -98,7 +102,7 @@ register({
         el('button', { class: 'btn tonal sm', onclick: () => apply('sort') }, 'مرتب‌سازی ↑'),
         el('button', { class: 'btn tonal sm', onclick: () => apply('rsort') }, 'مرتب‌سازی ↓'),
       ),
-      out.root
+      out.root, stats
     );
   }
 });

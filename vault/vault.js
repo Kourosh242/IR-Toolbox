@@ -11,6 +11,16 @@ const td = new TextDecoder();
 const GENERIC_ERR = '❌ بازگشایی ممکن نشد — رمز عبور اشتباه است یا فایل دستکاری شده.';
 const ENC_ERR = '❌ رمزنگاری ممکن نشد — فایل خیلی بزرگ است یا حافظهٔ مرورگر کافی نیست.'; // fix: قبلاً برای خطای رمزنگاری، پیام «بازگشایی» نمایش داده می‌شد
 
+/* v1.3.6 (A7): نمایش حجم ورودی/فشرده/نهایی و درصد کاهش */
+const zipStats = (out) => {
+  const saved = out.plainLen ? Math.max(0, Math.round((1 - out.compLen / out.plainLen) * 100)) : 0;
+  return el('div', { class: 'stats', style: 'margin-top:8px' },
+    el('span', { class: 'stat' }, 'ورودی: ', el('b', {}, faBytes(out.plainLen))),
+    el('span', { class: 'stat' }, 'فشرده: ', el('b', {}, faBytes(out.compLen))),
+    el('span', { class: 'stat' }, 'نهایی: ', el('b', {}, faBytes(out.length))),
+    el('span', { class: 'stat' }, out.compressed ? `−${faNum(saved)}٪ حجم` : 'فشرده‌سازی در دسترس نبود'));
+};
+
 function savedPanel(blob, name) {
   return el('div', { class: 'ok-box', style: 'display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap' },
     el('span', {}, '✅ فایل ', el('b', { class: 'mono' }, name), ' آماده شد.'),
@@ -60,7 +70,7 @@ register({
           const name = `ir-vault-${Date.now()}${EXT}`;
           download(name, blob);
           info.textContent = '';
-          info.append(savedPanel(blob, name));
+          info.append(savedPanel(blob, name), zipStats(out));
           ta.value = ''; pw.input.value = ''; pw2.input.value = '';
         } catch { info.textContent = ENC_ERR; }
         btn.disabled = false; btn.textContent = '🔒 رمزنگاری و دانلود';
@@ -88,7 +98,7 @@ register({
           const name = `ir-vault-${files.length > 1 ? files.length + 'files-' : ''}${Date.now()}${EXT}`;
           download(name, blob);
           info.textContent = '';
-          info.append(savedPanel(blob, name), el('div', { class: 'hint' }, `${faNum(files.length)} فایل رمزنگاری شد (${faBytes(out.length)})`));
+          info.append(savedPanel(blob, name), el('div', { class: 'hint' }, `${faNum(files.length)} فایل رمزنگاری شد (${faBytes(out.length)})`), zipStats(out));
           files = []; list.textContent = ''; pw.input.value = ''; pw2.input.value = '';
         } catch { info.textContent = ENC_ERR; }
         btn.disabled = false; btn.textContent = '🔒 رمزنگاری و دانلود';
@@ -128,7 +138,7 @@ register({
           });
           fileList.append(el('div', { class: 'ok-box' }, `✅ ${faNum(files.length)} فایل بازگشایی شد. «کپی متن» فقط متن را کپی می‌کند و «دانلود» فایل را با نام و پسوند اصلی ذخیره می‌کند.`));
           pw.input.value = '';
-        } catch { out.set(GENERIC_ERR); fileList.textContent = ''; }
+        } catch (e) { out.set(e && typeof e.message === 'string' && e.message.includes('مرورگر') ? '❌ ' + e.message : GENERIC_ERR); fileList.textContent = ''; }
         btn.disabled = false; btn.textContent = '🔓 بازگشایی';
       } }, '🔓 بازگشایی');
       out.box.style.maxHeight = '320px'; out.box.style.overflowY = 'auto';

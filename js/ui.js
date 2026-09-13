@@ -128,3 +128,25 @@ export function fileInput({ multiple = false, accept = '', onFiles }) {
 export function stat(label, value) {
   return el('span', { class: 'stat' }, `${label}: `, el('b', {}, value));
 }
+
+/* v1.3.6-fix: جداکنندهٔ هزارگان زنده در ورودی‌های عددی */
+export const toLatinDigits = (s) => String(s).replace(/[۰-۹]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, (d) => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+export const numOf = (v) => Number(toLatinDigits(String(v)).replace(/[،,٬\s]/g, '').replace(/٫/g, '.'));
+export function liveGroup(inp) {
+  inp.addEventListener('input', () => {
+    const raw = inp.value;
+    const caret = inp.selectionStart ?? raw.length;
+    const stripped = raw.replace(/[،,٬]/g, '');
+    const m = toLatinDigits(stripped).match(/^([+-]?)(\d*)([.]?)(\d*)$/);
+    if (!m) { if (stripped !== raw) inp.value = stripped; return; }
+    const [, sign, int, dot, dec] = m;
+    const nv = sign + int.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (dot || (dec ? '.' : '')) + dec;
+    if (nv === raw) return;
+    inp.value = nv;
+    const effBefore = toLatinDigits(raw.slice(0, caret)).replace(/[،,٬]/g, '').length;
+    let c = 0, pos = 0;
+    for (let i = 0; i < nv.length; i++) { if (c === effBefore) { pos = i; break; } if (!/[،,٬]/.test(nv[i])) c++; pos = i + 1; }
+    try { inp.setSelectionRange(pos, pos); } catch { /* ignore */ }
+  });
+  return inp;
+}

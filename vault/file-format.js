@@ -16,6 +16,18 @@
 import { encryptBytes, decryptBytes } from './crypto-utils.js';
 
 export const MAGIC = 'IRT1';
+export const VERSION_V2 = 2; // v2 = plaintext gzip-compressed before encryption
+
+/* ── فشرده‌سازی (v1.3.6): gzip بومی مرورگر — قبل از رمزنگاری، نه بعد از آن ── */
+export const supportsZip = () => typeof CompressionStream !== 'undefined' && typeof DecompressionStream !== 'undefined';
+async function gz(bytes) {
+  const stream = new Blob([bytes]).stream().pipeThrough(new CompressionStream('gzip'));
+  return new Uint8Array(await new Response(stream).arrayBuffer());
+}
+async function ungz(bytes) {
+  const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+  return new Uint8Array(await new Response(stream).arrayBuffer());
+}
 export const LEGACY_MAGIC = 'IVA1'; // pre-1.3.2 brand (IVA) — accepted on decrypt only.
 export const VERSION = 1;
 
@@ -40,18 +52,22 @@ export async function packContainer(files, password) {
     plain.set(f.bytes, o); o += f.bytes.length;
   }
 
-  const { salt, iv, ct } = await encryptBytes(plain, password);
+  // v1.3.6: اول فشرده‌سازی، بعد رمزنگاری (دادهٔ رمزشده فشرده نمی‌شود)
+  const compressed = supportsZip();
+  const payload = compressed ? await gz(plain) : plain;
+  const { salt, iv, ct } = await encryptBytes(payload, password);
 
   const out = new Uint8Array(4 + 1 + 1 + 1 + 2 + salt.length + 2 + iv.length + 4 + ct.length);
   const v = new DataView(out.buffer);
   let p = 0;
   for (const c of MAGIC) out[p++] = c.charCodeAt(0);
-  v.setUint8(p++, VERSION);
+  v.setUint8(p++, compressed ? VERSION_V2 : VERSION);
   v.setUint8(p++, 1); // kdf
   v.setUint8(p++, 1); // alg
   v.setUint16(p, salt.length, true); p += 2; out.set(salt, p); p += salt.length;
   v.setUint16(p, iv.length, true); p += 2; out.set(iv, p); p += iv.length;
   v.setUint32(p, ct.length, true); p += 4; out.set(ct, p);
+  out.plainLen = plain.length; out.compLen = payload.length; out.compressed = compressed;
   return out;
 }
 
@@ -62,7 +78,7 @@ export async function unpackContainer(buf, password) {
   if (u8.length < 13 || (magic !== MAGIC && magic !== LEGACY_MAGIC))
     throw new Error('bad');
   const version = v.getUint8(4);
-  if (version !== VERSION) throw new Error('bad');
+  if (version !== VERSION && version !== VERSION_V2) throw new Error('bad');
   let p = 7;
   const saltLen = v.getUint16(p, true); p += 2;
   const salt = u8.slice(p, p + saltLen); p += saltLen;
@@ -72,7 +88,11 @@ export async function unpackContainer(buf, password) {
   const ct = u8.slice(p, p + ctLen);
 
   // Throws OperationError on wrong password / tamper → caller shows generic msg.
-  const plain = await decryptBytes(ct, password, salt, iv);
+  let plain = await decryptBytes(ct, password, salt, iv);
+  if (version === VERSION_V2) {
+    if (!supportsZip()) throw new Error('مرورگر شما بازکردن فایل فشرده را پشتیبانی نمی‌کند — لطفاً مرورگر را به‌روز کنید');
+    plain = await ungz(plain);
+  }
   const dv = new DataView(plain.buffer, plain.byteOffset, plain.byteLength);
   let o = 0;
   const metaLen = dv.getUint32(o, true); o += 4;

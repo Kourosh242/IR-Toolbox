@@ -1,6 +1,6 @@
 /* IR-Toolbox — طراحی / Design tools */
 import { register } from '../js/registry.js';
-import { el, field, textInput, readout, selectInput, stat } from '../js/ui.js';
+import { el, field, textInput, readout, selectInput, stat, liveGroup, numOf } from '../js/ui.js';
 import { faNum } from '../js/helpers.js';
 
 function hexToRgb(hex) {
@@ -149,12 +149,12 @@ register({
   keywords: ['rem', 'px', 'font-size'],
   mount(root) {
     const base = textInput({ mono: true, value: '16' });
-    const px = textInput({ mono: true, value: '16' });
+    const px = liveGroup(textInput({ mono: true, value: '16' }));
     const remOut = readout();
     const run = () => {
       if (px.value.trim() === '') { remOut.clear(); return; }
       const b = Number(base.value) || 16;
-      const v = Number(px.value);
+      const v = numOf(px.value);
       if (!isFinite(v) || !isFinite(b) || b <= 0) { remOut.set('❌ عدد نامعتبر'); return; } // v1.3.4
       remOut.set(`${(v / b).toFixed(4)}rem`);
     };

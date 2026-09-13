@@ -1,6 +1,6 @@
 /* IR-Toolbox — توسعه‌دهنده / Developer tools */
 import { register } from '../js/registry.js';
-import { el, field, areaInput, textInput, readout, copyBtn, stat } from '../js/ui.js';
+import { el, field, areaInput, textInput, readout, copyBtn, stat, liveGroup, numOf } from '../js/ui.js';
 import { faNum, escapeHTML } from '../js/helpers.js';
 
 /* v1.3.3: رمزگذاری تکه‌تکه — متن‌های بزرگ دیگر استک را سرریز نمی‌کنند */
@@ -238,11 +238,11 @@ register({
   keywords: ['timestamp', 'unix', 'epoch'],
   mount(root) {
     const now = Math.floor(Date.now() / 1000);
-    const inp = textInput({ mono: true, value: String(now) });
+    const inp = liveGroup(textInput({ mono: true, value: String(now) }));
     const out = readout();
     const run = () => {
       if (inp.value.trim() === '') { out.clear(); return; }
-      const n = Number(inp.value);
+      const n = numOf(inp.value);
       if (!isFinite(n)) { out.set('❌ عدد نامعتبر'); return; }
       // v1.3.3: آستانه ۱e۱۱ — میلی‌ثانیه‌های قبل از ۲۰۰۱ دیگر به‌اشتباه «ثانیه» خوانده نمی‌شوند
       const ms = Math.abs(n) >= 1e11 ? n : n * 1000;

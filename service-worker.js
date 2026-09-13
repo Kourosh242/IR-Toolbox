@@ -2,7 +2,7 @@
  * Versioned cache, safe update, old-cache cleanup.
  * Never caches sensitive/decrypted content (those live only in memory).
  */
-const VERSION = 'ir-v6'; // v1.3.5 — کلاینت‌ها کش قدیمی را دور می‌اندازند و خودکار به‌روز می‌شوند
+const VERSION = 'ir-v7'; // v1.3.4 — کلاینت‌ها کش قدیمی را دور می‌اندازند و خودکار به‌روز می‌شوند
 const CORE = [
   './',
   './index.html',
@@ -39,6 +39,9 @@ const CORE = [
   './tools/lorem.js',
   './tools/passman.js',
   './vendor/qrcode.js',
+  './vendor/jsQR.js',
+  './js/url-safety.js',
+  './tools/qr-reader.js',
   './tools/fun-data.js',
   './vault/vault.js',
   './vault/file-format.js',

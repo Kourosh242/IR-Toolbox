@@ -1,6 +1,6 @@
 /* IR-Toolbox — محاسبات / Math tools */
 import { register } from '../js/registry.js';
-import { el, field, textInput, readout, selectInput, stat } from '../js/ui.js';
+import { el, field, textInput, readout, selectInput, stat, liveGroup, numOf } from '../js/ui.js';
 import { faNum, faGroup } from '../js/helpers.js';
 
 /* Safe math: whitelist tokens, then evaluate.
@@ -57,12 +57,12 @@ register({
   desc: 'X٪ از Y، تغییر درصدی، افزایش/کاهش',
   keywords: ['percent', 'درصد'],
   mount(root) {
-    const a = textInput({ mono: true, value: '20' });
-    const b = textInput({ mono: true, value: '150' });
+    const a = liveGroup(textInput({ mono: true, value: '20' }));
+    const b = liveGroup(textInput({ mono: true, value: '150' }));
     const out = el('div', { class: 'stats' });
     const run = () => {
       if (a.value.trim() === '' || b.value.trim() === '') { out.textContent = ''; return; }
-      const x = Number(a.value), y = Number(b.value);
+      const x = numOf(a.value), y = numOf(b.value);
       out.textContent = '';
       // v1.3.4: ورودی غیرعددی یا بی‌نهایت = پیام خطا به‌جای «ناعدد»/∞
       if (!isFinite(x) || !isFinite(y)) { out.append(el('span', { class: 'badge bad' }, '❌ عدد نامعتبر')); return; }
@@ -92,7 +92,7 @@ register({
   keywords: ['unit', 'convert', 'واحد', 'تبدیل'],
   mount(root) {
     const catSel = selectInput(Object.entries(UNITS).map(([k, v]) => [k, v.fa]));
-    const val = textInput({ mono: true, value: '1' });
+    const val = liveGroup(textInput({ mono: true, value: '1' }));
     const fromSel = selectInput(Object.keys(UNITS.length.u).map((u) => [u, u]));
     const toSel = selectInput(Object.keys(UNITS.length.u).map((u) => [u, u]));
     const out = readout();
@@ -112,7 +112,7 @@ register({
     };
     const run = () => {
       if (val.value.trim() === '') { out.clear(); return; }
-      const v = Number(val.value);
+      const v = numOf(val.value);
       if (!isFinite(v)) { out.set('❌ عدد نامعتبر'); return; } // v1.3.4
       const r = conv(v, fromSel.value, toSel.value);
       out.set(`${faGroup(+r.toPrecision(8))} ${toSel.value}`);
@@ -131,11 +131,11 @@ register({
   desc: 'BMI + دسته‌بندی سازمان جهانی بهداشت',
   keywords: ['bmi', 'weight', 'سلامتی'],
   mount(root) {
-    const w = textInput({ mono: true, value: '70' });
-    const h = textInput({ mono: true, value: '175' });
+    const w = liveGroup(textInput({ mono: true, value: '70' }));
+    const h = liveGroup(textInput({ mono: true, value: '175' }));
     const out = el('div', { class: 'stats' });
     const run = () => {
-      const wm = Number(w.value), hm = Number(h.value) / 100;
+      const wm = numOf(w.value), hm = numOf(h.value) / 100;
       if (!wm || !hm) { out.textContent = ''; return; }
       if (wm <= 0 || hm <= 0 || !isFinite(wm) || !isFinite(hm)) { out.textContent = ''; out.append(el('span', { class: 'badge bad' }, '❌ وزن و قد باید عدد مثبت باشند')); return; } // v1.3.4
       const bmi = wm / (hm * hm);
@@ -156,11 +156,11 @@ register({
   desc: 'بازه دلخواه با crypto (بدون تکرار اختیاری)',
   keywords: ['random', 'تصادفی'],
   mount(root) {
-    const min = textInput({ mono: true, value: '1' });
-    const max = textInput({ mono: true, value: '100' });
+    const min = liveGroup(textInput({ mono: true, value: '1' }));
+    const max = liveGroup(textInput({ mono: true, value: '100' }));
     const out = readout();
     const gen = () => {
-      const lo = Number(min.value), hi = Number(max.value);
+      const lo = numOf(min.value), hi = numOf(max.value);
       if (!isFinite(lo) || !isFinite(hi) || hi < lo) { out.set('❌ بازه نامعتبر'); return; }
       if (hi === lo) { out.set(faGroup(lo)); return; } // v1.3.4: بازهٔ تک‌عدد = خود عدد
       const range = hi - lo + 1;
@@ -174,5 +174,34 @@ register({
     };
     root.append(el('div', { class: 'grid2' }, field('از', min), field('تا', max)),
       el('button', { class: 'btn primary', onclick: gen }, '🎲 تولید'), out.root);
+  }
+});
+
+/* ── جداکنندهٔ ۳ رقمی ── */
+register({
+  id: 'num-group', cat: 'math', icon: '🧾',
+  fa: 'جداکنندهٔ ۳ رقمی', en: 'Digit Grouping',
+  desc: '150000 → 150,000 به‌همراه نسخهٔ فارسی',
+  keywords: ['group', 'separator', 'جداکننده', 'سه رقم'],
+  mount(root) {
+    const inp = textInput({ mono: true, placeholder: '150000', inputmode: 'decimal' });
+    const out = readout();
+    const note = el('div', { style: 'margin-top:8px' });
+    const run = () => {
+      note.textContent = '';
+      const raw = inp.value.trim();
+      if (!raw) { out.clear(); return; }
+      const hadSep = /[,،٬]/.test(raw) || /\d[,،٬ ]\d{3}/.test(raw);
+      const clean = raw.replace(/[,،٬\s]/g, '')
+        .replace(/[۰-۹]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+        .replace(/[٠-٩]/g, (d) => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+      if (!/^[+-]?(\d+(\.\d*)?|\.\d+)$/.test(clean)) { out.set('❌ ورودی عدد نیست'); return; }
+      const [int, dec] = clean.split('.');
+      const grouped = (int === '' ? '0' : int).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      out.set(`${grouped}${dec !== undefined ? '.' + dec : ''}\n${faGroup(clean)}`);
+      if (hadSep) note.append(el('span', { class: 'warn-box', style: 'display:inline-block' }, 'این ورودی از قبل جداکننده دارد؛ نیازی به جداسازی نبود 🙂'));
+    };
+    inp.addEventListener('input', run);
+    root.append(field('عدد', inp), out.root, note);
   }
 });
