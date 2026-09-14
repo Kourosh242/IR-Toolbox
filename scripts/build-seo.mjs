@@ -435,7 +435,7 @@ ${crumbs([['خانه', p()], [t.catSeo.fa, catUrl(t.catSeo)], [t.fa, null]])}
   <section aria-labelledby="h-rel">
     <h2 id="h-rel">ابزارهای مرتبط در دستهٔ ${esc(t.catSeo.fa)}</h2>
     <ul class="tool-chips">${related.map((x) => `<li><a href="${toolUrl(x)}">${x.icon} ${esc(x.fa)}</a></li>`).join('')}</ul>
-    <p><a href="${catUrl(t.catSeo)}">همهٔ ابزارهای ${esc(t.catSeo.fa)} ←</a> · <a href="${p('tools/')}">فهرست کامل ${TF} ابزار</a></p>
+    <p><a href="${catUrl(t.catSeo)}">${esc(t.catSeo.fa)} — همهٔ ${fa(related.length + 1)} ابزار ←</a> · <a href="${p('tools/')}">فهرست کامل ${TF} ابزار</a></p>
   </section>
 
   <section aria-labelledby="h-other">
