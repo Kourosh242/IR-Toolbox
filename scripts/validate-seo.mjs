@@ -346,6 +346,32 @@ pass(`بازرسی ${pages.length} صفحهٔ HTML انجام شد`);
   if (!bad) pass('هیچ escape رمزگشایی‌نشده‌ای در خروجی HTML نیست');
 }
 
+/* ═══════════ ۹پ) کلمهٔ تکراریِ پشت‌سرهم در یک گرهٔ متنی ═══════════ */
+/* فقط داخل هر text node بررسی می‌شود؛ چسبیدن آیتم‌های مجاورِ یک لیست
+   (که طبیعی است) خطای کاذب نمی‌دهد. */
+{
+  const STOP = new Set(['که','و','در','از','به','را','می','ها','است','این','آن','تا','هم','یک','ماه','روز']);
+  let bad = 0;
+  for (const f of pages) {
+    /* محتوای <script>/<style> متن قابل‌خواندن نیست (JSON-LD) — مستثنا */
+    const html = read(f).replace(/<script[\s\S]*?<\/script>/gi, '>').replace(/<style[\s\S]*?<\/style>/gi, '>');
+    for (const node of html.matchAll(/>([^<>]*[\u0600-\u06FF][^<>]*)</g)) {
+      /* پرانتز به مرزِ کلمه تبدیل می‌شود تا الگوی «نام فارسی (English Name)»
+         که ذاتاً کلمه را تکرار می‌کند، خطای کاذب ندهد */
+      const words = node[1].replace(/[()،,؛;]/g, ' \u0000 ').replace(/\s+/g, ' ').trim().split(' ');
+      const clean = (x) => x.replace(/[\u200c\u060c\u061b\u061f.,:;!?«»]/g, '');
+      for (let i = 1; i < words.length; i++) {
+        const w = clean(words[i]);
+        const prev = clean(words[i - 1]);
+        if (w.length > 2 && w === prev && !STOP.has(w)) {
+          fail(`[${f}] کلمهٔ تکراری: «${w} ${w}» در: …${node[1].trim().slice(0, 70)}…`); bad++;
+        }
+      }
+    }
+  }
+  if (!bad) pass('هیچ کلمهٔ تکراریِ پشت‌سرهمی در متن صفحه‌ها نیست');
+}
+
 /* ═══════════ ۱۰: basePath در کل ریپو ═══════════ */
 {
   let bad = 0;
