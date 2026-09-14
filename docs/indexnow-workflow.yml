@@ -16,14 +16,34 @@ on:
       - 'llms.txt'
       - 'sitemap.xml'
       - 'README.md'
+      - 'about/**'
+      - 'tools/**/index.html'
   workflow_dispatch:
 
 jobs:
   ping-indexnow:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Wait for GitHub Pages deployment
         run: sleep 120
+
+      # فهرست آدرس‌ها از خودِ sitemap.xml خوانده می‌شود، نه دستی.
+      # این‌طور با اضافه‌شدن هر ابزار/صفحهٔ جدید، پینگ هم خودکار کامل می‌شود.
+      - name: Build URL list from sitemap.xml
+        id: urls
+        run: |
+          python3 - <<'PY' > /tmp/urllist.json
+          import re, json
+          xml = open('sitemap.xml', encoding='utf-8').read()
+          urls = re.findall(r'<loc>(.*?)</loc>', xml)
+          # IndexNow حداکثر ۱۰٬۰۰۰ آدرس در هر درخواست می‌پذیرد؛ ۵۰۰ تا سقف امن است
+          print(json.dumps(urls[:500]))
+          PY
+          echo "آدرس‌های جمع‌شده: $(python3 -c "import json;print(len(json.load(open('/tmp/urllist.json'))))")"
+          cat /tmp/urllist.json >> "$GITHUB_STEP_SUMMARY" || true
 
       - name: Ping IndexNow API
         env:
@@ -35,21 +55,26 @@ jobs:
             echo "::warning::کلید IndexNow در دسترس نیست — پینگ انجام نشد."
             exit 0
           fi
+          PAYLOAD=$(python3 - "$INDEXNOW_KEY" <<'PY'
+          import json, sys
+          key = sys.argv[1]
+          urls = json.load(open('/tmp/urllist.json'))
+          print(json.dumps({
+            "host": "kourosh242.github.io",
+            "key": key,
+            "keyLocation": f"https://kourosh242.github.io/IR-Toolbox/{key}.txt",
+            "urlList": urls,
+          }))
+          PY
+          )
           RESPONSE=$(curl -sS -o /tmp/indexnow-response.txt -w "%{http_code}" -X POST \
             "https://api.indexnow.org/IndexNow" \
             -H "Content-Type: application/json; charset=utf-8" \
-            -d '{
-              "host": "kourosh242.github.io",
-              "key": "'"$INDEXNOW_KEY"'",
-              "keyLocation": "https://kourosh242.github.io/IR-Toolbox/'"$INDEXNOW_KEY"'.txt",
-              "urlList": [
-                "https://kourosh242.github.io/IR-Toolbox/"
-              ]
-            }')
+            -d "$PAYLOAD")
           echo "IndexNow HTTP status: $RESPONSE"
           cat /tmp/indexnow-response.txt || true
           if [ "$RESPONSE" != "200" ] && [ "$RESPONSE" != "202" ]; then
             echo "::warning::پینگ IndexNow با کد $RESPONSE برگشت (کلید/فایل کلید را بررسی کنید)"
           else
-            echo "✅ آدرس سایت با موفقیت به موتورهای جستجو اعلام شد."
+            echo "✅ آدرس‌های سایت با موفقیت به موتورهای جستجو اعلام شد."
           fi

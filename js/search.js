@@ -4,6 +4,10 @@ import * as registry from './registry.js';
 import { highlight, debounce } from './helpers.js';
 
 let back, input, list, items = [], sel = 0, onClose;
+/* v1.3.6: ماژول‌های ابزار تنبل بارگذاری می‌شوند؛ اگر پالت زودتر از رسیدنِ
+ * دسته‌ها باز شود، فهرست ناقص است. وقتی آماده شدند (و پالت هنوز باز است) دوباره
+ * رندر می‌کنیم. */
+let ready = () => Promise.resolve();
 
 function close() {
   if (back) { back.remove(); back = null; onClose && onClose(); }
@@ -56,10 +60,12 @@ function open(onNavigate) {
     if (e.key === 'Escape') close();
   });
   render();
+  ready().then(() => { if (back) render(input.value.trim()); }).catch(() => {});
   return close;
 }
 
-export function initSearch() {
+export function initSearch(opts = {}) {
+  if (typeof opts.ready === 'function') ready = opts.ready;
   document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); open(); }
   });

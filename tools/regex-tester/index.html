@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<!-- ─────────────────────────────────────────────────────────────────────
+     تولیدشده توسط scripts/build-seo.mjs — این فایل را دستی ویرایش نکنید.
+     منبع محتوا: seo/site.mjs · seo/tools-meta.mjs · js/helps.js · tools/*.js
+     بازسازی: npm run build:seo        راستی‌آزمایی: npm run validate:seo
+     ───────────────────────────────────────────────────────────────────── -->
+<html lang="fa" dir="rtl" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>آزمایش Regex — IR-Toolbox</title>
+<meta name="description" content="الگوی عبارت باقاعده را با پرچم‌های دلخواه روی متن آزمایش می‌کند و تعداد و فهرست تطبیق‌ها را زنده نشان می‌دهد. بخشی از IR-Toolbox: جعبه‌ابزار آفلاین فارسی با ۵۲ ابزار مرورگری، بدون سرور و بدون ردیابی.">
+<link rel="canonical" href="https://kourosh242.github.io/IR-Toolbox/tools/regex-tester/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="author" content="Kourosh242">
+<meta name="application-name" content="IR-Toolbox">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="IR-Toolbox — Persian Offline Web Toolbox by Kourosh242">
+<meta property="og:title" content="آزمایش Regex — IR-Toolbox">
+<meta property="og:description" content="الگوی عبارت باقاعده را با پرچم‌های دلخواه روی متن آزمایش می‌کند و تعداد و فهرست تطبیق‌ها را زنده نشان می‌دهد. بخشی از IR-Toolbox: جعبه‌ابزار آفلاین فارسی با ۵۲ ابزار مرورگری، بدون سرور و بدون ردیابی.">
+<meta property="og:url" content="https://kourosh242.github.io/IR-Toolbox/tools/regex-tester/">
+<meta property="og:image" content="https://kourosh242.github.io/IR-Toolbox/assets/brand/og-image.png">
+<meta property="og:image:width" content="1376">
+<meta property="og:image:height" content="768">
+<meta property="og:image:alt" content="IR-Toolbox — Persian Offline Web Toolbox by Kourosh242">
+<meta property="og:locale" content="fa_IR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="آزمایش Regex — IR-Toolbox">
+<meta name="twitter:description" content="الگوی عبارت باقاعده را با پرچم‌های دلخواه روی متن آزمایش می‌کند و تعداد و فهرست تطبیق‌ها را زنده نشان می‌دهد. بخشی از IR-Toolbox: جعبه‌ابزار آفلاین فارسی با ۵۲ ابزار مرورگری، بدون سرور و بدون ردیابی.">
+<meta name="twitter:image" content="https://kourosh242.github.io/IR-Toolbox/assets/brand/og-image.png">
+<link rel="preload" href="/IR-Toolbox/assets/fonts/Vazirmatn-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/IR-Toolbox/css/themes.css">
+<link rel="stylesheet" href="/IR-Toolbox/css/main.css">
+<link rel="stylesheet" href="/IR-Toolbox/css/components.css">
+<link rel="stylesheet" href="/IR-Toolbox/css/static.css">
+<link rel="manifest" href="/IR-Toolbox/manifest.json">
+<link rel="icon" type="image/png" href="/IR-Toolbox/assets/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/IR-Toolbox/assets/icons/icon-192.png">
+<link rel="sitemap" type="application/xml" href="/IR-Toolbox/sitemap.xml">
+<meta name="theme-color" content="#0a6e57">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","@id":"https://kourosh242.github.io/IR-Toolbox/tools/regex-tester/#tool","name":"آزمایش Regex (Regex Tester)","alternateName":["Regex Tester","آزمایش Regex"],"url":"https://kourosh242.github.io/IR-Toolbox/tools/regex-tester/","applicationCategory":"DeveloperApplication","applicationSuite":"IR-Toolbox","applicationSubCategory":"Developer Tools","operatingSystem":"Any modern web browser","browserRequirements":"Requires JavaScript; works offline as a PWA","softwareVersion":"1.3.6","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"fa-IR","license":"https://opensource.org/licenses/MIT","author":{"@id":"https://kourosh242.github.io/IR-Toolbox/#author"},"publisher":{"@id":"https://kourosh242.github.io/IR-Toolbox/#author"},"creator":{"@id":"https://kourosh242.github.io/IR-Toolbox/#author"},"isPartOf":{"@id":"https://kourosh242.github.io/IR-Toolbox/#website"},"sameAs":["https://github.com/Kourosh242/IR-Toolbox"],"description":"الگوی عبارت باقاعده را با پرچم‌های دلخواه روی متن آزمایش می‌کند و تعداد و فهرست تطبیق‌ها را زنده نشان می‌دهد.","featureList":["اجرای زنده با تغییر الگو، پرچم‌ها یا متن","رفتار درست با پرچم g و بدون آن (بدون g فقط نخستین تطبیق کامل نمایش داده می‌شود)","نمایش تا ۴۰ تطبیق اول به‌همراه شمارش کل","سقف ۲۰٬۰۰۰ کاراکتر برای متن آزمایش تا الگوهای بیمار باعث فریز شدن نشوند (ReDoS)"]},{"@type":"Person","@id":"https://kourosh242.github.io/IR-Toolbox/#author","name":"Kourosh242","url":"https://github.com/Kourosh242","sameAs":["https://github.com/Kourosh242/IR-Toolbox"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"خانه","item":"https://kourosh242.github.io/IR-Toolbox/"},{"@type":"ListItem","position":2,"name":"ابزارهای توسعه‌دهنده","item":"https://kourosh242.github.io/IR-Toolbox/tools/developer/"},{"@type":"ListItem","position":3,"name":"آزمایش Regex","item":"https://kourosh242.github.io/IR-Toolbox/tools/regex-tester/"}]}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">پرش به محتوای اصلی</a>
+<header class="topbar">
+  <div class="topbar-in wrap">
+    <a class="brand" href="/IR-Toolbox/"><span class="logo" aria-hidden="true">IR</span>
+      <span class="brand-txt"><b>IR-Toolbox</b><small>جعبه‌ابزار آفلاین فارسی</small></span></a>
+    <nav class="topnav" aria-label="ناوبری اصلی">
+      <a href="/IR-Toolbox/">خانه</a>
+      <a href="/IR-Toolbox/tools/">ابزارها</a>
+      <a href="/IR-Toolbox/about/">درباره</a>
+      <a class="btn btn-pri" href="/IR-Toolbox/#/">باز کردن اپ</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="wrap">
+
+<nav class="crumbs" aria-label="مسیر صفحه"><ol><li><a href="/IR-Toolbox/">خانه</a> <span aria-hidden="true">‹</span></li><li><a href="/IR-Toolbox/tools/developer/">ابزارهای توسعه‌دهنده</a> <span aria-hidden="true">‹</span></li><li><span aria-current="page">آزمایش Regex</span></li></ol></nav>
+<article class="prose">
+  <h1>🧲 آزمایش Regex</h1>
+  <p class="tool-en muted">Regex Tester</p>
+  <p class="lead">الگوی عبارت باقاعده را با پرچم‌های دلخواه روی متن آزمایش می‌کند و تعداد و فهرست تطبیق‌ها را زنده نشان می‌دهد.</p>
+  <p class="cta"><a class="btn btn-pri" href="/IR-Toolbox/#/t/regex">باز کردن «آزمایش Regex» در IR-Toolbox</a></p>
+
+  <section aria-labelledby="h-feat">
+    <h2 id="h-feat">قابلیت‌ها</h2>
+    <ul><li>اجرای زنده با تغییر الگو، پرچم‌ها یا متن</li>
+    <li>رفتار درست با پرچم g و بدون آن (بدون g فقط نخستین تطبیق کامل نمایش داده می‌شود)</li>
+    <li>نمایش تا ۴۰ تطبیق اول به‌همراه شمارش کل</li>
+    <li>سقف ۲۰٬۰۰۰ کاراکتر برای متن آزمایش تا الگوهای بیمار باعث فریز شدن نشوند (ReDoS)</li></ul>
+  </section>
+
+  <section aria-labelledby="h-use">
+    <h2 id="h-use">راهنمای استفاده</h2>
+    <p>الگوی عبارت باقاعدگی + پرچم‌ها (مثل g) و متن آزمایش را بدهید؛ تعداد و فهرست تطبیق‌ها زنده نمایش داده می‌شود. اگر الگو غلط باشد پیام خطا می‌بینید.</p>
+  </section>
+
+  <section aria-labelledby="h-priv">
+    <h2 id="h-priv">حریم خصوصی این ابزار</h2>
+    <p>این ابزار کاملاً داخل مرورگر اجرا می‌شود. ورودی شما به هیچ سروری ارسال نمی‌شود و هیچ درخواست شبکه‌ای برای پردازش آن انجام نمی‌گیرد.</p>
+  </section>
+
+  <section class="faq" aria-labelledby="h-faq">
+<h2 id="h-faq">پرسش‌های پرتکرار</h2>
+<details open><summary>چرا سقف ۲۰ هزار کاراکتر وجود دارد؟</summary><p>چون بعضی الگوها روی متن بزرگ زمان نمایی می‌گیرند و تب مرورگر را قفل می‌کنند. این سقف یک محافظ عملی است.</p></details>
+<details><summary>آیا گروه‌های capture هم نمایش داده می‌شوند؟</summary><p>خیر؛ فقط تطبیق کامل هر مورد نمایش داده می‌شود تا خروجی بدون ابهام باشد.</p></details>
+</section>
+
+  <section aria-labelledby="h-rel">
+    <h2 id="h-rel">ابزارهای مرتبط در دستهٔ ابزارهای توسعه‌دهنده</h2>
+    <ul class="tool-chips"><li><a href="/IR-Toolbox/tools/json-formatter/">🧾 فرمت‌کننده JSON</a></li><li><a href="/IR-Toolbox/tools/base64-encoder-decoder/">📦 Base64</a></li><li><a href="/IR-Toolbox/tools/url-encoder-decoder/">🔗 کدگذاری URL</a></li><li><a href="/IR-Toolbox/tools/slug-generator/">🐌 اسلاگ‌ساز</a></li><li><a href="/IR-Toolbox/tools/uuid-generator/">🪪 تولیدکننده UUID</a></li><li><a href="/IR-Toolbox/tools/jwt-decoder/">🎫 رمزگشای JWT</a></li><li><a href="/IR-Toolbox/tools/html-entities/">🏷️ HTML Entities</a></li><li><a href="/IR-Toolbox/tools/unix-timestamp-converter/">🕰️ تبدیل Timestamp</a></li><li><a href="/IR-Toolbox/tools/qr-code-generator/">🔳 QR‌کدساز</a></li><li><a href="/IR-Toolbox/tools/qr-reader/">📷 QR‌خوان</a></li><li><a href="/IR-Toolbox/tools/cron-translator/">⏰ مترجم Cron</a></li></ul>
+    <p><a href="/IR-Toolbox/tools/developer/">همهٔ ابزارهای ابزارهای توسعه‌دهنده ←</a> · <a href="/IR-Toolbox/tools/">فهرست کامل ۵۲ ابزار</a></p>
+  </section>
+
+  <section aria-labelledby="h-other">
+    <h2 id="h-other">از دسته‌های دیگر</h2>
+    <ul class="tool-chips"><li><a href="/IR-Toolbox/tools/text-counter/">🔢 شمارنده متن</a></li><li><a href="/IR-Toolbox/tools/case-converter/">🔠 تبدیل حروف</a></li><li><a href="/IR-Toolbox/tools/text-cleaner/">🧹 پاک‌سازی متن</a></li><li><a href="/IR-Toolbox/tools/find-and-replace/">🔁 جستجو و جایگزینی</a></li><li><a href="/IR-Toolbox/tools/color-converter/">🎨 تبدیل رنگ</a></li><li><a href="/IR-Toolbox/tools/contrast-checker/">🌓 بررسی کنتراست</a></li><li><a href="/IR-Toolbox/tools/css-gradient-generator/">🌈 گرادیان‌ساز CSS</a></li><li><a href="/IR-Toolbox/tools/css-box-shadow-generator/">🌫️ سایه‌ساز CSS</a></li></ul>
+  </section>
+</article>
+</main>
+<footer class="site-foot">
+  <div class="wrap foot-grid">
+    <div>
+      <p class="foot-brand"><b>IR-Toolbox</b> — جعبه‌ابزار آفلاین فارسی، ساخته‌شده توسط Kourosh242</p>
+      <p>IR-Toolbox یک وب‌اپلیکیشن رایگان، متن‌باز، حریم‌محور و کاملاً آفلاین (PWA) است که ۵۲ ابزار مرورگری را در ۹ دسته ارائه می‌دهد.</p>
+    </div>
+    <div>
+      <h2>ابزارها</h2>
+      <ul><li><a href="/IR-Toolbox/tools/text/">ابزارهای متن</a></li><li><a href="/IR-Toolbox/tools/developer/">ابزارهای توسعه‌دهنده</a></li><li><a href="/IR-Toolbox/tools/design/">ابزارهای طراحی</a></li><li><a href="/IR-Toolbox/tools/files/">ابزارهای فایل</a></li><li><a href="/IR-Toolbox/tools/math/">ابزارهای محاسبات</a></li><li><a href="/IR-Toolbox/tools/time/">ابزارهای زمان و تقویم شمسی</a></li><li><a href="/IR-Toolbox/tools/security/">ابزارهای امنیت</a></li><li><a href="/IR-Toolbox/tools/fun/">ابزارهای سرگرمی</a></li><li><a href="/IR-Toolbox/tools/brain-games/">بازی‌های فکری</a></li></ul>
+    </div>
+    <div>
+      <h2>پروژه</h2>
+      <ul>
+        <li><a href="/IR-Toolbox/about/">درباره و حریم خصوصی</a></li>
+        <li><a href="/IR-Toolbox/tools/">فهرست ۵۲ ابزار</a></li>
+        <li><a href="/IR-Toolbox/sitemap.xml">نقشهٔ سایت</a></li>
+        <li><a href="https://github.com/Kourosh242/IR-Toolbox" rel="noopener">مخزن GitHub</a></li>
+        <li><a href="https://github.com/Kourosh242/IR-Toolbox/issues" rel="noopener">گزارش مشکل</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>واقعیت‌ها</h2>
+      <ul class="foot-facts">
+        <li>نسخهٔ 1.3.6 · لایسنس MIT</li>
+        <li>۵۲ ابزار · ۹ دسته · بدون فریم‌ورک</li>
+        <li>پردازش محلی، بدون سرور و بدون ردیابی</li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap foot-note">
+    <p>ساخته‌شده توسط <a href="https://github.com/Kourosh242" rel="noopener">Kourosh242</a> ·
+      لایسنس <a href="https://opensource.org/licenses/MIT" rel="noopener">MIT</a> ·
+      این IR-Toolbox یک جعبه‌ابزار فارسی و آفلاین برای کارهای روزمرهٔ مرورگر است و با کتابخانه‌ها یا پروژه‌های پژوهشی «بازیابی اطلاعات» (Information Retrieval) که نام مشابه دارند هیچ ارتباطی ندارد.</p>
+  </div>
+</footer>
+</body>
+</html>

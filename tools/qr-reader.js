@@ -12,6 +12,29 @@ const pushHist = (text) => {
   try { localStorage.setItem(HIST_KEY, JSON.stringify(h.slice(0, 10))); } catch {}
 };
 
+/* ── بارگذاری تنبل jsQR (۲۵۱KB) ──
+ * قبلاً vendor/jsQR.js با یک تگ <script> معمولی (بدون defer/async) در index.html
+ * بارگذاری می‌شد و چون بلاک‌کنندهٔ رندر است، کل اپ منتظر دانلود/اجرای آن می‌ماند —
+ * درحالی‌که فقط همین ابزار به آن نیاز دارد. حالا تنها وقتی که کاربر QR‌خوان را باز
+ * کند، با import پویا گرفته می‌شود؛ نتیجه یک‌بار کش می‌شود و برای همهٔ دیکدها به کار می‌رود.
+ * فایل UMD است و خودش را روی self/window می‌نشاند، پس بعد از resolve همان
+ * window.jsQR را می‌خوانیم. (آدرس با import.meta.url ساخته می‌شود تا به مسیر صفحه
+ * وابسته نباشد و در هر عمق نصبی درست کار کند.) */
+const JSQR_URL = new URL('../vendor/jsQR.js', import.meta.url).href;
+let jsQRLoading = null;
+export function loadJsQR() {
+  if (typeof window.jsQR === 'function') return Promise.resolve(window.jsQR);
+  if (!jsQRLoading) {
+    jsQRLoading = import(JSQR_URL)
+      .then(() => {
+        if (typeof window.jsQR !== 'function') throw new Error('jsQR بارگذاری نشد');
+        return window.jsQR;
+      })
+      .catch((e) => { jsQRLoading = null; throw e; }); // شکست = تلاش دوباره در کلیک بعدی
+  }
+  return jsQRLoading;
+}
+
 /* ── تشخیص نوع خروجی ── */
 function detectType(text) {
   if (/^https?:\/\//i.test(text)) return 'url';
@@ -34,6 +57,20 @@ export function mountQrReader(root) {
   const status = el('div', { class: 'hint' });
   const video = el('video', { style: 'width:100%;max-height:300px;border-radius:14px;border:1px solid var(--line);display:none;background:#000', playsinline: '', muted: '', 'aria-label': 'پیش‌نمایش دوربین' });
   let stream = null, raf = 0, scanning = false;
+
+  /* jsQR از شبکه/SW کش گرفته می‌شود؛ اگر نبود، پیام صادقانه + تلاش دوبارهٔ خودکار
+   * در اقدام بعدی (loadJsQR در صورت شکست، promise کش‌شده را دور می‌اندازد). */
+  const LIB_MSG = '⚠️ کتابخانهٔ QR (jsQR) بارگذاری نشد — اتصال را بررسی کن؛ در اقدام بعدی دوباره تلاش می‌شود.';
+  let libFailed = false;
+  const retryHint = () => {
+    libFailed = true;
+    status.textContent = LIB_MSG;
+    toast(LIB_MSG, 'err', 5000);
+  };
+  // پیش‌بارگذاری در پس‌زمینه تا نخستین اسکن معطل نماند (بی‌صدا: اگر نشد، اقدام بعدی دوباره تلاش می‌کند)
+  loadJsQR()
+    .then(() => { if (libFailed) { libFailed = false; status.textContent = ''; } })
+    .catch(() => { libFailed = true; status.textContent = LIB_MSG; });
 
   const stopCam = () => {
     scanning = false;
@@ -103,10 +140,11 @@ export function mountQrReader(root) {
   };
 
   /* ── decode ── */
-  const decodeCanvas = (canvas) => {
+  const decodeCanvas = async (canvas) => {
+    const jsQR = await loadJsQR(); // تنها نقطهٔ وابستگی به کتابخانه — تنبل
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
     const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    return window.jsQR(img.data, img.width, img.height, { inversionAttempts: 'attemptBoth' });
+    return jsQR(img.data, img.width, img.height, { inversionAttempts: 'attemptBoth' });
   };
   const handleDecoded = (text) => { if (text) { show(text); status.textContent = '✅ QR خوانده شد'; } };
 
@@ -123,18 +161,21 @@ export function mountQrReader(root) {
   };
   const fromFile = async (file) => {
     status.textContent = 'در حال خواندن…';
-    try {
-      const bmp = await loadBitmap(file);
-      const canvas = document.createElement('canvas');
-      const max = 1200;
-      const k = Math.min(1, max / Math.max(bmp.width, bmp.height));
-      canvas.width = Math.max(1, Math.round(bmp.width * k));
-      canvas.height = Math.max(1, Math.round(bmp.height * k));
-      canvas.getContext('2d').drawImage(bmp, 0, 0, canvas.width, canvas.height);
-      const r = decodeCanvas(canvas);
-      if (r && r.data) handleDecoded(r.data);
-      else { resBox.style.display = 'none'; status.textContent = ''; toast('❌ QR در این تصویر پیدا نشد — تصویر واضح‌تری آپلود کن', 'err', 4000); }
-    } catch { toast('❌ فایل تصویر باز نشد', 'err'); }
+    let bmp;
+    try { bmp = await loadBitmap(file); }
+    catch { status.textContent = ''; toast('❌ فایل تصویر باز نشد', 'err'); return; }
+    const canvas = document.createElement('canvas');
+    const max = 1200;
+    const k = Math.min(1, max / Math.max(bmp.width, bmp.height));
+    canvas.width = Math.max(1, Math.round(bmp.width * k));
+    canvas.height = Math.max(1, Math.round(bmp.height * k));
+    canvas.getContext('2d').drawImage(bmp, 0, 0, canvas.width, canvas.height);
+    let r;
+    // جدا از catch بالا: شکستِ بارگذاری jsQR نباید «فایل باز نشد» گزارش شود
+    try { r = await decodeCanvas(canvas); }
+    catch { status.textContent = ''; retryHint(); return; }
+    if (r && r.data) handleDecoded(r.data);
+    else { resBox.style.display = 'none'; status.textContent = ''; toast('❌ QR در این تصویر پیدا نشد — تصویر واضح‌تری آپلود کن', 'err', 4000); }
   };
 
   const fi = el('input', { type: 'file', accept: 'image/*', class: 'input', style: 'padding:8px' });
@@ -151,16 +192,24 @@ export function mountQrReader(root) {
     await video.play().catch(() => {});
     scanning = true;
     const canvas = document.createElement('canvas');
-    const loop = () => {
+    let busy = false; // دیکد حالا async است؛ بدون این نگهبان فریم‌ها روی هم تلنبار می‌شدند
+    const loop = async () => {
       if (!scanning) return;
       raf = requestAnimationFrame(loop);
-      if (video.readyState < 2 || !video.videoWidth) return;
-      const k = Math.min(1, 640 / video.videoWidth);
-      canvas.width = Math.round(video.videoWidth * k); canvas.height = Math.round(video.videoHeight * k);
-      const ctx = canvas.getContext('2d', { willReadFrequently: true });
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      const r = decodeCanvas(canvas);
-      if (r && r.data) { stopCam(); handleDecoded(r.data); toast('✅ QR اسکن شد'); }
+      if (busy || video.readyState < 2 || !video.videoWidth) return;
+      busy = true;
+      try {
+        const k = Math.min(1, 640 / video.videoWidth);
+        canvas.width = Math.round(video.videoWidth * k); canvas.height = Math.round(video.videoHeight * k);
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const r = await decodeCanvas(canvas);
+        if (!scanning) return; // کاربر در فاصلهٔ دیکد دوربین را بسته است
+        if (r && r.data) { stopCam(); handleDecoded(r.data); toast('✅ QR اسکن شد'); }
+      } catch {
+        if (!scanning) return;
+        stopCam(); retryHint();
+      } finally { busy = false; }
     };
     loop();
   } }, '📷 اسکن با دوربین');

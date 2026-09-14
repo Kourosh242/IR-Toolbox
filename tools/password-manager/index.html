@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!-- ─────────────────────────────────────────────────────────────────────
+     تولیدشده توسط scripts/build-seo.mjs — این فایل را دستی ویرایش نکنید.
+     منبع محتوا: seo/site.mjs · seo/tools-meta.mjs · js/helps.js · tools/*.js
+     بازسازی: npm run build:seo        راستی‌آزمایی: npm run validate:seo
+     ───────────────────────────────────────────────────────────────────── -->
+<html lang="fa" dir="rtl" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مدیر رمز عبور — IR-Toolbox</title>
+<meta name="description" content="مدیر رمز عبور کاملاً محلی: ورودی‌ها با AES-256-GCM و رمز اصلی رمزنگاری و فقط روی دستگاه شما ذخیره می‌شوند. بخشی از IR-Toolbox: جعبه‌ابزار آفلاین فارسی با ۵۲ ابزار مرورگری، بدون سرور و بدون ردیابی.">
+<link rel="canonical" href="https://kourosh242.github.io/IR-Toolbox/tools/password-manager/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="author" content="Kourosh242">
+<meta name="application-name" content="IR-Toolbox">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="IR-Toolbox — Persian Offline Web Toolbox by Kourosh242">
+<meta property="og:title" content="مدیر رمز عبور — IR-Toolbox">
+<meta property="og:description" content="مدیر رمز عبور کاملاً محلی: ورودی‌ها با AES-256-GCM و رمز اصلی رمزنگاری و فقط روی دستگاه شما ذخیره می‌شوند. بخشی از IR-Toolbox: جعبه‌ابزار آفلاین فارسی با ۵۲ ابزار مرورگری، بدون سرور و بدون ردیابی.">
+<meta property="og:url" content="https://kourosh242.github.io/IR-Toolbox/tools/password-manager/">
+<meta property="og:image" content="https://kourosh242.github.io/IR-Toolbox/assets/brand/og-image.png">
+<meta property="og:image:width" content="1376">
+<meta property="og:image:height" content="768">
+<meta property="og:image:alt" content="IR-Toolbox — Persian Offline Web Toolbox by Kourosh242">
+<meta property="og:locale" content="fa_IR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="مدیر رمز عبور — IR-Toolbox">
+<meta name="twitter:description" content="مدیر رمز عبور کاملاً محلی: ورودی‌ها با AES-256-GCM و رمز اصلی رمزنگاری و فقط روی دستگاه شما ذخیره می‌شوند. بخشی از IR-Toolbox: جعبه‌ابزار آفلاین فارسی با ۵۲ ابزار مرورگری، بدون سرور و بدون ردیابی.">
+<meta name="twitter:image" content="https://kourosh242.github.io/IR-Toolbox/assets/brand/og-image.png">
+<link rel="preload" href="/IR-Toolbox/assets/fonts/Vazirmatn-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/IR-Toolbox/css/themes.css">
+<link rel="stylesheet" href="/IR-Toolbox/css/main.css">
+<link rel="stylesheet" href="/IR-Toolbox/css/components.css">
+<link rel="stylesheet" href="/IR-Toolbox/css/static.css">
+<link rel="manifest" href="/IR-Toolbox/manifest.json">
+<link rel="icon" type="image/png" href="/IR-Toolbox/assets/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/IR-Toolbox/assets/icons/icon-192.png">
+<link rel="sitemap" type="application/xml" href="/IR-Toolbox/sitemap.xml">
+<meta name="theme-color" content="#0a6e57">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","@id":"https://kourosh242.github.io/IR-Toolbox/tools/password-manager/#tool","name":"مدیر رمز عبور (Password Manager)","alternateName":["Password Manager","مدیر رمز عبور"],"url":"https://kourosh242.github.io/IR-Toolbox/tools/password-manager/","applicationCategory":"UtilityApplication","applicationSuite":"IR-Toolbox","applicationSubCategory":"Security Tools","operatingSystem":"Any modern web browser","browserRequirements":"Requires JavaScript; works offline as a PWA","softwareVersion":"1.3.6","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"fa-IR","license":"https://opensource.org/licenses/MIT","author":{"@id":"https://kourosh242.github.io/IR-Toolbox/#author"},"publisher":{"@id":"https://kourosh242.github.io/IR-Toolbox/#author"},"creator":{"@id":"https://kourosh242.github.io/IR-Toolbox/#author"},"isPartOf":{"@id":"https://kourosh242.github.io/IR-Toolbox/#website"},"sameAs":["https://github.com/Kourosh242/IR-Toolbox"],"description":"مدیر رمز عبور کاملاً محلی: ورودی‌ها با AES-256-GCM و رمز اصلی رمزنگاری و فقط روی دستگاه شما ذخیره می‌شوند.","featureList":["رمزنگاری AES-256-GCM با مشتق کلید PBKDF2-HMAC-SHA-256 (۲۵۰٬۰۰۰ تکرار)","رمز اصلی هرگز ذخیره نمی‌شود؛ بعد از هر بستن یا رفرش صفحه، گنجینه قفل است","جست‌وجو، ویرایش، حذف، تولید رمز امن و کپی موقت با پاک‌شدن کلیپ‌بورد پس از ۲۰ ثانیه","پشتیبان رمزنگاری‌شده و بازیابی آن، به‌همراه تغییر رمز اصلی (بازرمزنگاری کامل داده‌ها)","خطای ذخیره باعث حذف ورودی موجود نمی‌شود (بازگردانی کامل)"]},{"@type":"Person","@id":"https://kourosh242.github.io/IR-Toolbox/#author","name":"Kourosh242","url":"https://github.com/Kourosh242","sameAs":["https://github.com/Kourosh242/IR-Toolbox"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"خانه","item":"https://kourosh242.github.io/IR-Toolbox/"},{"@type":"ListItem","position":2,"name":"ابزارهای امنیت","item":"https://kourosh242.github.io/IR-Toolbox/tools/security/"},{"@type":"ListItem","position":3,"name":"مدیر رمز عبور","item":"https://kourosh242.github.io/IR-Toolbox/tools/password-manager/"}]}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">پرش به محتوای اصلی</a>
+<header class="topbar">
+  <div class="topbar-in wrap">
+    <a class="brand" href="/IR-Toolbox/"><span class="logo" aria-hidden="true">IR</span>
+      <span class="brand-txt"><b>IR-Toolbox</b><small>جعبه‌ابزار آفلاین فارسی</small></span></a>
+    <nav class="topnav" aria-label="ناوبری اصلی">
+      <a href="/IR-Toolbox/">خانه</a>
+      <a href="/IR-Toolbox/tools/">ابزارها</a>
+      <a href="/IR-Toolbox/about/">درباره</a>
+      <a class="btn btn-pri" href="/IR-Toolbox/#/">باز کردن اپ</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="wrap">
+
+<nav class="crumbs" aria-label="مسیر صفحه"><ol><li><a href="/IR-Toolbox/">خانه</a> <span aria-hidden="true">‹</span></li><li><a href="/IR-Toolbox/tools/security/">ابزارهای امنیت</a> <span aria-hidden="true">‹</span></li><li><span aria-current="page">مدیر رمز عبور</span></li></ol></nav>
+<article class="prose">
+  <h1>🔑 مدیر رمز عبور</h1>
+  <p class="tool-en muted">Password Manager</p>
+  <p class="lead">مدیر رمز عبور کاملاً محلی: ورودی‌ها با AES-256-GCM و رمز اصلی رمزنگاری و فقط روی دستگاه شما ذخیره می‌شوند.</p>
+  <p class="cta"><a class="btn btn-pri" href="/IR-Toolbox/#/t/passman">باز کردن «مدیر رمز عبور» در IR-Toolbox</a></p>
+
+  <section aria-labelledby="h-feat">
+    <h2 id="h-feat">قابلیت‌ها</h2>
+    <ul><li>رمزنگاری AES-256-GCM با مشتق کلید PBKDF2-HMAC-SHA-256 (۲۵۰٬۰۰۰ تکرار)</li>
+    <li>رمز اصلی هرگز ذخیره نمی‌شود؛ بعد از هر بستن یا رفرش صفحه، گنجینه قفل است</li>
+    <li>جست‌وجو، ویرایش، حذف، تولید رمز امن و کپی موقت با پاک‌شدن کلیپ‌بورد پس از ۲۰ ثانیه</li>
+    <li>پشتیبان رمزنگاری‌شده و بازیابی آن، به‌همراه تغییر رمز اصلی (بازرمزنگاری کامل داده‌ها)</li>
+    <li>خطای ذخیره باعث حذف ورودی موجود نمی‌شود (بازگردانی کامل)</li></ul>
+  </section>
+
+  <section aria-labelledby="h-use">
+    <h2 id="h-use">راهنمای استفاده</h2>
+    <p>مدیر رمز عبور کاملاً محلی: بار اول «رمز اصلی» می‌سازید؛ ورودی‌ها (عنوان، کاربر، رمز با هر زبان/فرمتی، آدرس، یادداشت) با AES-256-GCM رمزنگاری و فقط روی دستگاه شما ذخیره می‌شوند. جست‌وجو، ویرایش، حذف، تولید رمز امن، کپی موقت (پاک‌شدن کلیپ‌بورد بعد از ۲۰ ثانیه) و پشتیبان رمزنگاری‌شده. فراموشی رمز اصلی = از دست رفتن داده؛ ویژگی امنیتی است.</p>
+  </section>
+
+  <section aria-labelledby="h-priv">
+    <h2 id="h-priv">حریم خصوصی این ابزار</h2>
+    <p>ورودی‌ها با AES-256-GCM رمزنگاری می‌شوند و کلید با PBKDF2 (۲۵۰٬۰۰۰ تکرار) از رمز اصلی مشتق می‌شود. رمز اصلی هرگز ذخیره نمی‌شود و پس از هر بستن یا رفرش صفحه، گنجینه قفل است. داده‌ها فقط در localStorage همین مرورگر می‌مانند و هیچ‌جا ارسال نمی‌شوند. رمزنگاری نیازمند محیط امن (HTTPS یا localhost) است.</p>
+  </section>
+
+  <section class="faq" aria-labelledby="h-faq">
+<h2 id="h-faq">پرسش‌های پرتکرار</h2>
+<details open><summary>اگر رمز اصلی را فراموش کنم چه؟</summary><p>داده‌ها قابل بازیابی نیستند. این یک ویژگی امنیتی است، نه باگ: بدون کلید، هیچ راه برگشتی وجود ندارد. پشتیبان رمزنگاری‌شده هم بدون رمز اصلی بی‌استفاده است.</p></details>
+<details><summary>چرا در بعضی محیط‌ها ابزار کار نمی‌کند؟</summary><p>Web Crypto فقط در محیط امن (HTTPS یا localhost) در دسترس است. روی file:// یا http معمولی، مرورگر اجازهٔ رمزنگاری نمی‌دهد و ابزار هشدار واضح نشان می‌دهد.</p></details>
+</section>
+
+  <section aria-labelledby="h-rel">
+    <h2 id="h-rel">ابزارهای مرتبط در دستهٔ ابزارهای امنیت</h2>
+    <ul class="tool-chips"><li><a href="/IR-Toolbox/tools/hash-checker/">#️⃣ بررسی هش</a></li><li><a href="/IR-Toolbox/tools/password-generator/">🔑 تولید رمز عبور</a></li><li><a href="/IR-Toolbox/tools/secure-token-generator/">🧬 توکن امن</a></li><li><a href="/IR-Toolbox/tools/ir-vault/">🧰 گاوصندوق IR</a></li></ul>
+    <p><a href="/IR-Toolbox/tools/security/">همهٔ ابزارهای ابزارهای امنیت ←</a> · <a href="/IR-Toolbox/tools/">فهرست کامل ۵۲ ابزار</a></p>
+  </section>
+
+  <section aria-labelledby="h-other">
+    <h2 id="h-other">از دسته‌های دیگر</h2>
+    <ul class="tool-chips"><li><a href="/IR-Toolbox/tools/text-counter/">🔢 شمارنده متن</a></li><li><a href="/IR-Toolbox/tools/case-converter/">🔠 تبدیل حروف</a></li><li><a href="/IR-Toolbox/tools/text-cleaner/">🧹 پاک‌سازی متن</a></li><li><a href="/IR-Toolbox/tools/find-and-replace/">🔁 جستجو و جایگزینی</a></li><li><a href="/IR-Toolbox/tools/json-formatter/">🧾 فرمت‌کننده JSON</a></li><li><a href="/IR-Toolbox/tools/base64-encoder-decoder/">📦 Base64</a></li><li><a href="/IR-Toolbox/tools/url-encoder-decoder/">🔗 کدگذاری URL</a></li><li><a href="/IR-Toolbox/tools/slug-generator/">🐌 اسلاگ‌ساز</a></li></ul>
+  </section>
+</article>
+</main>
+<footer class="site-foot">
+  <div class="wrap foot-grid">
+    <div>
+      <p class="foot-brand"><b>IR-Toolbox</b> — جعبه‌ابزار آفلاین فارسی، ساخته‌شده توسط Kourosh242</p>
+      <p>IR-Toolbox یک وب‌اپلیکیشن رایگان، متن‌باز، حریم‌محور و کاملاً آفلاین (PWA) است که ۵۲ ابزار مرورگری را در ۹ دسته ارائه می‌دهد.</p>
+    </div>
+    <div>
+      <h2>ابزارها</h2>
+      <ul><li><a href="/IR-Toolbox/tools/text/">ابزارهای متن</a></li><li><a href="/IR-Toolbox/tools/developer/">ابزارهای توسعه‌دهنده</a></li><li><a href="/IR-Toolbox/tools/design/">ابزارهای طراحی</a></li><li><a href="/IR-Toolbox/tools/files/">ابزارهای فایل</a></li><li><a href="/IR-Toolbox/tools/math/">ابزارهای محاسبات</a></li><li><a href="/IR-Toolbox/tools/time/">ابزارهای زمان و تقویم شمسی</a></li><li><a href="/IR-Toolbox/tools/security/">ابزارهای امنیت</a></li><li><a href="/IR-Toolbox/tools/fun/">ابزارهای سرگرمی</a></li><li><a href="/IR-Toolbox/tools/brain-games/">بازی‌های فکری</a></li></ul>
+    </div>
+    <div>
+      <h2>پروژه</h2>
+      <ul>
+        <li><a href="/IR-Toolbox/about/">درباره و حریم خصوصی</a></li>
+        <li><a href="/IR-Toolbox/tools/">فهرست ۵۲ ابزار</a></li>
+        <li><a href="/IR-Toolbox/sitemap.xml">نقشهٔ سایت</a></li>
+        <li><a href="https://github.com/Kourosh242/IR-Toolbox" rel="noopener">مخزن GitHub</a></li>
+        <li><a href="https://github.com/Kourosh242/IR-Toolbox/issues" rel="noopener">گزارش مشکل</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>واقعیت‌ها</h2>
+      <ul class="foot-facts">
+        <li>نسخهٔ 1.3.6 · لایسنس MIT</li>
+        <li>۵۲ ابزار · ۹ دسته · بدون فریم‌ورک</li>
+        <li>پردازش محلی، بدون سرور و بدون ردیابی</li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap foot-note">
+    <p>ساخته‌شده توسط <a href="https://github.com/Kourosh242" rel="noopener">Kourosh242</a> ·
+      لایسنس <a href="https://opensource.org/licenses/MIT" rel="noopener">MIT</a> ·
+      این IR-Toolbox یک جعبه‌ابزار فارسی و آفلاین برای کارهای روزمرهٔ مرورگر است و با کتابخانه‌ها یا پروژه‌های پژوهشی «بازیابی اطلاعات» (Information Retrieval) که نام مشابه دارند هیچ ارتباطی ندارد.</p>
+  </div>
+</footer>
+</body>
+</html>

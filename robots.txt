@@ -1,9 +1,12 @@
-# IR-Toolbox — جعبه ابزار آفلاین فارسی | https://kourosh242.github.io/IR-Toolbox/
-# همه خزنده‌ها خوش آمدید — موتورهای جستجو و موتورهای پاسخ هوش مصنوعی
+# IR-Toolbox — Persian Offline Web Toolbox by Kourosh242
+# IR-Toolbox is a free, open-source, privacy-first, offline-first Progressive Web App providing 52 browser-based tools across 9 categories.
+# خزیدن برای ایندکس‌شدن و استخراج توسط موتورهای جستجو و دستیارهای هوش مصنوعی آزاد است.
+
 User-agent: *
 Allow: /
+Disallow: /assets/icons/
 
-# AI / answer-engine crawlers — explicitly welcome (GEO)
+# ── دستیارهای هوش مصنوعی (محتوای این سایت عمومی و قابل استناد است) ──
 User-agent: GPTBot
 Allow: /
 User-agent: OAI-SearchBot
@@ -18,15 +21,28 @@ User-agent: anthropic-ai
 Allow: /
 User-agent: PerplexityBot
 Allow: /
+User-agent: Perplexity-User
+Allow: /
 User-agent: Google-Extended
 Allow: /
 User-agent: Applebot-Extended
 Allow: /
 User-agent: CCBot
 Allow: /
-User-agent: Bytespider
+User-agent: Amazonbot
 Allow: /
 User-agent: cohere-ai
 Allow: /
+User-agent: MistralAI-User
+Allow: /
+User-agent: YouBot
+Allow: /
+User-agent: DuckAssistBot
+Allow: /
+User-agent: Meta-ExternalAgent
+Allow: /
+User-agent: Bytespider
+Allow: /
 
+# ── نقشهٔ سایت ──
 Sitemap: https://kourosh242.github.io/IR-Toolbox/sitemap.xml
