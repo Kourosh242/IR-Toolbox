@@ -27,11 +27,54 @@
   <a href="LICENSE">📄 لایسنس MIT</a>
 </p>
 
+<p align="center">
+  <a href="https://kourosh242.github.io/IR-Toolbox/about/"><strong>ℹ️ درباره، حریم خصوصی و امنیت</strong></a>
+  ·
+  <a href="https://kourosh242.github.io/IR-Toolbox/tools/"><strong>🧰 فهرست ۵۲ ابزار</strong></a>
+  ·
+  <a href="https://kourosh242.github.io/IR-Toolbox/llms.txt">🤖 llms.txt</a>
+  ·
+  <a href="CITATION.cff">🎓 استناد (CITATION.cff)</a>
+</p>
+
+> **⚠️ ابهام‌زدایی از نام:** این **IR-Toolbox** یک جعبه‌ابزار فارسی و آفلاین برای کارهای روزمرهٔ مرورگر است.
+> با کتابخانه‌ها یا پروژه‌های پژوهشی «بازیابی اطلاعات» (Information Retrieval) و بسته‌های MATLAB
+> که نام مشابه دارند **هیچ ارتباطی ندارد**.
+>
+> *Disambiguation:* this **IR-Toolbox** is a Persian offline-first browser toolbox.
+> It is **not** an Information Retrieval library or MATLAB package that shares a similar name.
+
 ---
 
 **IR-Toolbox** (جعبه ابزار IR) is a **free, open-source, offline-first Progressive Web App (PWA)** with **52 privacy-first web tools in 9 categories** — text tools, developer utilities, design tools, file tools, calculators, time tools (Jalali/Shamsi calendar), security tools (AES-256-GCM encrypted vault, password manager, hash checker), QR code generator & scanner, and offline games. Everything runs **100% locally in your browser: no server, no database, no upload, no tracking** — built for Persian (Farsi) users with full RTL support, and it works anywhere.
 
 **جعبه ابزار IR** یک وب‌اپلیکیشن **رایگان، متن‌باز و کاملاً آفلاین** است: ۵۲ ابزار کاربردی فارسی در ۹ دسته — از ابزارهای متن و توسعه‌دهنده تا رمزنگاری AES-256، مدیر رمز عبور، QR‌خوان و تقویم شمسی. همه‌ی پردازش‌ها **روی دستگاه شما** انجام می‌شود؛ هیچ داده‌ای به سرور ارسال نمی‌شود و بدون اینترنت هم کامل کار می‌کند.
+
+## 📌 معرفی و استناد (About & Citation)
+
+متن استاندارد زیر برای استناد، معرفی در مقاله/وبلاگ یا ارجاع به پروژه آماده است
+(بدون هیچ ادعای افزوده — همان واقعیت‌هایی که در کد وجود دارد):
+
+> **IR-Toolbox** is a free and open-source (MIT) Persian offline-first Progressive Web App
+> created by **Kourosh242**. It provides **52 browser-based tools across 9 categories**,
+> with a strong focus on privacy, local processing, and offline use.
+>
+> **IR-Toolbox** یک وب‌اپلیکیشن رایگان و متن‌باز (MIT)، آفلاین و فارسی است که توسط **Kourosh242**
+> ساخته شده و **۵۲ ابزار مرورگری در ۹ دسته** ارائه می‌دهد؛ با تأکید بر حریم خصوصی،
+> پردازش محلی و استفادهٔ بدون اینترنت.
+
+| منبع | آدرس |
+| --- | --- |
+| وب‌اپلیکیشن | <https://kourosh242.github.io/IR-Toolbox/> |
+| صفحهٔ درباره (هویت، حریم خصوصی، امنیت، محدودیت‌ها) | <https://kourosh242.github.io/IR-Toolbox/about/> |
+| فهرست ابزارها | <https://kourosh242.github.io/IR-Toolbox/tools/> |
+| مخزن کد | <https://github.com/Kourosh242/IR-Toolbox> |
+| خلاصهٔ ماشین‌خوان برای دستیارهای هوش مصنوعی | <https://kourosh242.github.io/IR-Toolbox/llms.txt> |
+| فایل استناد | [`CITATION.cff`](CITATION.cff) |
+
+- **نسخه:** 1.3.6 · **لایسنس:** MIT · **سازنده:** [Kourosh242](https://github.com/Kourosh242)
+- **فناوری:** Vanilla JavaScript (ES modules) — بدون فریم‌ورک و بدون مرحلهٔ build
+- **حریم خصوصی:** بدون سرور، بدون API، بدون کوکی ردیابی و بدون اسکریپت شخص ثالث
 
 ## 🚀 شروع سریع (Quick Start)
 
@@ -144,7 +187,9 @@ python3 -m http.server 8080
 - 🧾 **ابزار جدید: «جداکنندهٔ ۳ رقمی»** در تب محاسبات — `150000` → `150,000` + نسخهٔ فارسی (۱۵۰٬۰۰۰) و تشخیص ورودیِ از‌قبل‌جداشده.
 - 🗜️ **فشرده‌سازی خروجی گاوصندوق IR** — ترتیب درستِ فشرده‌سازی→رمزنگاری (gzip بومی مرورگر)، سازگار با فایل‌های قدیمی `.ir256`/`.iva256` + نمایش حجم ورودی/فشرده/نهایی و درصد کاهش.
 - 🧹 پاک‌سازی متن: عملیات حالا زنجیره‌ای‌اند و در همهٔ حالت‌ها فاصلهٔ اضافه/خط خالی حذف می‌شود؛ «حذف تکراری» با trim کار می‌کند + شمارندهٔ خطوط.
-- 📲 Service Worker: کش `ir-v7` با به‌روزرسانی خودکار.
+- ⚡ **سرعت بارگذاری** — `vendor/jsQR.js` (۲۵۱KB) دیگر با تگ بلاک‌کننده در `index.html` بارگذاری نمی‌شود و فقط هنگام بازکردن QR‌خوان با import پویا گرفته می‌شود؛ ماژول‌های دسته‌های ابزار هم تنبل (lazy) بارگذاری می‌شوند — گراف بار اول از ۳۴ فایل/۲۸۳KB به ۱۱ فایل/۶۵KB رسید — و فونت وزیرمتن پیش از شیوه‌نامه‌ها `preload` می‌شود.
+- 🔗 رفع بررسی ایمنی لینک: ترفند `@` با userinfo خالی (مثل `https://@evil.com/`) هم پرچم خطر می‌گیرد (شرط مردهٔ `url.host.includes("@")` حذف شد).
+- 📲 Service Worker: کش `ir-v10` با به‌روزرسانی خودکار.
 
 ### v1.3.5
 - 🎨 **ظاهر کاملاً نو (Design System v2)** — پس‌زمینه‌ی aurora با گوی‌های نور متحرک، شبکه و بافت ظریف؛ سطوح شیشه‌ای (blur) در سایدبار، نوار بالا، ناوبری پایین، کارت‌ها و توست‌ها.

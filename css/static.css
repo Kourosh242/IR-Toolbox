@@ -1,0 +1,171 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+ * IR-Toolbox — css/static.css
+ * پوستهٔ صفحات استاتیک SEO/GEO (about · tools · دسته‌ها · ابزارها · 404)
+ * فقط از متغیرهای واقعی css/themes.css استفاده می‌کند تا در تم روشن و تیره
+ * هم‌رنگ خود اپ باشد. هیچ فونت یا اسکریپت خارجی بارگذاری نمی‌شود.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+:root { --maxw: 1080px; }
+
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: Vazirmatn, Tahoma, system-ui, sans-serif;
+  line-height: 1.9; font-size: 15.5px;
+}
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+.muted { color: var(--muted); font-weight: 400; }
+a { color: var(--primary-2); text-decoration: none; }
+a:hover, a:focus-visible { text-decoration: underline; }
+a:focus-visible { outline: 2px solid var(--primary-2); outline-offset: 3px; border-radius: 4px; }
+
+/* ── دسترسی‌پذیری: پرش به محتوا ── */
+.skip {
+  position: absolute; inset-inline-start: -9999px; top: 0;
+  background: var(--primary); color: var(--on-primary); padding: 10px 16px;
+  border-radius: 0 0 8px 0; z-index: 100;
+}
+.skip:focus { inset-inline-start: 0; text-decoration: none; }
+
+/* ── نوار بالا ── */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px); border-bottom: 1px solid var(--line);
+}
+.topbar-in { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 12px 20px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--text); }
+.brand:hover { text-decoration: none; }
+.logo {
+  width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center;
+  background: linear-gradient(140deg, var(--primary), var(--primary-3));
+  color: var(--on-primary); font-weight: 800; font-size: .82rem; letter-spacing: .5px;
+}
+.brand-txt { display: flex; flex-direction: column; line-height: 1.35; }
+.brand-txt b { font-size: 1rem; }
+.brand-txt small { font-size: .74rem; color: var(--muted); }
+.topnav { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.topnav a { padding: 7px 12px; border-radius: 10px; color: var(--text-2); font-size: .9rem; }
+.topnav a:hover { background: var(--surface-2); text-decoration: none; }
+.btn {
+  display: inline-block; padding: 9px 18px; border-radius: 12px;
+  background: var(--surface-2); color: var(--text); border: 1px solid var(--line-2);
+  font: inherit; font-size: .9rem; cursor: pointer;
+}
+.btn:hover { background: var(--surface-3); text-decoration: none; }
+.btn-pri { background: var(--primary); color: var(--on-primary); border-color: transparent; font-weight: 600; }
+.btn-pri:hover { background: var(--primary-2); }
+
+/* ── مسیر صفحه (breadcrumb) ── */
+.crumbs { margin: 26px 0 4px; font-size: .82rem; color: var(--muted); }
+.crumbs ol { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 0; }
+.crumbs li { display: flex; align-items: center; gap: 6px; }
+.crumbs span[aria-current] { color: var(--text-2); }
+
+/* ── محتوای اصلی ── */
+main.wrap { padding: 0 20px 70px; }
+.prose { max-width: 78ch; }
+.prose.center { text-align: center; margin: 0 auto; }
+.prose h1 { font-size: 1.85rem; line-height: 1.5; margin: 12px 0 14px; }
+.prose h2 {
+  font-size: 1.24rem; margin: 40px 0 10px;
+  border-inline-start: 4px solid var(--primary); padding-inline-start: 11px;
+}
+.prose h3 { font-size: 1.02rem; margin: 22px 0 6px; color: var(--primary-2); }
+.prose p { margin: 8px 0 12px; }
+.prose ul { padding-inline-start: 22px; margin: 8px 0 14px; }
+.prose li { margin: 6px 0; }
+.prose code {
+  background: var(--surface-2); border: 1px solid var(--line);
+  padding: 1px 6px; border-radius: 6px; font-size: .88em;
+}
+.lead { font-size: 1.07rem; color: var(--text-2); }
+.tool-en { font-size: .9rem; margin: -6px 0 14px; letter-spacing: .3px; }
+.note {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 32%, transparent);
+  border-radius: 12px; padding: 12px 16px; font-size: .93rem;
+}
+.cta { margin: 18px 0 6px; }
+.inline-links { list-style: none; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; padding: 0; }
+
+/* ── واقعیت‌های عددی ── */
+.fact-grid {
+  list-style: none; display: grid; gap: 10px; padding: 0; margin: 12px 0;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+.fact-grid li {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+  padding: 14px; display: flex; flex-direction: column; gap: 2px; box-shadow: var(--shadow-1);
+}
+.fact-grid b { font-size: 1.4rem; color: var(--primary-2); line-height: 1.2; }
+.fact-grid span { font-size: .8rem; color: var(--muted); }
+
+/* ── فهرست دسته‌ها ── */
+.cat-list { list-style: none; padding: 0; display: grid; gap: 12px; }
+.cat-list > li {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+  padding: 14px 16px; box-shadow: var(--shadow-1);
+}
+.cat-list > li > a { font-size: 1.03rem; }
+.cat-list p { margin: 6px 0 0; font-size: .9rem; color: var(--muted); }
+
+/* ── چیپ‌های ابزار ── */
+.tool-chips { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 10px 0 6px; }
+.tool-chips li a {
+  display: inline-block; padding: 6px 13px; border-radius: 999px;
+  background: var(--surface-2); border: 1px solid var(--line-2);
+  color: var(--text-2); font-size: .87rem;
+}
+.tool-chips li a:hover { background: var(--surface-3); color: var(--text); text-decoration: none; }
+
+/* ── کارت‌های ابزار (صفحهٔ دسته) ── */
+.tool-cards { list-style: none; padding: 0; margin: 14px 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.tool-cards > li {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+  padding: 14px; box-shadow: var(--shadow-1); display: flex; flex-direction: column; gap: 10px;
+}
+.tcard { display: flex; gap: 12px; align-items: flex-start; color: var(--text); }
+.tcard:hover { text-decoration: none; }
+.ticon { font-size: 1.5rem; line-height: 1.2; }
+.tbody { display: flex; flex-direction: column; gap: 3px; }
+.tbody b { font-size: .99rem; }
+.tbody small { font-size: .82rem; color: var(--muted); line-height: 1.7; }
+.topen { align-self: flex-start; font-size: .82rem; padding: 5px 12px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line-2); color: var(--text-2); }
+.topen:hover { background: var(--primary); color: var(--on-primary); border-color: transparent; text-decoration: none; }
+
+/* ── پرسش‌های پرتکرار ── */
+.faq { margin-top: 34px; }
+.faq details {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  padding: 12px 16px; margin: 8px 0;
+}
+.faq summary { cursor: pointer; font-weight: 600; color: var(--text); }
+.faq summary:focus-visible { outline: 2px solid var(--primary-2); outline-offset: 3px; border-radius: 6px; }
+.faq details p { margin: 10px 0 2px; color: var(--text-2); font-size: .95rem; }
+
+/* ── پانوشت ── */
+.site-foot { border-top: 1px solid var(--line); background: var(--bg-2); margin-top: 40px; padding: 34px 0 20px; }
+.foot-grid { display: grid; gap: 26px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.site-foot h2 { font-size: .9rem; margin: 0 0 10px; color: var(--primary-2); }
+.site-foot ul { list-style: none; padding: 0; margin: 0; }
+.site-foot li { margin: 6px 0; font-size: .88rem; }
+.site-foot a { color: var(--text-2); }
+.foot-brand { font-size: 1rem; margin: 0 0 6px; }
+.foot-facts li { color: var(--muted); }
+.foot-note { border-top: 1px solid var(--line); margin-top: 26px; padding-top: 16px; font-size: .8rem; color: var(--muted); }
+
+/* ── واکنش‌گرایی ── */
+@media (max-width: 640px) {
+  body { font-size: 15px; }
+  .prose h1 { font-size: 1.5rem; }
+  .topbar-in { padding: 10px 14px; }
+  .brand-txt small { display: none; }
+  .topnav a { padding: 6px 9px; }
+}
+
+/* ── چاپ ── */
+@media print {
+  .topbar, .site-foot, .cta, .skip { display: none; }
+  body { background: #fff; color: #000; }
+}

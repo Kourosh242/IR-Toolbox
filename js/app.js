@@ -9,23 +9,38 @@ import * as pwa from './pwa.js';
 import { HELPS } from './helps.js';
 import { CHANGELOG, VERSION } from './changelog.js';
 
-/* Tool modules (self-registering) */
-import '../tools/text.js';
-import '../tools/dev.js';
-import '../tools/design.js';
-import '../tools/files.js';
-import '../tools/math.js';
-import '../tools/time.js';
-import '../tools/security.js';
-import '../tools/fun.js';
-import '../tools/brain.js';
-import '../tools/qr.js';
-import '../tools/qr-reader.js';
-import '../tools/cron.js';
-import '../tools/pomodoro.js';
-import '../tools/lorem.js';
-import '../vault/vault.js';
-import { lockPassman } from '../tools/passman.js';
+/* ── ماژول‌های ابزار: import پویا، بر اساس دسته ──
+ * قبلاً همهٔ ابزارها import استاتیک بودند: ۳۴ فایل ≈ ۲۸۳KB (به‌علاوهٔ ۲۵۱KB
+ * vendor/jsQR.js) پیش از آن‌که اپ تعاملی شود دانلود و پارس می‌شد، حتی برای کاربری که
+ * فقط یک ابزار را می‌خواهد. حالا پوستهٔ اپ بلافاصله رندر می‌شود و هر دسته فقط وقتی
+ * لازم شود گرفته می‌شود. ابزارها همچنان self-registering هستند: import شدن = ثبت شدن.
+ *
+ * فایل‌های تک‌ابزاری هر دسته هم کنار همان دسته بارگذاری می‌شوند (مثلاً qrcode.js
+ * ۵۷KB فقط با دستهٔ توسعه‌دهنده) و vault/passman هم زیرمجموعهٔ دستهٔ امنیت‌اند. */
+const CAT_MODULES = {
+  text: () => Promise.all([import('../tools/text.js'), import('../tools/lorem.js')]),
+  dev: () => Promise.all([import('../tools/dev.js'), import('../tools/qr.js'), import('../tools/qr-reader.js'), import('../tools/cron.js')]),
+  design: () => import('../tools/design.js'),
+  files: () => import('../tools/files.js'),
+  math: () => import('../tools/math.js'),
+  time: () => Promise.all([import('../tools/time.js'), import('../tools/pomodoro.js')]),
+  security: () => Promise.all([import('../tools/security.js'), import('../vault/vault.js'), import('../tools/passman.js')]),
+  fun: () => import('../tools/fun.js'),
+  brain: () => import('../tools/brain.js'),
+};
+
+const catCache = new Map(); // هر دسته حداکثر یک‌بار گرفته می‌شود
+function loadCat(id) {
+  if (!catCache.has(id)) {
+    const load = CAT_MODULES[id];
+    catCache.set(id, (load ? load() : Promise.resolve()).catch((e) => { catCache.delete(id); throw e; }));
+  }
+  return catCache.get(id);
+}
+/* صفحهٔ خانه، علاقه‌مندی‌ها و پالت جستجو به فهرست *کامل* ابزارها نیاز دارند؛
+ * پس همهٔ دسته‌ها موازی (اما غیربلاک‌کننده و بعد از رندر پوسته) گرفته می‌شوند. */
+let allCatsPromise = null;
+const loadAllCats = () => (allCatsPromise ??= Promise.all(registry.CATS.map((c) => loadCat(c.id).catch(() => {}))));
 
 const SPARK = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z"/><circle cx="19" cy="5" r="2.2" fill="#FFD58A"/></svg>';
 
@@ -305,7 +320,14 @@ function pageSettings() {
     el('div', { class: 'ctrl' },
       el('button', { class: 'btn tonal sm', onclick: () => import('./helpers.js').then(({ download, textBlob }) => download('ir-settings.json', textBlob(store.exportSettings(), 'application/json'))) }, 'خروجی'),
       el('button', { class: 'btn tonal sm', onclick: () => fileImp.click() }, 'ورودی'),
-      el('button', { class: 'btn danger sm', onclick: () => { if (confirm('همه داده‌های محلی IR-Toolbox پاک شود؟')) { store.clearAll(); lockPassman(); applyPrefs(); renderCurrent(); toast('پاک شد'); } } }, 'پاک‌سازی'))); // fix: مدیر رمز هم قفل می‌شود تا ورودی‌های حافظه دوباره ذخیره نشوند
+      el('button', { class: 'btn danger sm', onclick: async () => {
+        if (!confirm('همه داده‌های محلی IR-Toolbox پاک شود؟')) return;
+        store.clearAll();
+        // fix: مدیر رمز هم قفل می‌شود تا ورودی‌های حافظه دوباره ذخیره نشوند.
+        // ماژولش حالا تنبل است؛ فقط اگر واقعاً بارگذاری شده باشد قفل لازم است.
+        if (registry.get('passman')) { const { lockPassman } = await import('../tools/passman.js'); lockPassman(); }
+        applyPrefs(); renderCurrent(); toast('پاک شد');
+      } }, 'پاک‌سازی')));
 
   const pwaRow = el('div', { class: 'set-row' },
     el('div', {}, el('div', { class: 't' }, 'نصب به‌صورت اپ'), el('div', { class: 'd' }, pwa.isIOS() ? 'iOS: در سافاری Share سپس Add to Home Screen' : 'با پشتیبانی مرورگر، IR-Toolbox مثل اپ نصب می‌شود')),
@@ -359,13 +381,34 @@ function notFound() {
 }
 
 /* ── Routing ── */
-function renderCurrent(opts) {
+let renderSeq = 0; // ناوبری پیاپی: رندرِ کهنه دور ریخته می‌شود
+function loadingView() {
+  return el('div', { class: 'empty', role: 'status', 'aria-live': 'polite' },
+    el('span', { class: 'big' }, '⏳'), 'در حال بارگذاری ابزارها…');
+}
+async function renderCurrent(opts) {
   const keepScroll = !!(opts && !Array.isArray(opts) && opts.keepScroll);
   const prevY = window.scrollY;
   const parts = router.parse();
   const v = view();
   registry.runCleanup(); // v1.3.4: توقف تایمرهای ابزار قبلی
   v.textContent = '';
+  const seq = ++renderSeq;
+
+  /* فقط ماژول‌های لازمِ همین مسیر گرفته می‌شوند:
+   * خانه/علاقه‌مندی‌ها ← همهٔ دسته‌ها · #/c/x ← فقط دستهٔ x · لینک مستقیم به ابزاری
+   * که هنوز ثبت نشده ← همهٔ دسته‌ها (چون نگاشت id→cat نداریم). */
+  const need = (parts.length === 0 || parts[0] === 'fav') ? loadAllCats()
+    : parts[0] === 'c' && parts[1] ? loadCat(parts[1])
+    : parts[0] === 't' && parts[1] && !registry.get(parts[1]) ? loadAllCats()
+    : null;
+  if (need) {
+    v.append(loadingView());
+    await need.catch(() => {});
+    if (seq !== renderSeq) return; // کاربر در این فاصله جای دیگری رفته است
+    v.textContent = '';
+  }
+
   let page;
   if (parts.length === 0) page = pageHome();
   else if (parts[0] === 'c') page = pageCat(parts[1]);
@@ -392,7 +435,7 @@ function boot() {
   document.getElementById('seo-static')?.remove();
   applyPrefs();
   buildShell();
-  search = initSearch();
+  search = initSearch({ ready: loadAllCats }); // پالت جستجو خودش دسته‌های نابرده را می‌گیرد
   document.getElementById('searchbtn').addEventListener('click', () => search.open());
   pwa.register();
   // v1.3.4: همگام‌سازی پوسته/داده میان تب‌ها

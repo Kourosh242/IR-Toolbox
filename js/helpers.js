@@ -6,7 +6,7 @@ export const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
 export const faNum = (n) => String(n).replace(/\d/g, (d) => FA_DIGITS[+d]);
 
-/* Number with thousands separators + Persian digits (e.g. ۱۵۰٬۰۰٬۰۰) */
+/* Number with thousands separators + Persian digits (e.g. faGroup(150000) → «۱۵۰٬۰۰۰») */
 const groupFmt = new Intl.NumberFormat('fa-IR', { maximumFractionDigits: 6 });
 export const faGroup = (n) => groupFmt.format(Number(String(n).replace(/[،,٬\s]/g, ''))); // v1.3.6-fix: ورودیِ دارای جداکننده هم پذیرفته می‌شود
 

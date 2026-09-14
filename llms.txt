@@ -1,41 +1,139 @@
-# IR-Toolbox — جعبه ابزار آفلاین فارسی (Offline-First Persian Web Toolbox)
+# IR-Toolbox — Persian Offline Web Toolbox by Kourosh242
 
-> IR-Toolbox is a free, open-source (MIT), offline-first Progressive Web App (PWA) with 52 privacy-first web tools in 9 categories. Everything runs 100% locally in the browser — no server, no database, no upload, no tracking. Built for Persian (Farsi) users with full RTL support; works anywhere.
+> IR-Toolbox is a free, open-source, privacy-first, offline-first Progressive Web App providing 52 browser-based tools across 9 categories.
 
-**IR-Toolbox** (جعبه ابزار IR) یک وب‌اپلیکیشن رایگان، متن‌باز و کاملاً آفلاین است: ۵۲ ابزار کاربردی فارسی در ۹ دسته. همه پردازش‌ها روی دستگاه کاربر انجام می‌شود و هیچ داده‌ای به سرور ارسال نمی‌شود.
+IR-Toolbox (جعبه‌ابزار آفلاین فارسی، ساخته‌شده توسط Kourosh242) یک وب‌اپلیکیشن رایگان، متن‌باز، حریم‌محور و آفلاین‌اول است که ۵۲ ابزار مرورگری را در ۹ دسته ارائه می‌دهد. ساخته‌شده توسط Kourosh242، با لایسنس MIT و بدون هیچ سرور، ردیاب یا وابستگی به سرویس شخص ثالث.
 
-## Facts
+## لینک‌های کلیدی
 
-- Website (live app): https://kourosh242.github.io/IR-Toolbox/
-- Source code (GitHub): https://github.com/Kourosh242/IR-Toolbox
-- License: MIT
-- Current version: v1.3.6
-- Tech stack: Vanilla JavaScript, HTML, CSS — no framework, no build step
-- Language / UI: Persian (fa), RTL, self-hosted Vazirmatn font
-- Privacy model: 100% local processing; data never leaves the device; installable as a PWA and fully usable offline (service worker)
-- Categories (9): Text, Developer, Design, Files, Math, Time, Security, Fun, Brain games
+- [صفحهٔ اصلی](https://kourosh242.github.io/IR-Toolbox/): اپلیکیشن (SPA آفلاین با مسیرهای هش‌محور)
+- [درباره و حریم خصوصی](https://kourosh242.github.io/IR-Toolbox/about/): هویت پروژه، قابلیت‌ها، حریم خصوصی، امنیت، محدودیت‌ها
+- [فهرست ابزارها](https://kourosh242.github.io/IR-Toolbox/tools/): ۵۲ ابزار در ۹ دسته
+- [مخزن GitHub](https://github.com/Kourosh242/IR-Toolbox) · [گزارش مشکل](https://github.com/Kourosh242/IR-Toolbox/issues) · [لایسنس MIT](https://opensource.org/licenses/MIT)
+- [CITATION.cff](https://kourosh242.github.io/IR-Toolbox/CITATION.cff) برای استناد
 
-## Notable tools
+## واقعیت‌های پروژه
 
-- IR Vault (گاوصندوق IR): AES-256-GCM encryption with PBKDF2 key derivation; gzip compression before encryption; `.ir256` output files
-- Password manager: AES-256-GCM encrypted local vault with search, temporary clipboard copy, encrypted backups
-- QR generator & QR reader: offline QR creation (UTF-8, SVG/PNG) and live camera scanning with an offline phishing-link safety check
-- Jalali (Shamsi) calendar toolkit, age calculator, Pomodoro timer, Cron translator with Persian explanations
-- Developer utilities: JSON formatter, Base64 (text/file), CSV ↔ JSON, timestamp converter, slug maker, px ↔ rem
-- 52 tools total across text, developer, design, file, math, time, security, fun, and brain-game categories
+- ابزارها: 52 · دسته‌ها: 9 · نسخه: 1.3.6 · لایسنس: MIT
+- زمان انتشار: 2026-09-13 · آخرین به‌روزرسانی: 2026-09-14
+- فناوری: Vanilla JavaScript (ES modules) — بدون فریم‌ورک و بدون مرحلهٔ build
+- حریم خصوصی: پردازش کاملاً محلی؛ بدون سرور، API، کوکی ردیابی یا اسکریپت تحلیل. تنظیمات کاربر در localStorage همان مرورگر ذخیره می‌شود.
+- رمزنگاری: AES-256-GCM با PBKDF2-HMAC-SHA-256 (۲۵۰٬۰۰۰ تکرار) در مدیر رمز عبور و گاوصندوق IR؛ کلید هرگز ذخیره نمی‌شود.
+- آفلاین: PWA با Service Worker؛ پس از اولین بارگذاری بدون اینترنت کار می‌کند.
 
-## FAQ
+## دسته‌ها و ابزارها
 
-- Is IR-Toolbox free and open source? Yes — MIT license, free for personal and commercial use.
-- Does it send my data anywhere? No — all processing and storage happen locally on the user's device; no server, no analytics, no tracking.
-- Does it work offline? Yes — it is a real installable PWA; after the first load it runs completely offline.
-- How do I install it? Open https://kourosh242.github.io/IR-Toolbox/ in Chrome/Edge/Safari and tap "Install" / "Add to Home Screen".
-- What is the .ir256 format? A file produced by IR Vault: gzip-compressed, then encrypted with AES-256-GCM; the key is derived (PBKDF2) from the user's passphrase and never stored.
+### ابزارهای متن (Text Tools) — ۵ ابزار
 
-## Links
+شمارش، تبدیل و پاک‌سازی متن فارسی و انگلیسی — مستقیم داخل مرورگر. هیچ متنی به سروری فرستاده نمی‌شود؛ حتی متن‌های بلند هم فقط در حافظهٔ همان تب پردازش می‌شوند.
 
-- [Web app](https://kourosh242.github.io/IR-Toolbox/)
-- [GitHub repository](https://github.com/Kourosh242/IR-Toolbox)
-- [Project wiki](https://github.com/Kourosh242/IR-Toolbox/wiki)
-- [Issue tracker](https://github.com/Kourosh242/IR-Toolbox/issues)
-- [README (Persian)](https://github.com/Kourosh242/IR-Toolbox#readme)
+- [شمارنده متن](https://kourosh242.github.io/IR-Toolbox/tools/text-counter/): تعداد کاراکتر، کاراکتر بدون فاصله، کلمه، جمله، خط، حجم واقعی UTF-8 و زمان تقریبی مطالعه را هم‌زمان با تایپ کردن نشان می‌دهد.
+- [تبدیل حروف](https://kourosh242.github.io/IR-Toolbox/tools/case-converter/): حروف لاتین متن را به بزرگ (UPPERCASE)، کوچک (lowercase)، عنوانی (Title Case) یا کاملاً معکوس تبدیل می‌کند.
+- [پاک‌سازی متن](https://kourosh242.github.io/IR-Toolbox/tools/text-cleaner/): متن‌های کپی‌شده از وب یا PDF را مرتب می‌کند: فاصله‌های اضافه و خطوط خالی حذف می‌شوند، خطوط تکراری از بین می‌روند و مرتب‌سازی الفبایی فارسی انجام می‌شود.
+- [جستجو و جایگزینی](https://kourosh242.github.io/IR-Toolbox/tools/find-and-replace/): یک عبارت را در متن جست‌وجو و با عبارت دیگر جایگزین می‌کند و تعداد موارد جایگزین‌شده را نشان می‌دهد.
+- [لورم فارسی](https://kourosh242.github.io/IR-Toolbox/tools/persian-lorem-ipsum/): متن جای‌نگهدار (لورم) فارسی با تعداد پاراگراف و جملهٔ دلخواه تولید می‌کند — برای پر کردن موقت قالب و صفحهٔ طراحی تا متن اصلی آماده شود.
+
+### ابزارهای توسعه‌دهنده (Developer Tools) — ۱۲ ابزار
+
+ابزارهای روزمرهٔ برنامه‌نویسان: JSON، Base64، URL، اسلاگ، UUID، JWT، Regex، Timestamp، مترجم Cron و QR‌کدساز/QR‌خوان. همه آفلاین و بدون ارسال کد یا توکن به هیچ سرویس بیرونی.
+
+- [فرمت‌کننده JSON](https://kourosh242.github.io/IR-Toolbox/tools/json-formatter/): JSON را زیبا (با تورفتگی ۲ یا ۴ فاصله یا Tab) یا فشرده می‌کند و در صورت نامعتبر بودن، خطای دقیق را با شمارهٔ خط و ستون نشان می‌دهد.
+- [Base64](https://kourosh242.github.io/IR-Toolbox/tools/base64-encoder-decoder/): متن را با پشتیبانی کامل از UTF-8 به Base64 تبدیل می‌کند و برعکس — فارسی، اموجی و هر زبان دیگری درست کدگذاری می‌شود.
+- [کدگذاری URL](https://kourosh242.github.io/IR-Toolbox/tools/url-encoder-decoder/): کاراکترهای خاص لینک و کوئری‌استرینگ را با encodeURIComponent کدگذاری می‌کند و کدگذاری درصدی را به متن برمی‌گرداند.
+- [اسلاگ‌ساز](https://kourosh242.github.io/IR-Toolbox/tools/slug-generator/): عنوان فارسی یا انگلیسی را به آدرس خوانا (slug) تبدیل می‌کند؛ حروف فارسی به فینگلیش برمی‌گردند و خروجی به‌صورت زنده به‌روز می‌شود.
+- [تولیدکننده UUID](https://kourosh242.github.io/IR-Toolbox/tools/uuid-generator/): شناسهٔ یکتای UUID نسخهٔ ۴ را با مولد تصادفی امن مرورگر (crypto.getRandomValues) می‌سازد — تکی یا ده‌تایی.
+- [رمزگشای JWT](https://kourosh242.github.io/IR-Toolbox/tools/jwt-decoder/): بخش‌های header و payload توکن JWT را به‌صورت محلی باز و نمایش می‌دهد — بدون ارسال توکن به هیچ سرویس بیرونی و بدون اعتبارسنجی امضا.
+- [آزمایش Regex](https://kourosh242.github.io/IR-Toolbox/tools/regex-tester/): الگوی عبارت باقاعده را با پرچم‌های دلخواه روی متن آزمایش می‌کند و تعداد و فهرست تطبیق‌ها را زنده نشان می‌دهد.
+- [HTML Entities](https://kourosh242.github.io/IR-Toolbox/tools/html-entities/): کاراکترهای خاص HTML مثل < و > و & را به موجودیت امن تبدیل می‌کند و برعکس — برای جلوگیری از تزریق کد در خروجی.
+- [تبدیل Timestamp](https://kourosh242.github.io/IR-Toolbox/tools/unix-timestamp-converter/): زمان یونیکس (ثانیه یا میلی‌ثانیه) را به تاریخ ISO، میلادی و شمسی تبدیل می‌کند و برعکس — با تشخیص خودکار واحد.
+- [QR‌کدساز](https://kourosh242.github.io/IR-Toolbox/tools/qr-code-generator/): متن، لینک، شماره تماس یا هر محتوای فارسی و انگلیسی را با کدگذاری UTF-8 به QR تبدیل می‌کند و خروجی SVG یا PNG می‌دهد — کاملاً آفلاین.
+- [QR‌خوان](https://kourosh242.github.io/IR-Toolbox/tools/qr-reader/): QR را از آپلود تصویر (گالری) یا اسکن زندهٔ دوربین می‌خواند، نوع محتوا را تشخیص می‌دهد و لینک‌ها را با موتور آفلاین ضدفیشینگ بررسی می‌کند.
+- [مترجم Cron](https://kourosh242.github.io/IR-Toolbox/tools/cron-translator/): عبارت زمان‌بندی Cron (۵ بخشی) را به توضیح فارسی تبدیل می‌کند و پنج اجرای بعدی را با تاریخ شمسی نشان می‌دهد.
+
+### ابزارهای طراحی (Design Tools) — ۵ ابزار
+
+رنگ، کنتراست WCAG، گرادیان، سایه و تایپوگرافی — با خروجی CSS آمادهٔ کپی و پیش‌نمایش زنده، برای طراحان و توسعه‌دهندگان فرانت‌اند.
+
+- [تبدیل رنگ](https://kourosh242.github.io/IR-Toolbox/tools/color-converter/): رنگ را بین HEX، RGB و HSL به‌صورت دوطرفه تبدیل می‌کند — با انتخابگر رنگ، ورودی HEX و پیش‌نمایش زنده.
+- [بررسی کنتراست](https://kourosh242.github.io/IR-Toolbox/tools/contrast-checker/): نسبت کنتراست رنگ متن و پس‌زمینه را بر اساس WCAG محاسبه می‌کند و قبولی AA و AAA را برای متن معمولی و بزرگ نشان می‌دهد.
+- [گرادیان‌ساز CSS](https://kourosh242.github.io/IR-Toolbox/tools/css-gradient-generator/): با انتخاب دو رنگ و زاویه، گرادیان خطی CSS می‌سازد و کد آمادهٔ کپی را با پیش‌نمایش زنده تحویل می‌دهد.
+- [سایه‌ساز CSS](https://kourosh242.github.io/IR-Toolbox/tools/css-box-shadow-generator/): افکت سایه را با اسلایدرهای افقی، عمودی، تاری، گستردگی و شفافیت تنظیم می‌کند و کد box-shadow را با پیش‌نمایش روی کارت می‌دهد.
+- [تبدیل px ↔ rem](https://kourosh242.github.io/IR-Toolbox/tools/px-to-rem-converter/): پیکسل را با پایهٔ قابل تنظیم (پیش‌فرض ۱۶) به rem تبدیل می‌کند — برای تایپوگرافی مقیاس‌پذیر و طراحی واکنش‌گرا.
+
+### ابزارهای فایل (File Tools) — ۵ ابزار
+
+اطلاعات فایل، تبدیل تصویر به Base64 و برعکس، پیش‌نمایش Markdown و تبدیل CSV ↔ JSON. فایل‌ها فقط در حافظهٔ مرورگر خوانده می‌شوند و هرگز آپلود نمی‌شوند.
+
+- [اطلاعات فایل](https://kourosh242.github.io/IR-Toolbox/tools/file-info/): نام، حجم، نوع (MIME) و تاریخ تغییر یک یا چند فایل را نمایش می‌دهد — بدون هیچ آپلودی.
+- [تصویر به Base64](https://kourosh242.github.io/IR-Toolbox/tools/image-to-base64/): تصویر را به Data URL (Base64) تبدیل می‌کند تا بتوانید آن را مستقیم داخل HTML یا CSS جاسازی کنید — با پیش‌نمایش.
+- [Base64 به فایل](https://kourosh242.github.io/IR-Toolbox/tools/base64-to-file/): Base64 یا Data URL را می‌گیرد، پیش‌نمایش زنده (تصویر، صدا، ویدیو یا متن) نشان می‌دهد و فایل را با نام دلخواه دانلود می‌کند.
+- [پیش‌نمایش Markdown](https://kourosh242.github.io/IR-Toolbox/tools/markdown-preview/): متن Markdown را به‌صورت محلی و امن رندر می‌کند — تیتر، متن ضخیم و کج، کد، نقل‌قول، لیست و لینک.
+- [CSV ↔ JSON](https://kourosh242.github.io/IR-Toolbox/tools/csv-to-json-converter/): جدول CSV با سرستون را به آرایهٔ JSON و برعکس تبدیل می‌کند — با تجزیهٔ واقعی CSV شامل گیومه و کامای داخل فیلد.
+
+### ابزارهای محاسبات (Math Tools) — ۶ ابزار
+
+ماشین‌حساب علمی با ارزیابی امن، درصد، تبدیل واحد، BMI، عدد تصادفی رمزنگاری‌شده و جداکنندهٔ هزارگان — با پشتیبانی از ارقام فارسی.
+
+- [ماشین‌حساب علمی](https://kourosh242.github.io/IR-Toolbox/tools/scientific-calculator/): عبارت‌های ریاضی را با توان، پرانتز و توابعی مثل sqrt، sin و pow محاسبه می‌کند — با ارزیابی امن که فقط توکن‌های ریاضی را می‌پذیرد.
+- [ماشین‌حساب درصد](https://kourosh242.github.io/IR-Toolbox/tools/percentage-calculator/): چهار محاسبهٔ درصدی را هم‌زمان انجام می‌دهد: X٪ از Y، افزایش Y به میزان X٪، کاهش، و درصد تغییر بین دو مقدار.
+- [تبدیل واحد](https://kourosh242.github.io/IR-Toolbox/tools/unit-converter/): واحدهای طول، وزن، داده و دما را به‌صورت زنده تبدیل می‌کند — با فرمول دقیق سلسیوس، فارنهایت و کلوین.
+- [شاخص توده بدنی](https://kourosh242.github.io/IR-Toolbox/tools/bmi-calculator/): شاخص تودهٔ بدنی (BMI) را از وزن و قد محاسبه می‌کند و دسته‌بندی سازمان جهانی بهداشت را نشان می‌دهد.
+- [عدد تصادفی](https://kourosh242.github.io/IR-Toolbox/tools/random-number-generator/): عدد تصادفی در بازهٔ دلخواه را با مولد تصادفی رمزنگاری مرورگر تولید می‌کند — بدون بایاس و بدون Math.random.
+- [جداکنندهٔ ۳ رقمی](https://kourosh242.github.io/IR-Toolbox/tools/number-separator/): عدد را با جداکنندهٔ هزارگان نمایش می‌دهد (150000 ← 150,000) و نسخهٔ فارسی آن را هم می‌سازد (۱۵۰٬۰۰۰).
+
+### ابزارهای زمان و تقویم شمسی (Time & Jalali Calendar Tools) — ۶ ابزار
+
+تبدیل تاریخ جلالی (شمسی) و میلادی، محاسبهٔ سن، اختلاف دو تاریخ، کرنومتر، تایمر شمارش معکوس و پومودورو — با پیکر تاریخ شمسی و نام ماه‌های فارسی.
+
+- [تبدیل تاریخ شمسی ↔ میلادی](https://kourosh242.github.io/IR-Toolbox/tools/jalali-calendar/): تاریخ جلالی (شمسی) را به میلادی و برعکس تبدیل می‌کند — با پیکر تاریخ شمسی، نام ماه‌های فارسی و نام روز هفته.
+- [محاسبه سن](https://kourosh242.github.io/IR-Toolbox/tools/age-calculator/): با تاریخ تولد شمسی یا میلادی، سن دقیق را به سال، ماه و روز شمسی و همچنین کل روزهای زندگی را محاسبه می‌کند.
+- [اختلاف دو تاریخ](https://kourosh242.github.io/IR-Toolbox/tools/date-difference-calculator/): فاصلهٔ بین دو تاریخ شمسی یا میلادی را به روز، هفته و ماه تقریبی محاسبه می‌کند.
+- [کرنومتر](https://kourosh242.github.io/IR-Toolbox/tools/stopwatch/): زمان‌سنج دقیق با شروع، توقف، ثبت دورهای میانی (lap) و بازنشانی — با نمایش دهم ثانیه.
+- [تایمر شمارش معکوس](https://kourosh242.github.io/IR-Toolbox/tools/countdown-timer/): تایمر شمارش معکوس با دقیقه و ثانیهٔ دلخواه و هشدار صوتی و لرزشی در پایان.
+- [پومودورو](https://kourosh242.github.io/IR-Toolbox/tools/pomodoro-timer/): تایمر پومودورو با چرخهٔ استاندارد تمرکز و استراحت، زمان‌های قابل تنظیم، شروع خودکار و ثبت رکورد روزانه روی همین دستگاه.
+
+### ابزارهای امنیت (Security Tools) — ۵ ابزار
+
+هش SHA-256/384/512 و SHA-1، تولید رمز عبور و توکن امن با مولد رمزنگاری مرورگر، مدیر رمز عبور رمزنگاری‌شده و گاوصندوق IR با AES-256-GCM. کلیدها هرگز ذخیره یا ارسال نمی‌شوند.
+
+- [بررسی هش](https://kourosh242.github.io/IR-Toolbox/tools/hash-checker/): هش متن یا فایل را با SHA-256، SHA-384، SHA-512 و SHA-1 می‌سازد، با هش مورد انتظار تطبیق می‌دهد و الگوریتم هر هش را از روی طول شناسایی می‌کند.
+- [تولید رمز عبور](https://kourosh242.github.io/IR-Toolbox/tools/password-generator/): رمز عبور امن را با مولد تصادفی رمزنگاری مرورگر می‌سازد و قدرت آن را با تخمین آنتروپی نشان می‌دهد.
+- [توکن امن](https://kourosh242.github.io/IR-Toolbox/tools/secure-token-generator/): توکن تصادفی غیرقابل حدس در قالب Hex یا Base64 با crypto.getRandomValues تولید می‌کند — برای کلید یک‌بارمصرف، نشست یا لینک دعوت.
+- [مدیر رمز عبور](https://kourosh242.github.io/IR-Toolbox/tools/password-manager/): مدیر رمز عبور کاملاً محلی: ورودی‌ها با AES-256-GCM و رمز اصلی رمزنگاری و فقط روی دستگاه شما ذخیره می‌شوند.
+- [گاوصندوق IR](https://kourosh242.github.io/IR-Toolbox/tools/ir-vault/): گاوصندوق IR متن و فایل را با AES-256-GCM رمزنگاری می‌کند و فایل .ir256 می‌سازد؛ کلید با PBKDF2 از رمز عبور مشتق می‌شود و هرگز ذخیره نمی‌شود.
+
+### ابزارهای سرگرمی (Fun Tools) — ۵ ابزار
+
+جوک، ایده، سوالات یخ‌شکن، ایموجی و شیر‌یا‌خط/تاس — با محتوای داخلی و کاملاً آفلاین؛ بدون هیچ درخواست شبکه‌ای.
+
+- [جوک‌سرا](https://kourosh242.github.io/IR-Toolbox/tools/persian-jokes/): ۹۹ جوک آفلاین فارسی (عمدتاً دربارهٔ برنامه‌نویسی) با نمایش تصادفی و دکمهٔ کپی.
+- [ایده‌پرداز](https://kourosh242.github.io/IR-Toolbox/tools/idea-generator/): ۱۰۲ ایدهٔ پروژه و سرگرمی برای وقتی که نمی‌دانید چه کار کنید — از ساختنی تا یادگرفتنی.
+- [سوالات دورهمی](https://kourosh242.github.io/IR-Toolbox/tools/icebreaker-questions/): ۱۰۰ سوال یخ‌شکن برای دورهمی، کلاس و آشنا شدن — تصادفی و کاملاً آفلاین.
+- [ایموجی تصادفی](https://kourosh242.github.io/IR-Toolbox/tools/random-emoji/): از میان ۱۳۸ ایموجی، یکی را تصادفی انتخاب و برای کپی آماده می‌کند — برای پیام، بیو و واکنش سریع.
+- [شیر یا خط + تاس](https://kourosh242.github.io/IR-Toolbox/tools/coin-flip-dice/): شیر یا خط و تاس شش‌وجهی با تصادفی امن — برای تصمیم‌های شانسی و بازی.
+
+### بازی‌های فکری (Brain Games) — ۳ ابزار
+
+بازی حافظه، سرعت واکنش و ریاضی سرعتی با ثبت رکورد محلی روی همین دستگاه — بدون حساب کاربری و بدون ارسال امتیاز.
+
+- [بازی حافظه](https://kourosh242.github.io/IR-Toolbox/tools/memory-match-game/): بازی حافظه با ۱۶ کارت و ۸ جفت ایموجی؛ بهترین رکورد (کمترین حرکت) به‌صورت محلی ثبت می‌شود.
+- [سرعت واکنش](https://kourosh242.github.io/IR-Toolbox/tools/reaction-time-test/): سرعت واکنش شما را اندازه می‌گیرد: وقتی صفحه سبز شد کلیک کنید؛ بهترین زمان (کمترین میلی‌ثانیه) ثبت می‌شود.
+- [ریاضی سرعتی](https://kourosh242.github.io/IR-Toolbox/tools/math-sprint-game/): در ۳۰ ثانیه به بیشترین جمع و ضرب پاسخ درست بدهید؛ بیشترین امتیاز به‌عنوان رکورد محلی ثبت می‌شود.
+
+## پرسش‌های پرتکرار
+
+- IR-Toolbox چیست؟ IR-Toolbox is a free and open-source Persian offline-first Progressive Web App created by Kourosh242. It provides 52 browser-based tools across 9 categories, with a strong focus on privacy, local processing, and offline use.
+- آیا رایگان است؟ بله؛ متن‌باز با لایسنس MIT، بدون پرداخت و تبلیغات.
+- آیا داده‌ها به سرور فرستاده می‌شوند؟ خیر؛ پردازش کاملاً در مرورگر انجام می‌شود.
+- آیا بدون اینترنت کار می‌کند؟ بله؛ به‌عنوان PWA پس از اولین بارگذاری آفلاین است.
+- آیا نصب لازم است؟ خیر؛ در مرورگر باز می‌شود و به‌دلخواه قابل نصب است.
+
+## ابهام‌زدایی از نام
+
+This IR-Toolbox is a Persian offline-first web toolbox for everyday browser tasks. It is not an Information Retrieval library, MATLAB package, or research toolbox that shares a similar name.
+این IR-Toolbox یک جعبه‌ابزار فارسی و آفلاین برای کارهای روزمرهٔ مرورگر است و با کتابخانه‌ها یا پروژه‌های پژوهشی «بازیابی اطلاعات» (Information Retrieval) که نام مشابه دارند هیچ ارتباطی ندارد.
+
+## اسناد
+
+- [README](https://kourosh242.github.io/IR-Toolbox/README.md) · [مشارکت](https://kourosh242.github.io/IR-Toolbox/CONTRIBUTING.md) · [امنیت](https://kourosh242.github.io/IR-Toolbox/SECURITY.md) · [پشتیبانی](https://kourosh242.github.io/IR-Toolbox/SUPPORT.md) · [منشور رفتاری](https://kourosh242.github.io/IR-Toolbox/CODE_OF_CONDUCT.md)
+- [نقشهٔ سایت](https://kourosh242.github.io/IR-Toolbox/sitemap.xml)

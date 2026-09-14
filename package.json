@@ -1,0 +1,12 @@
+{
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "node --test",
+    "build:seo": "node scripts/build-seo.mjs",
+    "validate:seo": "node scripts/validate-seo.mjs"
+  },
+  "dependencies": {
+    "happy-dom": "^20.14.5"
+  }
+}

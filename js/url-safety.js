@@ -31,8 +31,9 @@ export function analyzeUrl(input) {
   const flags = [];
   const add = (sev, fa) => flags.push({ sev, fa });
 
+  const raw = String(input).trim();
   let url;
-  try { url = new URL(String(input).trim()); } catch { url = null; }
+  try { url = new URL(raw); } catch { url = null; }
   if (!url) return { score: 100, level: 'bad', flags: [{ sev: 100, fa: 'این مقدار اصلاً یک لینک معتبر نیست' }], url: null };
 
   const scheme = url.protocol.replace(':', '');
@@ -43,7 +44,17 @@ export function analyzeUrl(input) {
 
   const host = url.hostname;
   if (/^\d+\.\d+\.\d+\.\d+$/.test(host) || host.includes('[')) add(30, 'آدرس IP خام به‌جای دامنه — شرکت‌های معتبر این‌کار را نمی‌کنند');
-  if (url.username || (url.href.includes('@') && url.host.includes('@'))) add(30, 'ترفند «@»: مرورگر فقط بخش بعد از @ را باز می‌کند');
+  /* ترفند «@»: مرورگر فقط بخش بعد از @ را باز می‌کند.
+   * fix: شرط قبلی `url.username || (url.href.includes('@') && url.host.includes('@'))`
+   * دو مشکل داشت: (۱) `url.host` هرگز '@' ندارد (فقط hostname:port است) پس نیمهٔ دوم
+   * همیشه false بود — شرط مرده؛ (۲) userinfo خالی مثل https://@evil.com/ که
+   * `url.username` در آن رشتهٔ خالی (falsy) است، اصلاً پرچم نمی‌گرفت.
+   * توجه: پارسر URL هم userinfo خالی را کامل دور می‌اندازد
+   * (new URL('https://@evil.com/').href === 'https://evil.com/')، پس این بررسی باید روی
+   * رشتهٔ خامِ ورودی انجام شود نه روی آبجکت URL. حالا هر سه حالت گرفته می‌شود:
+   * user@host، user:pass@host و @host. */
+  const rawAuthority = (raw.split('//')[1] || '').split(/[/?#]/)[0];
+  if (rawAuthority.includes('@')) add(30, 'ترفند «@»: مرورگر فقط بخش بعد از @ را باز می‌کند');
   if (host.startsWith('xn--')) add(30, 'پیشوند Punycode (xn--) — حروف غیرانگلیسی شبیه به حروف اصلی (هموگلیف)');
   if (/[^\x00-\x7F]/.test(host)) add(25, 'حروف غیرانگلیسی در دامنه — احتمال حملهٔ هموگلیف');
 
