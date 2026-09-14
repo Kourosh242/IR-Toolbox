@@ -334,6 +334,18 @@ pass(`بازرسی ${pages.length} صفحهٔ HTML انجام شد`);
   else pass(`صفحهٔ اصلی ${linkedTools} لینک واقعی به ابزار/دسته و همچنین /about/ و /tools/ دارد`);
 }
 
+/* ═══════════ ۹ب) escape های decode‌نشده در خروجی ═══════════ */
+/* ژنراتور متادیتا را از متن خام سورس می‌خواند؛ اگر escape را decode نکند
+   همان «\u{1F3AD}» در HTML چاپ می‌شود. این بررسی جلوی تکرارش را می‌گیرد. */
+{
+  let bad = 0;
+  for (const f of pages) {
+    const m = read(f).match(/\\u\{[0-9a-fA-F]+\}|\\u[0-9a-fA-F]{4}|\\x[0-9a-fA-F]{2}/);
+    if (m) { fail(`[${f}] escape decode‌نشده در خروجی: ${m[0]}`); bad++; }
+  }
+  if (!bad) pass('هیچ escape رمزگشایی‌نشده‌ای در خروجی HTML نیست');
+}
+
 /* ═══════════ ۱۰: basePath در کل ریپو ═══════════ */
 {
   let bad = 0;
