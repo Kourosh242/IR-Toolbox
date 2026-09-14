@@ -56,6 +56,14 @@ const CAT_APP_CATEGORY = {
   security: 'UtilityApplication', fun: 'LifestyleApplication', brain: 'GameApplication',
 };
 
+/* decode کردن escape های رشتهٔ JS — فقط همان‌هایی که در متادیتای ابزارها می‌آیند */
+const unesc = (x) => x
+  .replace(/\\u\{([0-9a-fA-F]+)\}/g, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+  .replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16)))
+  .replace(/\\x([0-9a-fA-F]{2})/g, (_, h) => String.fromCharCode(parseInt(h, 16)))
+  .replace(/\\n/g, '\n').replace(/\\t/g, '\t')
+  .replace(/\\'/g, "'").replace(/\\"/g, '"');
+
 /* ═══════════ ۱) استخراج متادیتای واقعی ابزارها از کد منبع ═══════════ */
 const SRC_FILES = [
   ...['text', 'dev', 'design', 'files', 'math', 'time', 'security', 'fun', 'fun-data', 'brain',
@@ -67,7 +75,9 @@ for (const f of SRC_FILES) {
   const src = readFileSync(join(ROOT, f), 'utf8');
   for (const m of src.matchAll(/register\(\{([\s\S]*?)\n\s*\}\)/g)) {
     const b = m[1];
-    const g = (k) => { const r = new RegExp(`${k}:\\s*(['"\`])((?:\\\\.|(?!\\1)[\\s\\S])*?)\\1`).exec(b); return r ? r[2] : null; };
+    /* مقدار خام از سورس خوانده می‌شود، پس escape های JS باید decode شوند
+       (مثلاً icon: '\u{1F3AD}' وگرنه همان متن خام در HTML چاپ می‌شود) */
+    const g = (k) => { const r = new RegExp(`${k}:\\s*(['"\`])((?:\\\\.|(?!\\1)[\\s\\S])*?)\\1`).exec(b); return r ? unesc(r[2]) : null; };
     const id = g('id');
     if (!id) throw new Error(`id پیدا نشد در ${f}`);
     TOOLS.push({ id, cat: g('cat'), icon: g('icon') || '🔧', fa: g('fa'), en: g('en'), desc: g('desc') || '' });
