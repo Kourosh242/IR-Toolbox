@@ -19,7 +19,7 @@
  *   • لینک‌های داخلی root-relative از basePath مشتق می‌شوند
  *   • فقط واقعیت: متن راهنما از js/helps.js، آمار از شمارش واقعی کد
  * ═══════════════════════════════════════════════════════════════════════════ */
-import { readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SITE, BASE, abs, ENTITY_EN, ENTITY_FA } from '../seo/site.mjs';
@@ -41,8 +41,8 @@ const A_APP = `${abs()}#application`;
 /* متن حریم خصوصی: پیش‌فرض + استثناهای واقعی (مبتنی بر کد، نه ادعا) */
 const PRIVACY_DEFAULT = 'این ابزار کاملاً داخل مرورگر اجرا می‌شود. ورودی شما به هیچ سروری ارسال نمی‌شود و هیچ درخواست شبکه‌ای برای پردازش آن انجام نمی‌گیرد.';
 const PRIVACY_OVERRIDE = {
-  passman: 'ورودی‌ها با AES-256-GCM رمزنگاری می‌شوند و کلید با PBKDF2 (۲۵۰٬۰۰۰ تکرار) از رمز اصلی مشتق می‌شود. رمز اصلی هرگز ذخیره نمی‌شود و پس از هر بستن یا رفرش صفحه، گنجینه قفل است. داده‌ها فقط در localStorage همین مرورگر می‌مانند و هیچ‌جا ارسال نمی‌شوند. رمزنگاری نیازمند محیط امن (HTTPS یا localhost) است.',
-  vault: 'فایل و متن شما با AES-256-GCM رمزنگاری می‌شود و فایل .ir256 برای دانلود ساخته می‌شود؛ کلید با PBKDF2 (۲۵۰٬۰۰۰ تکرار) از رمز عبور شما مشتق می‌شود و هرگز ذخیره نمی‌گردد. هیچ فایلی آپلود نمی‌شود و پردازش کاملاً محلی است. رمزنگاری نیازمند محیط امن (HTTPS یا localhost) است.',
+  passman: 'ورودی‌ها با AES-256-GCM رمزنگاری می‌شوند و کلید با PBKDF2 (۶۰۰٬۰۰۰ تکرار) از رمز اصلی مشتق می‌شود. رمز اصلی هرگز ذخیره نمی‌شود و پس از هر بستن یا رفرش صفحه، گنجینه قفل است. داده‌ها فقط در localStorage همین مرورگر می‌مانند و هیچ‌جا ارسال نمی‌شوند. رمزنگاری نیازمند محیط امن (HTTPS یا localhost) است.',
+  vault: 'فایل و متن شما با AES-256-GCM رمزنگاری می‌شود و فایل .ir256 برای دانلود ساخته می‌شود؛ کلید با PBKDF2 (۶۰۰٬۰۰۰ تکرار) از رمز عبور شما مشتق می‌شود و هرگز ذخیره نمی‌گردد. هیچ فایلی آپلود نمی‌شود و پردازش کاملاً محلی است. رمزنگاری نیازمند محیط امن (HTTPS یا localhost) است.',
   'hash-checker': 'متن و فایل فقط داخل مرورگر هَش می‌شوند و جایی فرستاده نمی‌شوند. بخش «هش ← متن» از یک دیتابیس محلی برای حدس مقادیر بسیار رایج استفاده می‌کند؛ این یک جست‌وجوی محلی است، نه شکستن هش.',
   'qr-reader': 'تصویر آپلودشده و فریم‌های دوربین فقط داخل مرورگر با jsQR پردازش می‌شوند و هرگز آپلود نمی‌شوند. دسترسی به دوربین تنها در محیط امن (HTTPS یا localhost) ممکن است. تاریخچهٔ اسکن فقط روی همین دستگاه و در localStorage ذخیره می‌شود و هر زمان قابل پاک‌کردن است.',
   pomodoro: 'رکوردهای روزانهٔ پومودورو فقط در localStorage همین مرورگر (با پیشوند ir:) ذخیره می‌شوند و هیچ‌جا ارسال نمی‌شوند.',
@@ -130,6 +130,10 @@ const GEN_NOTE = `<!-- ───────────────────
      منبع محتوا: seo/site.mjs · seo/tools-meta.mjs · js/helps.js · tools/*.js
      بازسازی: npm run build:seo        راستی‌آزمایی: npm run validate:seo
      ───────────────────────────────────────────────────────────────────── -->`;
+
+/* ── Content-Security-Policy (v1.3.7) — مقدار از seo/site.mjs می‌آید (منبع حقیقت) ──
+   ⚠️ این تگ را دستی در فایل‌های HTML کپی نکنید — ژنراتور خودش می‌گذارد. */
+const CSP_META = `<meta http-equiv="Content-Security-Policy" content="${SITE.csp}">`;
 
 const SITE_HEADER = `<header class="topbar">
   <div class="topbar-in wrap">
@@ -225,6 +229,7 @@ ${noindex ? '<meta name="robots" content="noindex, follow">' : '<meta name="robo
 <meta name="author" content="${esc(SITE.author.name)}">
 <meta name="application-name" content="${esc(SITE.name)}">
 <meta name="color-scheme" content="light dark">
+${CSP_META}
 ${og}
 ${HEAD_ASSETS}
 ${graph.map(ld).join('\n')}
@@ -342,9 +347,12 @@ ${crumbs([['خانه', p()], ['دربارهٔ IR-Toolbox', null]])}
   <section aria-labelledby="h-sec">
     <h2 id="h-sec">امنیت و رمزنگاری</h2>
     <ul>
-      <li><a href="${toolUrl(toolById.passman)}">مدیر رمز عبور</a> و <a href="${toolUrl(toolById.vault)}">گاوصندوق IR</a> از AES-256-GCM با مشتق کلید PBKDF2-HMAC-SHA-256 (۲۵۰٬۰۰۰ تکرار) استفاده می‌کنند.</li>
+      <li><a href="${toolUrl(toolById.passman)}">مدیر رمز عبور</a> و <a href="${toolUrl(toolById.vault)}">گاوصندوق IR</a> از AES-256-GCM با مشتق کلید PBKDF2-HMAC-SHA-256 (۶۰۰٬۰۰۰ تکرار) استفاده می‌کنند.</li>
+      <li>شمارش تکرار KDF داخل خودِ فایل <code>.ir256</code> ذخیره می‌شود (<code>kdfId</code>)؛ فایل‌های قدیمی با ۲۵۰٬۰۰۰ تکرار همچنان باز می‌شوند و بالا رفتن این عدد داده‌های قبلی را نمی‌شکند.</li>
       <li>کلید یا رمز اصلی هرگز ذخیره نمی‌شود؛ بدون آن، داده‌ها قابل بازیابی نیستند.</li>
-      <li>رمز عبور و توکن‌ها با مولد تصادفی رمزنگاری مرورگر ساخته می‌شوند، نه <code>Math.random</code>.</li>
+      <li>رمز عبور و توکن‌ها با مولد تصادفی رمزنگاری مرورگر ساخته می‌شوند، نه <code>Math.random</code> — بدون بایاس modulo (rejection sampling).</li>
+      <li>هیچ‌جای اپ <code>eval</code> یا <code>new Function</code> استفاده نمی‌شود: ماشین‌حساب علمی یک پارسر واقعی recursive-descent دارد و <a href="${toolUrl(toolById.regex)}">آزمایش Regex</a> در Web Worker با قطع ۸۰۰ms اجرا می‌شود تا الگوی ReDoS نتواند تب را فریز کند.</li>
+      <li>همهٔ صفحه‌ها <code>Content-Security-Policy</code> سخت‌گیرانه دارند (فقط <code>'self'</code>؛ بدون منبع بیرونی) و خروجی CSV در برابر تزریق فرمول محافظت می‌شود.</li>
       <li>رمزنگاری مرورگر فقط در محیط امن (HTTPS یا localhost) در دسترس است؛ در غیر این صورت ابزار به‌جای رفتار ناامن، هشدار می‌دهد.</li>
       <li>برای گزارش آسیب‌پذیری، <a href="${p('SECURITY.md')}">SECURITY.md</a> را ببینید.</li>
     </ul>
@@ -574,7 +582,9 @@ writePage(p('404.html'), {
 });
 
 /* ═══════════ ۱۰) sitemap.xml ═══════════ */
-const docDate = (f) => { try { return statSync(join(ROOT, f)).mtime.toISOString().slice(0, 10); } catch { return SITE.dateModified; } };
+/* همهٔ lastmodها از SITE.dateModified می‌آیند — نه از mtime فایل.
+   mtime روی یک clone تازه برابر «روزِ clone» است، پس sitemap غیرقطعی و
+   اشتباه می‌شد. حالا sitemap فقط با ویرایش seo/site.mjs عوض می‌شود. */
 const URLS = [
   [p(), SITE.dateModified, '1.0', 'weekly'],
   [ABOUT_URL, SITE.dateModified, '0.9', 'monthly'],
@@ -582,7 +592,7 @@ const URLS = [
   ...CATS_SEO.map((c) => [catUrl(c), SITE.dateModified, '0.7', 'monthly']),
   ...ALL.map((t) => [toolUrl(t), SITE.dateModified, '0.6', 'monthly']),
   ...['README.md', 'CONTRIBUTING.md', 'SECURITY.md', 'SUPPORT.md', 'CODE_OF_CONDUCT.md', 'CITATION.cff']
-    .filter((f) => existsSync(join(ROOT, f))).map((f) => [p(f), docDate(f), '0.4', 'yearly']),
+    .filter((f) => existsSync(join(ROOT, f))).map((f) => [p(f), SITE.dateModified, '0.4', 'yearly']),
 ];
 writeFileSync(join(ROOT, 'sitemap.xml'),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
@@ -618,7 +628,8 @@ writeFileSync(join(ROOT, 'llms.txt'),
   `- زمان انتشار: ${SITE.datePublished} · آخرین به‌روزرسانی: ${SITE.dateModified}\n` +
   `- فناوری: ${SITE.runtime}\n` +
   `- حریم خصوصی: پردازش کاملاً محلی؛ بدون سرور، API، کوکی ردیابی یا اسکریپت تحلیل. تنظیمات کاربر در localStorage همان مرورگر ذخیره می‌شود.\n` +
-  `- رمزنگاری: AES-256-GCM با PBKDF2-HMAC-SHA-256 (۲۵۰٬۰۰۰ تکرار) در مدیر رمز عبور و گاوصندوق IR؛ کلید هرگز ذخیره نمی‌شود.\n` +
+  `- رمزنگاری: AES-256-GCM با PBKDF2-HMAC-SHA-256 (۶۰۰٬۰۰۰ تکرار) در مدیر رمز عبور و گاوصندوق IR؛ کلید هرگز ذخیره نمی‌شود و شمارش تکرار (kdfId) در خود فایل .ir256 ثبت می‌شود تا فایل‌های قدیمی (۲۵۰٬۰۰۰) همچنان باز شوند.\n` +
+  `- سخت‌سازی: Content-Security-Policy روی همهٔ صفحه‌ها؛ بدون eval/new Function (ماشین‌حساب با پارسر recursive-descent)؛ آزمایش Regex در Web Worker با قطع ۸۰۰ms؛ محافظت خروجی CSV در برابر تزریق فرمول.\n` +
   `- آفلاین: PWA با Service Worker؛ پس از اولین بارگذاری بدون اینترنت کار می‌کند.\n\n` +
   `## دسته‌ها و ابزارها\n\n` +
   CATS_SEO.map((c) => `### ${c.fa} (${c.en}) — ${fa(catTools(c.id).length)} ابزار\n\n${c.intro}\n\n` +
@@ -648,6 +659,7 @@ const patch = (marker, content) => {
 patch('HEAD', `<!-- ⚠️ تولیدشده توسط scripts/build-seo.mjs — دستی ویرایش نکنید.
      برای تغییر آدرس پایه، seo/site.mjs را ویرایش و «npm run build:seo» را اجرا کنید. -->
 <link rel="canonical" href="${abs()}">
+${CSP_META}
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="${esc(ENTITY_EN)}">
 <meta property="og:title" content="${esc(ENTITY_FA)}">

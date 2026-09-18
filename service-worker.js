@@ -2,10 +2,14 @@
  * Versioned cache, safe update, old-cache cleanup.
  * Never caches sensitive/decrypted content (those live only in memory).
  */
-const VERSION = 'ir-v12'; // v1.3.7 — CSP + Worker رگکس + KDF 600k // v1.3.6-fix: صفحات استاتیک SEO/GEO (about · tools · دسته‌ها · ابزارها)
-// و اصلاح کش ناوبری — هر آدرس با کلید خودش کش می‌شود، نه زیر './index.html'.
-// شمارهٔ کش بالا می‌رود تا کلاینت‌های قبلی کش کهنه (ir-v10) را دور بیندازند.
-// نسخهٔ اپ همان 1.3.6 است.
+/* نسخهٔ کش — با هر انتشار بالا می‌رود تا کلاینت‌های قبلی کش کهنه را دور بیندازند
+ * (کش قدیمی در activate حذف و نسخهٔ جدید خودکار اعمال می‌شود).
+ * ir-v12 = v1.3.7: CSP سخت‌گیرانه روی همهٔ صفحه‌ها + اجرای Regex در Web Worker
+ * + مشتق کلید PBKDF2 با ۶۰۰٬۰۰۰ تکرار.
+ * ⚠️ این عدد «نسخهٔ کش» است، نه نسخهٔ اپ. نسخهٔ اپ در js/changelog.js (VERSION)،
+ *    seo/site.mjs (SITE.version) و manifest.json (version) تعریف می‌شود و
+ *    «npm run validate:seo» یکی بودن هر سه را بررسی می‌کند. */
+const VERSION = 'ir-v12';
 const CORE = [
   './',
   './index.html',

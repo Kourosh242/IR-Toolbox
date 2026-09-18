@@ -1,11 +1,12 @@
 /* IR Vault — Web Crypto primitives.
- * KDF: PBKDF2-HMAC-SHA-256 (250,000 iters) → AES-256-GCM.
+ * KDF: PBKDF2-HMAC-SHA-256 (600,000 iters since v1.3.7; KDF_ITERS keeps the
+ *      legacy 250,000 mapping so old files still open) → AES-256-GCM.
  * Password and keys never leave memory; never persisted.
  */
 
 export const KDF_ITER = 600000; // v1.3.7: توصیهٔ به‌روز OWASP برای PBKDF2-HMAC-SHA256
 /* v1.3.7 (یافتهٔ ۹): شمارش تکرار در خود خروجی ذخیره می‌شود تا بالا بردن آن داده‌های قدیمی را نشکند.
-   kdfId=1 → فایل‌های پیش از ۱.۳.۷ (۲۵k) · kdfId=2 → از ۱.۳.۷ به بعد (۶۰۰k) */
+   kdfId=1 → فایل‌های پیش از ۱.۳.۷ (۲۵۰k) · kdfId=2 → از ۱.۳.۷ به بعد (۶۰۰k) */
 export const KDF_ITERS = { 1: 250000, 2: 600000 };
 export const KDF_ID = 2;
 

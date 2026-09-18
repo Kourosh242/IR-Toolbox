@@ -213,7 +213,7 @@ register({
     const run = () => {
       if (!pat.value || !ta.value) { res.textContent = ''; return; }
       // سقف طول متن: فقط برای محدودکردن حجم هایلایت (نه محافظ ReDoS — آن کار Worker است)
-      if (ta.value.length > 20000) { res.textContent = '❌ متن آزمایش حداکثر ۲۰٬۰۰ کاراکتر است.'; return; }
+      if (ta.value.length > 20000) { res.textContent = '❌ متن آزمایش حداکثر ۲۰٬۰۰۰ کاراکتر است.'; return; }
       const my = ++seq;
       if (worker) { worker.terminate(); worker = null; }
       worker = spawn();

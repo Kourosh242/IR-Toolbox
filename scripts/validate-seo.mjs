@@ -208,11 +208,17 @@ pass(`بازرسی ${pages.length} صفحهٔ HTML انجام شد`);
     const f = urlToFile(l);
     if (!f || !exists(f)) { fail(`[sitemap.xml] آدرس به فایل موجود نمی‌رسد: ${l}`); missing++; }
   }
+  let staleLm = 0;
   for (const l of locs) {
     const lm = new RegExp(`<loc>${l.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}</loc>\\s*<lastmod>([^<]+)</lastmod>`).exec(sm);
     if (!lm) fail(`[sitemap.xml] lastmod ندارد: ${l}`);
     else if (!/^\d{4}-\d{2}-\d{2}$/.test(lm[1])) fail(`[sitemap.xml] lastmod نامعتبر (${lm[1]}): ${l}`);
+    else if (lm[1] !== SITE.dateModified) {
+      fail(`[sitemap.xml] lastmod = ${lm[1]} ≠ SITE.dateModified (${SITE.dateModified}): ${l}`);
+      staleLm++;
+    }
   }
+  if (!staleLm) pass(`هر ${locs.length} lastmod در sitemap برابر ${SITE.dateModified} است (قطعی، نه از mtime فایل)`);
   /* هر صفحهٔ ایندکس‌شدنی باید در sitemap باشد */
   for (const f of staticPages) {
     if (/name="robots" content="noindex/.test(read(f))) continue;
@@ -294,6 +300,61 @@ pass(`بازرسی ${pages.length} صفحهٔ HTML انجام شد`);
   if (man.version !== SITE.version) fail(`manifest.version = ${man.version} ≠ ${SITE.version}`);
   if (!man.name.includes(SITE.name)) fail(`manifest.name نام پروژه را ندارد: ${man.name}`);
   pass(`هویت سازگار: ۱ WebSite، ۱ Person، ۱ WebApplication (نسخهٔ ${SITE.version})`);
+}
+
+/* ═══════════ ۸ب) نسخه باید در همهٔ منابع یکی باشد ═══════════ */
+/* انتشار دستی (بدون npm run build:seo) دقیقاً همین‌جا لو می‌رود:
+   سایت/manifest روی نسخهٔ نو می‌روند ولی changelog، CITATION و مستندات عقب می‌مانند. */
+{
+  const { VERSION: APP_VERSION, CHANGELOG } = await import('../js/changelog.js');
+  if (APP_VERSION !== SITE.version) fail(`js/changelog.js VERSION = ${APP_VERSION} ≠ ${SITE.version}`);
+  if (!CHANGELOG.length || CHANGELOG[0].v !== SITE.version)
+    fail(`تازه‌ترین ورودی js/changelog.js نسخهٔ ${CHANGELOG[0]?.v} است، نه ${SITE.version}`);
+  /* تاریخ شمسی ورودی changelog باید شکل کامل داشته باشد (۱۴۰۵-۰۶-۲۷) */
+  if (!/^\u06F1[۰-۹]{3}-[۰-۹]{2}-[۰-۹]{2}$/.test(CHANGELOG[0]?.date || ''))
+    fail(`تاریخ ورودی changelog نامعتبر است: «${CHANGELOG[0]?.date}» (شکل درست: ۱۴۰۵-۰۶-۲۷)`);
+
+  const cit = read('CITATION.cff');
+  const cv = /^version:\s*(\S+)/m.exec(cit);
+  if (!cv) fail('[CITATION.cff] فیلد version ندارد');
+  else if (cv[1] !== SITE.version) fail(`CITATION.cff version = ${cv[1]} ≠ ${SITE.version}`);
+  const cd = /^date-released:\s*(\d{4}-\d{2}-\d{2})/m.exec(cit);
+  if (!cd) fail('[CITATION.cff] فیلد date-released ندارد یا نامعتبر است');
+  else if (cd[1] !== SITE.dateModified) fail(`CITATION.cff date-released = ${cd[1]} ≠ SITE.dateModified (${SITE.dateModified})`);
+  /* قرارداد این پروژه: هر دو تاریخ = روزِ همان انتشار (seo/site.mjs را ببینید) */
+  if (SITE.datePublished !== SITE.dateModified)
+    fail(`datePublished (${SITE.datePublished}) ≠ dateModified (${SITE.dateModified}) — هر دو باید تاریخ همان انتشار باشند`);
+  /* تاریخ انتشار نباید در آینده باشد. با تلورانس ۱ روز، چون منطقهٔ زمانی ماشین
+     (تهران UTC+3:30) و UTC می‌توانند یک روز اختلاف داشته باشند. */
+  const now = new Date();
+  const pad = (n) => String(n).padStart(2, '0');
+  const TODAY = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+  const days = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / 86400000);
+  if (days(TODAY, SITE.dateModified) > 1) fail(`dateModified (${SITE.dateModified}) در آینده است (امروز ${TODAY})`);
+
+  /* package.json هم باید همان نسخه را داشته باشد (npm pkg get version) */
+  const pkg = JSON.parse(read('package.json'));
+  if (pkg.version !== SITE.version) fail(`package.json version = ${pkg.version} ≠ ${SITE.version}`);
+
+  /* نشان نسخه در README نباید عقب بماند */
+  const rd = read('README.md');
+  if (!rd.includes(`badge/version-v${SITE.version}-blue.svg`)) fail(`[README.md] نشان نسخه v${SITE.version} ندارد`);
+  if (!rd.includes(`### v${SITE.version}`)) fail(`[README.md] بخش تغییرات نسخهٔ v${SITE.version} ندارد`);
+  pass(`نسخهٔ ${SITE.version} در site.mjs، manifest.json، changelog.js، CITATION.cff، package.json و README یکی است`);
+}
+
+/* ═══════════ ۸پ) Content-Security-Policy روی همهٔ صفحه‌ها ═══════════ */
+/* CSP در scripts/build-seo.mjs تولید می‌شود؛ اگر صفحه‌ای دستی ویرایش و
+   بازتولید نشود، این بررسی ناسازگاری را فوراً نشان می‌دهد. */
+{
+  const EXPECT = `<meta http-equiv="Content-Security-Policy" content="${SITE.csp}">`;
+  let bad = 0;
+  for (const f of pages) {
+    const html = read(f);
+    if (!/<meta http-equiv="Content-Security-Policy"/.test(html)) { fail(`[${f}] تگ Content-Security-Policy ندارد`); bad++; }
+    else if (!html.includes(EXPECT)) { fail(`[${f}] مقدار CSP با الگوی استاندارد نمی‌خواند`); bad++; }
+  }
+  if (!bad) pass(`هر ${pages.length} صفحه CSP سخت‌گیرانه و یکسان دارد`);
 }
 
 /* ═══════════ ۹: پوشش ۵۲ ابزار و ۹ دسته ═══════════ */

@@ -1,12 +1,26 @@
 {
-  "type": "module",
+  "name": "ir-toolbox",
+  "version": "1.3.7",
   "private": true,
+  "type": "module",
+  "description": "IR-Toolbox — جعبه‌ابزار آفلاین فارسی: ۵۲ ابزار مرورگری در ۹ دسته، کاملاً محلی و بدون سرور (PWA).",
+  "license": "MIT",
+  "homepage": "https://kourosh242.github.io/IR-Toolbox/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kourosh242/IR-Toolbox.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Kourosh242/IR-Toolbox/issues"
+  },
+  "author": "Kourosh242 (https://github.com/Kourosh242)",
   "scripts": {
     "test": "node --test",
     "build:seo": "node scripts/build-seo.mjs",
-    "validate:seo": "node scripts/validate-seo.mjs"
+    "validate:seo": "node scripts/validate-seo.mjs",
+    "check": "npm run build:seo && npm run validate:seo && npm test"
   },
-  "dependencies": {
+  "devDependencies": {
     "happy-dom": "^20.14.5"
   }
 }
