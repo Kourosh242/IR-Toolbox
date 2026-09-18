@@ -19,7 +19,7 @@
  *   • لینک‌های داخلی root-relative از basePath مشتق می‌شوند
  *   • فقط واقعیت: متن راهنما از js/helps.js، آمار از شمارش واقعی کد
  * ═══════════════════════════════════════════════════════════════════════════ */
-import { readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SITE, BASE, abs, ENTITY_EN, ENTITY_FA } from '../seo/site.mjs';
@@ -582,7 +582,9 @@ writePage(p('404.html'), {
 });
 
 /* ═══════════ ۱۰) sitemap.xml ═══════════ */
-const docDate = (f) => { try { return statSync(join(ROOT, f)).mtime.toISOString().slice(0, 10); } catch { return SITE.dateModified; } };
+/* همهٔ lastmodها از SITE.dateModified می‌آیند — نه از mtime فایل.
+   mtime روی یک clone تازه برابر «روزِ clone» است، پس sitemap غیرقطعی و
+   اشتباه می‌شد. حالا sitemap فقط با ویرایش seo/site.mjs عوض می‌شود. */
 const URLS = [
   [p(), SITE.dateModified, '1.0', 'weekly'],
   [ABOUT_URL, SITE.dateModified, '0.9', 'monthly'],
@@ -590,7 +592,7 @@ const URLS = [
   ...CATS_SEO.map((c) => [catUrl(c), SITE.dateModified, '0.7', 'monthly']),
   ...ALL.map((t) => [toolUrl(t), SITE.dateModified, '0.6', 'monthly']),
   ...['README.md', 'CONTRIBUTING.md', 'SECURITY.md', 'SUPPORT.md', 'CODE_OF_CONDUCT.md', 'CITATION.cff']
-    .filter((f) => existsSync(join(ROOT, f))).map((f) => [p(f), docDate(f), '0.4', 'yearly']),
+    .filter((f) => existsSync(join(ROOT, f))).map((f) => [p(f), SITE.dateModified, '0.4', 'yearly']),
 ];
 writeFileSync(join(ROOT, 'sitemap.xml'),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +

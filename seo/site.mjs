@@ -50,13 +50,13 @@ export const SITE = {
   licenseUrl: 'https://opensource.org/licenses/MIT',
 
   /* ── نسخه و تاریخ‌ها (واقعی — تاریخ جعلی نگذارید) ── */
-  /* ⚠️ با هر انتشار، این سه مقدار را با هم به‌روز کنید:
-        version       ← js/changelog.js (VERSION) و manifest.json (version)
-        dateModified  ← تاریخ همان انتشار
-        CITATION.cff  ← version و date-released
-     datePublished اولین انتشار عمومی اپ است و ثابت می‌ماند (تغییرش ندهید). */
+  /* ⚠️ با هر انتشار، همهٔ این‌ها را با هم و روی تاریخ همان روز بگذارید:
+        version                    ← js/changelog.js (VERSION)، manifest.json، package.json، README
+        datePublished/dateModified ← تاریخ همان انتشار (هر دو یکی)
+        CITATION.cff               ← version و date-released (باید با dateModified یکی باشد)
+     «npm run validate:seo» یکی‌بودن همهٔ این‌ها را بررسی می‌کند. */
   version: '1.3.7',
-  datePublished: '2026-09-13',
+  datePublished: '2026-09-18',
   dateModified: '2026-09-18',
 
   /* ── واقعیت‌های ساختاری (با کد راستی‌آزمایی می‌شوند) ── */

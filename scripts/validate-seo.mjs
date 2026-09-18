@@ -208,11 +208,17 @@ pass(`بازرسی ${pages.length} صفحهٔ HTML انجام شد`);
     const f = urlToFile(l);
     if (!f || !exists(f)) { fail(`[sitemap.xml] آدرس به فایل موجود نمی‌رسد: ${l}`); missing++; }
   }
+  let staleLm = 0;
   for (const l of locs) {
     const lm = new RegExp(`<loc>${l.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}</loc>\\s*<lastmod>([^<]+)</lastmod>`).exec(sm);
     if (!lm) fail(`[sitemap.xml] lastmod ندارد: ${l}`);
     else if (!/^\d{4}-\d{2}-\d{2}$/.test(lm[1])) fail(`[sitemap.xml] lastmod نامعتبر (${lm[1]}): ${l}`);
+    else if (lm[1] !== SITE.dateModified) {
+      fail(`[sitemap.xml] lastmod = ${lm[1]} ≠ SITE.dateModified (${SITE.dateModified}): ${l}`);
+      staleLm++;
+    }
   }
+  if (!staleLm) pass(`هر ${locs.length} lastmod در sitemap برابر ${SITE.dateModified} است (قطعی، نه از mtime فایل)`);
   /* هر صفحهٔ ایندکس‌شدنی باید در sitemap باشد */
   for (const f of staticPages) {
     if (/name="robots" content="noindex/.test(read(f))) continue;
@@ -315,7 +321,16 @@ pass(`بازرسی ${pages.length} صفحهٔ HTML انجام شد`);
   const cd = /^date-released:\s*(\d{4}-\d{2}-\d{2})/m.exec(cit);
   if (!cd) fail('[CITATION.cff] فیلد date-released ندارد یا نامعتبر است');
   else if (cd[1] !== SITE.dateModified) fail(`CITATION.cff date-released = ${cd[1]} ≠ SITE.dateModified (${SITE.dateModified})`);
-  if (SITE.datePublished > SITE.dateModified) fail(`datePublished (${SITE.datePublished}) از dateModified (${SITE.dateModified}) جدیدتر است`);
+  /* قرارداد این پروژه: هر دو تاریخ = روزِ همان انتشار (seo/site.mjs را ببینید) */
+  if (SITE.datePublished !== SITE.dateModified)
+    fail(`datePublished (${SITE.datePublished}) ≠ dateModified (${SITE.dateModified}) — هر دو باید تاریخ همان انتشار باشند`);
+  /* تاریخ انتشار نباید در آینده باشد. با تلورانس ۱ روز، چون منطقهٔ زمانی ماشین
+     (تهران UTC+3:30) و UTC می‌توانند یک روز اختلاف داشته باشند. */
+  const now = new Date();
+  const pad = (n) => String(n).padStart(2, '0');
+  const TODAY = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+  const days = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / 86400000);
+  if (days(TODAY, SITE.dateModified) > 1) fail(`dateModified (${SITE.dateModified}) در آینده است (امروز ${TODAY})`);
 
   /* package.json هم باید همان نسخه را داشته باشد (npm pkg get version) */
   const pkg = JSON.parse(read('package.json'));
