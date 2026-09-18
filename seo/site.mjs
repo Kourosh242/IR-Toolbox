@@ -50,10 +50,14 @@ export const SITE = {
   licenseUrl: 'https://opensource.org/licenses/MIT',
 
   /* ── نسخه و تاریخ‌ها (واقعی — تاریخ جعلی نگذارید) ── */
-  version: '1.3.6',
-  /* باید با date-released در CITATION.cff یکی باشد */
+  /* ⚠️ با هر انتشار، این سه مقدار را با هم به‌روز کنید:
+        version       ← js/changelog.js (VERSION) و manifest.json (version)
+        dateModified  ← تاریخ همان انتشار
+        CITATION.cff  ← version و date-released
+     datePublished اولین انتشار عمومی اپ است و ثابت می‌ماند (تغییرش ندهید). */
+  version: '1.3.7',
   datePublished: '2026-09-13',
-  dateModified: '2026-09-14',
+  dateModified: '2026-09-18',
 
   /* ── واقعیت‌های ساختاری (با کد راستی‌آزمایی می‌شوند) ── */
   toolCount: 52,
@@ -64,6 +68,14 @@ export const SITE = {
   ogImage: 'assets/brand/og-image.png',
   ogImageWidth: 1376,
   ogImageHeight: 768,
+
+  /* ── Content-Security-Policy (v1.3.7) ──
+     تنها منبع حقیقت CSP برای همهٔ صفحه‌های HTML پروژه.
+     هیچ منبع بیرونی مجاز نیست: اسکریپت/فونت/تصویر فقط از خود دامنه ('self')،
+     به‌همراه data:/blob: برای پیش‌نمایش ابزارها و blob: برای Web Worker رگکس.
+     build-seo.mjs آن را در همهٔ صفحه‌ها می‌گذارد و validate-seo.mjs همین مقدار
+     را بررسی می‌کند — پس تغییرش فقط این‌جا، بعد «npm run build:seo». */
+  csp: "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' blob:; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'",
 };
 
 /* آدرس مطلق پایه، با اسلش انتهایی — مثال: https://kourosh242.github.io/IR-Toolbox/ */

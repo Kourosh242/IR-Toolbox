@@ -2,14 +2,17 @@
  *
  * Layout (little-endian):
  *   [4]   magic   "IRT1" (pre-1.3.2 files carry "IVA1"; still accepted on decrypt)
- *   [1]   version (1)
- *   [1]   kdfId   (1 = PBKDF2-HMAC-SHA256, 250k)
+ *   [1]   version (1 = plain blob, 2 = blob gzip-compressed before encrypting)
+ *   [1]   kdfId   (1 = PBKDF2-HMAC-SHA256 @250k, pre-1.3.7 · 2 = @600k, 1.3.7+)
  *   [1]   algId   (1 = AES-256-GCM)
  *   [2]   saltLen, [saltLen] salt
  *   [2]   ivLen,   [ivLen]   iv
  *   [4]   ctLen,   [ctLen]   ciphertext (AES-GCM; includes auth tag)
  *
- * Decrypted plaintext blob:
+ * Both version and kdfId are read back from the file itself, so raising the
+ * KDF cost never locks users out of older data (see KDF_ITERS).
+ *
+ * Decrypted (and, for version 2, gunzipped) plaintext blob:
  *   [4] metaLen, [metaLen] JSON meta {files:[{name,mime}]}
  *   then per file: [4] len, [len] bytes  (same order as meta.files)
  */
@@ -80,7 +83,7 @@ export async function unpackContainer(buf, password) {
   const version = v.getUint8(4);
   if (version !== VERSION && version !== VERSION_V2) throw new Error('bad');
   const kdfId = v.getUint8(5);
-  const iter = KDF_ITERS[kdfId]; // v1.3.7: فایل‌های قدیمی kdfId=1 → ۲۵k
+  const iter = KDF_ITERS[kdfId]; // v1.3.7: فایل‌های قدیمی kdfId=1 → ۲۵۰k
   if (!iter) throw new Error('الگوریتم مشتق کلید این فایل ناشناخته است — اپ را به‌روز کنید');
   let p = 7;
   const saltLen = v.getUint16(p, true); p += 2;

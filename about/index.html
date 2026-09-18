@@ -142,9 +142,12 @@
   <section aria-labelledby="h-sec">
     <h2 id="h-sec">امنیت و رمزنگاری</h2>
     <ul>
-      <li><a href="/IR-Toolbox/tools/password-manager/">مدیر رمز عبور</a> و <a href="/IR-Toolbox/tools/ir-vault/">گاوصندوق IR</a> از AES-256-GCM با مشتق کلید PBKDF2-HMAC-SHA-256 (۶۰۰٬۰۰ تکرار) استفاده می‌کنند.</li>
+      <li><a href="/IR-Toolbox/tools/password-manager/">مدیر رمز عبور</a> و <a href="/IR-Toolbox/tools/ir-vault/">گاوصندوق IR</a> از AES-256-GCM با مشتق کلید PBKDF2-HMAC-SHA-256 (۶۰۰٬۰۰۰ تکرار) استفاده می‌کنند.</li>
+      <li>شمارش تکرار KDF داخل خودِ فایل <code>.ir256</code> ذخیره می‌شود (<code>kdfId</code>)؛ فایل‌های قدیمی با ۲۵۰٬۰۰۰ تکرار همچنان باز می‌شوند و بالا رفتن این عدد داده‌های قبلی را نمی‌شکند.</li>
       <li>کلید یا رمز اصلی هرگز ذخیره نمی‌شود؛ بدون آن، داده‌ها قابل بازیابی نیستند.</li>
-      <li>رمز عبور و توکن‌ها با مولد تصادفی رمزنگاری مرورگر ساخته می‌شوند، نه <code>Math.random</code>.</li>
+      <li>رمز عبور و توکن‌ها با مولد تصادفی رمزنگاری مرورگر ساخته می‌شوند، نه <code>Math.random</code> — بدون بایاس modulo (rejection sampling).</li>
+      <li>هیچ‌جای اپ <code>eval</code> یا <code>new Function</code> استفاده نمی‌شود: ماشین‌حساب علمی یک پارسر واقعی recursive-descent دارد و <a href="/IR-Toolbox/tools/regex-tester/">آزمایش Regex</a> در Web Worker با قطع ۸۰۰ms اجرا می‌شود تا الگوی ReDoS نتواند تب را فریز کند.</li>
+      <li>همهٔ صفحه‌ها <code>Content-Security-Policy</code> سخت‌گیرانه دارند (فقط <code>'self'</code>؛ بدون منبع بیرونی) و خروجی CSV در برابر تزریق فرمول محافظت می‌شود.</li>
       <li>رمزنگاری مرورگر فقط در محیط امن (HTTPS یا localhost) در دسترس است؛ در غیر این صورت ابزار به‌جای رفتار ناامن، هشدار می‌دهد.</li>
       <li>برای گزارش آسیب‌پذیری، <a href="/IR-Toolbox/SECURITY.md">SECURITY.md</a> را ببینید.</li>
     </ul>
