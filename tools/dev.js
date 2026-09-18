@@ -1,5 +1,5 @@
 /* IR-Toolbox — توسعه‌دهنده / Developer tools */
-import { register } from '../js/registry.js';
+import { register, setCleanup } from '../js/registry.js';
 import { el, field, areaInput, textInput, readout, copyBtn, stat, liveGroup, numOf } from '../js/ui.js';
 import { faNum, escapeHTML } from '../js/helpers.js';
 
@@ -192,20 +192,45 @@ register({
     const flags = textInput({ mono: true, value: 'g' });
     const ta = areaInput({ rows: 5, placeholder: 'متن آزمایش…' });
     const res = el('div', { class: 'readout', style: 'direction:rtl;text-align:start' });
+    /* v1.3.7 (یافتهٔ ۲): اجرای تطبیق در Web Worker با کلید قطع ۸۰۰ms —
+     * ترد اصلی هرگز فریز نمی‌شود؛ الگوی ReDoS فقط همان Worker را می‌سوزاند. */
+    const WORKER_SRC = `self.onmessage = (e) => {
+      const { p, f, t } = e.data;
+      try {
+        const re = new RegExp(p, f);
+        const m0 = t.match(re);
+        const matches = re.global ? m0 : (m0 ? [m0[0]] : null);
+        self.postMessage({ ok: true, count: matches ? matches.length : 0, list: matches ? matches.slice(0, 40).map((x) => x || '') : null });
+      } catch (err) { self.postMessage({ ok: false, msg: err.message }); }
+    };`;
+    let worker = null, seq = 0;
+    const spawn = () => new Worker(URL.createObjectURL(new Blob([WORKER_SRC], { type: 'text/javascript' })));
+    const showMatches = (count, list) => {
+      res.textContent = '';
+      res.append(el('div', {}, count ? `${faNum(count)} تطبیق: ` : 'تطبیقی یافت نشد'),
+        count ? el('div', { class: 'stats' }, (list || []).map((mm) => el('span', { class: 'stat' }, mm || '∅'))) : '');
+    };
     const run = () => {
       if (!pat.value || !ta.value) { res.textContent = ''; return; }
-      // v1.3.3: سقف طول متن — جلوگیری از فریز شدن با الگوهای بیمار (ReDoS)
-      if (ta.value.length > 20000) { res.textContent = '❌ برای جلوگیری از فریز شدن، متن آزمایش حداکثر ۲۰٬۰۰۰ کاراکتر است.'; return; }
-      try {
-        const re = new RegExp(pat.value, flags.value);
-        // fix: بدون پرچم g، match() گروه‌های capture را برمی‌گرداند نه تطبیق‌ها؛ فقط تطبیق کامل نمایش داده می‌شود
-        const m0 = ta.value.match(re);
-        const matches = re.global ? m0 : (m0 ? [m0[0]] : null);
-        res.textContent = '';
-        res.append(el('div', {}, matches ? `${faNum(matches.length)} تطبیق: ` : 'تطبیقی یافت نشد'),
-          matches ? el('div', { class: 'stats' }, matches.slice(0, 40).map((m) => el('span', { class: 'stat' }, m || '∅'))) : '');
-      } catch (e) { res.textContent = '❌ ' + e.message; }
+      // سقف طول متن: فقط برای محدودکردن حجم هایلایت (نه محافظ ReDoS — آن کار Worker است)
+      if (ta.value.length > 20000) { res.textContent = '❌ متن آزمایش حداکثر ۲۰٬۰۰ کاراکتر است.'; return; }
+      const my = ++seq;
+      if (worker) { worker.terminate(); worker = null; }
+      worker = spawn();
+      const killer = setTimeout(() => {
+        if (my !== seq) return;
+        if (worker) { worker.terminate(); worker = null; }
+        res.textContent = '⏱️ اجرای الگو بیش از ۸۰۰ms طول کشید و متوقف شد (احتمال الگوی ReDoS) — الگو را ساده‌تر کنید.';
+      }, 800);
+      worker.onmessage = (e) => {
+        clearTimeout(killer);
+        if (my !== seq) return;
+        if (e.data.ok) showMatches(e.data.count, e.data.list);
+        else res.textContent = '❌ ' + e.data.msg;
+      };
+      worker.postMessage({ p: pat.value, f: flags.value, t: ta.value });
     };
+    setCleanup(() => { seq++; if (worker) { worker.terminate(); worker = null; } });
     [pat, flags, ta].forEach((x) => x.addEventListener('input', run));
     root.append(field('الگو', pat), field('پرچم‌ها', flags), field('متن', ta), el('div', { class: 'lbl' }, 'نتیجه'), res);
   }

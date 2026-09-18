@@ -4,7 +4,8 @@
  */
 import { register } from '../js/registry.js';
 import { el, field, textInput, areaInput, toast, stat } from '../js/ui.js';
-import { faNum, uid, download, textBlob, hasCrypto, INSECURE_MSG } from '../js/helpers.js';
+import { faNum, uid, download, textBlob, hasCrypto, INSECURE_MSG, randInt } from '../js/helpers.js';
+import { KDF_ITER } from '../vault/crypto-utils.js';
 import { copyText } from '../js/clipboard.js';
 import { encryptBytes, decryptBytes } from '../vault/crypto-utils.js';
 
@@ -20,9 +21,15 @@ let entries = null;     // آرایه ورودی‌ها — فقط در حافظ
 export function lockPassman() { master = null; entries = null; }
 
 const loadBlob = () => { try { return JSON.parse(localStorage.getItem(LS)); } catch { return null; } };
+/* v1.3.7 (یافتهٔ ۱۱): فیلدها بعد از رمزگشایی به رشته sanitize می‌شوند تا ورودی دست‌کاری‌شده UI را نشکند */
+export const sanitizeEntries = (list) => (Array.isArray(list) ? list : []).map((raw) => {
+  const e = raw && typeof raw === 'object' ? raw : {};
+  const str = (v) => (typeof v === 'string' ? v : v == null ? '' : String(v));
+  return { id: str(e.id) || uid(), title: str(e.title), user: str(e.user), pass: str(e.pass), url: str(e.url), notes: str(e.notes) };
+});
 const saveBlob = async () => {
   const { salt, iv, ct } = await encryptBytes(new TextEncoder().encode(JSON.stringify(entries)), master);
-  localStorage.setItem(LS, JSON.stringify({ salt: b64(salt), iv: b64(iv), ct: b64(ct) }));
+  localStorage.setItem(LS, JSON.stringify({ salt: b64(salt), iv: b64(iv), ct: b64(ct), it: KDF_ITER }));
 };
 
 const strength = (pw) => {
@@ -39,19 +46,26 @@ const genPassword = (len = 16) => {
   const sets = ['abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', '0123456789', '!@#$%^&*()-_=+[]{}<>?/'];
   const all = sets.join('');
   const chars = [];
-  for (const set of sets) { const r = new Uint32Array(1); crypto.getRandomValues(r); chars.push(set[r[0] % set.length]); }
+  for (const set of sets) chars.push(set[randInt(set.length)]); // v1.3.7: بدون بایاس
   const rest = new Uint32Array(Math.max(0, len - chars.length));
   crypto.getRandomValues(rest);
-  for (let i = 0; i < rest.length; i++) chars.push(all[rest[i] % all.length]);
-  for (let i = chars.length - 1; i > 0; i--) { const r = new Uint32Array(1); crypto.getRandomValues(r); const j = r[0] % (i + 1); [chars[i], chars[j]] = [chars[j], chars[i]]; }
+  for (let i = 0; i < rest.length; i++) chars.push(all[randInt(all.length)]);
+  for (let i = chars.length - 1; i > 0; i--) { const j = randInt(i + 1); [chars[i], chars[j]] = [chars[j], chars[i]]; }
   return chars.join('');
 };
 
+/* v1.3.7 (یافتهٔ ۷): پاک‌سازی شرطی — اگر کاربر در این ۲۰ ثانیه چیز دیگری کپی کرده
+   باشد، کلیپ‌بوردش رونویسی نمی‌شود. */
+export const clipboardStillOurs = (copied, current) => current === null || current === copied;
 const copyEphemeral = async (text, label) => {
   const ok = await copyText(text);
   if (!ok) { toast('کپی ممکن نشد', 'err'); return; }
   toast(`⧉ ${label} کپی شد — کلیپ‌بورد پس از ۲۰ ثانیه پاک می‌شود`, 'ok');
-  setTimeout(() => copyText(' '), 20000);
+  setTimeout(async () => {
+    let cur = null;
+    try { cur = await navigator.clipboard.readText(); } catch { cur = null; } // بدون دسترسی: رفتار قبلی
+    if (clipboardStillOurs(text, cur)) copyText(' ');
+  }, 20000);
 };
 
 register({
@@ -102,8 +116,8 @@ function screenUnlock(box, rerender) {
     btn.disabled = true; btn.textContent = 'در حال بازگشایی…';
     try {
       const b = loadBlob();
-      const pt = await decryptBytes(unb64(b.ct), pw.value, unb64(b.salt), unb64(b.iv));
-      entries = JSON.parse(new TextDecoder().decode(pt));
+      const pt = await decryptBytes(unb64(b.ct), pw.value, unb64(b.salt), unb64(b.iv), b.it || 250000);
+      entries = sanitizeEntries(JSON.parse(new TextDecoder().decode(pt)));
       master = pw.value;
       toast('🔓 باز شد', 'ok');
       rerender();
@@ -204,10 +218,10 @@ function screenMain(box, rerender) {
       el('button', { class: 'btn primary sm', onclick: async () => {
         if (!rData || !rData.salt || !rData.iv || !rData.ct) { toast('❌ اول یک فایل پشتیبان معتبر انتخاب کنید', 'err'); return; }
         try {
-          const pt = await decryptBytes(unb64(rData.ct), rPw.value, unb64(rData.salt), unb64(rData.iv));
-          const list = JSON.parse(new TextDecoder().decode(pt));
-          if (!Array.isArray(list)) throw new Error('bad');
-          entries = list; master = rPw.value;
+          const pt = await decryptBytes(unb64(rData.ct), rPw.value, unb64(rData.salt), unb64(rData.iv), rData.it || 250000);
+          entries = sanitizeEntries(JSON.parse(new TextDecoder().decode(pt)));
+          if (!entries.length && !Array.isArray(JSON.parse(new TextDecoder().decode(pt)))) throw new Error('bad');
+          master = rPw.value;
           await saveBlob();
           toast(`⬆ بازیابی شد (${faNum(entries.length)} ورودی)`, 'ok');
           rerender();

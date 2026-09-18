@@ -13,7 +13,7 @@
  *   [4] metaLen, [metaLen] JSON meta {files:[{name,mime}]}
  *   then per file: [4] len, [len] bytes  (same order as meta.files)
  */
-import { encryptBytes, decryptBytes } from './crypto-utils.js';
+import { encryptBytes, decryptBytes, KDF_ITERS } from './crypto-utils.js';
 
 export const MAGIC = 'IRT1';
 export const VERSION_V2 = 2; // v2 = plaintext gzip-compressed before encryption
@@ -55,14 +55,14 @@ export async function packContainer(files, password) {
   // v1.3.6: اول فشرده‌سازی، بعد رمزنگاری (دادهٔ رمزشده فشرده نمی‌شود)
   const compressed = supportsZip();
   const payload = compressed ? await gz(plain) : plain;
-  const { salt, iv, ct } = await encryptBytes(payload, password);
+  const { salt, iv, ct, kdfId } = await encryptBytes(payload, password);
 
   const out = new Uint8Array(4 + 1 + 1 + 1 + 2 + salt.length + 2 + iv.length + 4 + ct.length);
   const v = new DataView(out.buffer);
   let p = 0;
   for (const c of MAGIC) out[p++] = c.charCodeAt(0);
   v.setUint8(p++, compressed ? VERSION_V2 : VERSION);
-  v.setUint8(p++, 1); // kdf
+  v.setUint8(p++, kdfId); // kdf (v1.3.7: شمارش تکرار از روی همین بایت)
   v.setUint8(p++, 1); // alg
   v.setUint16(p, salt.length, true); p += 2; out.set(salt, p); p += salt.length;
   v.setUint16(p, iv.length, true); p += 2; out.set(iv, p); p += iv.length;
@@ -79,6 +79,9 @@ export async function unpackContainer(buf, password) {
     throw new Error('bad');
   const version = v.getUint8(4);
   if (version !== VERSION && version !== VERSION_V2) throw new Error('bad');
+  const kdfId = v.getUint8(5);
+  const iter = KDF_ITERS[kdfId]; // v1.3.7: فایل‌های قدیمی kdfId=1 → ۲۵k
+  if (!iter) throw new Error('الگوریتم مشتق کلید این فایل ناشناخته است — اپ را به‌روز کنید');
   let p = 7;
   const saltLen = v.getUint16(p, true); p += 2;
   const salt = u8.slice(p, p + saltLen); p += saltLen;
@@ -88,7 +91,7 @@ export async function unpackContainer(buf, password) {
   const ct = u8.slice(p, p + ctLen);
 
   // Throws OperationError on wrong password / tamper → caller shows generic msg.
-  let plain = await decryptBytes(ct, password, salt, iv);
+  let plain = await decryptBytes(ct, password, salt, iv, iter);
   if (version === VERSION_V2) {
     if (!supportsZip()) throw new Error('مرورگر شما بازکردن فایل فشرده را پشتیبانی نمی‌کند — لطفاً مرورگر را به‌روز کنید');
     plain = await ungz(plain);

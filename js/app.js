@@ -185,7 +185,7 @@ function toolCard(t, q = '', i = 0) {
 
 /* ── Pages ─ */
 function pageHome() {
-  document.title = 'IR-Toolbox — جعبه ابزار IR';
+  document.title = 'IR-Toolbox — جعبه‌ابزار آفلاین فارسی | ۵۲ ابزار رایگان و متن‌باز';
   const favs = store.getFavs().map(registry.get).filter(Boolean);
   const recents = store.getRecents().map((r) => ({ t: registry.get(r.id), ts: r.ts })).filter((r) => r.t);
 

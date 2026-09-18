@@ -91,6 +91,16 @@ export function mountQrReader(root) {
     pushHist(text);
     drawHistory();
     const type = detectType(text);
+    /* v1.3.7 (یافتهٔ ۶): اسکیم‌های خطرناک هرگز به دکمهٔ باز/تماس نمی‌رسند — فقط کپی */
+    if (/^(javascript|data|vbscript):/i.test(text.trim())) {
+      const out0 = readout();
+      resBox.append(out0.root,
+        el('div', { class: 'warn-box', style: 'margin-top:10px' }, '⚠️ محتوای این QR یک اسکیم خطرناک (javascript:/data:/vbscript:) است — اجرا و بازشدن غیرفعال است؛ فقط کپی متن در دسترس است.'),
+        el('div', { class: 'dash-actions', style: 'margin-top:8px' },
+          el('button', { class: 'btn tonal sm', onclick: async () => { try { await navigator.clipboard.writeText(text); toast('کپی شد 📋'); } catch { toast('کپی ممکن نشد', 'err'); } } }, '📋 کپی')));
+      out0.set(text);
+      return;
+    }
     const out = readout();
     resBox.append(
       el('div', { style: 'display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px' },

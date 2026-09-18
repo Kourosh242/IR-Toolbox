@@ -1,27 +1,58 @@
 /* IR-Toolbox — محاسبات / Math tools */
 import { register } from '../js/registry.js';
 import { el, field, textInput, readout, selectInput, stat, liveGroup, numOf } from '../js/ui.js';
-import { faNum, faGroup } from '../js/helpers.js';
+import { faNum, faGroup, groupInt } from '../js/helpers.js';
 
 /* Safe math: whitelist tokens, then evaluate.
  * v1.3.3: تابع‌های معکوس مثل asin( دیگر توسط جایگزینی sin( خراب نمی‌شوند (تک‌گذشته با alternation)،
  * نماد علمی 1e5 پشتیبانی می‌شود و کاما هم جداکننده آرگومان است و هم جداکننده هزارگانِ چسبیده. */
+/* v1.3.7 (یافتهٔ ۱): پارسر واقعی recursive-descent به‌جای new Function —
+ * فقط عدد، + - * / ** ، پرانتز، کامای آرگومان و جدول ثابت توابع Math پذیرفته می‌شود.
+ * این کلاس آسیب‌پذیری (eval روی ورودی کاربر) برای همیشه حذف شد. */
 export function safeEval(input) {
   let s = input
     .replace(/[۰-۹]/g, (d) => '0123456789'['۰۱۲۳۴۵۶۷۸۹'.indexOf(d)])
     .replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-')
-    .replace(/(\d)[,،٬](?=\d{3}(?!\d))/g, '$1')   // جداکننده هزارگان (1,000 ← 1000)
+    .replace(/(\d)[,،٬](?=\d{3}(?!\d))/g, '$1')   // جداکنندهٔ هزارگان
     .replace(/[\s،٬]/g, '')
-    .replace(/(\d+(?:\.\d+)?|\.\d+)e([+-]?\d+)/gi, '($1*10**$2)') // نماد علمی — fix: «12e3» قبلاً به «1(2e3)» تبدیل می‌شد
-    .replace(/\^/g, '**');
-  const words = 'log10|log2|log|sqrt|asin|acos|atan|sin|cos|tan|abs|pow|min|max|floor|ceil|round';
-  let stripped = s.replace(new RegExp(words, 'g'), '').replace(/\bpi\b/g, '').replace(/\be\b/g, '');
-  if (!/^[\d+\-*/().,]*$/.test(stripped)) throw new Error('عبارت نامعتبر');
-  s = s.replace(new RegExp(`\\b(${words})\\(`, 'g'), (m, fn) => 'Math.' + fn + '(')
-    .replace(/\bpi\b/g, 'Math.PI').replace(/\be\b/g, 'Math.E');
-  let v;
-  try { v = new Function(`"use strict"; return (${s});`)(); }
-  catch { throw new Error('عبارت نامعتبر'); } // fix: خطای نحوی JS با پیام انگلیسی به کاربر نشان داده می‌شد
+    .replace(/(\d+(?:\.\d+)?|\.\d+)e([+-]?\d+)/gi, '($1*10**$2)'); // نماد علمی
+  const toks = [];
+  const re = /(\d+\.?\d*|\.\d+)|([a-zA-Z]+)|(\*\*|\^|[-+*/(),])/g;
+  let m2, last = 0;
+  while ((m2 = re.exec(s))) {
+    if (m2.index !== last) throw new Error('عبارت نامعتبر');
+    last = re.lastIndex;
+    if (m2[1] !== undefined) toks.push({ t: 'num', v: parseFloat(m2[1]) });
+    else if (m2[2] !== undefined) toks.push({ t: 'id', v: m2[2].toLowerCase() });
+    else toks.push({ t: 'op', v: m2[3] === '^' ? '**' : m2[3] });
+  }
+  if (last !== s.length || !toks.length) throw new Error('عبارت نامعتبر');
+  const FUN1 = { sin: Math.sin, cos: Math.cos, tan: Math.tan, asin: Math.asin, acos: Math.acos, atan: Math.atan, sqrt: Math.sqrt, log: Math.log, log2: Math.log2, log10: Math.log10, abs: Math.abs, floor: Math.floor, ceil: Math.ceil, round: Math.round };
+  const FUN2 = { pow: Math.pow, min: Math.min, max: Math.max };
+  let i = 0;
+  const peek = () => toks[i];
+  const eat = (v) => { const t = toks[i]; if (!t || t.t !== 'op' || t.v !== v) throw new Error('عبارت نامعتبر'); i++; };
+  function expr() { let v = term(); while (peek() && peek().t === 'op' && (peek().v === '+' || peek().v === '-')) { const op = toks[i++].v; const r = term(); v = op === '+' ? v + r : v - r; } return v; }
+  function term() { let v = unary(); while (peek() && peek().t === 'op' && (peek().v === '*' || peek().v === '/')) { const op = toks[i++].v; const r = unary(); v = op === '*' ? v * r : v / r; } return v; }
+  function unary() { if (peek() && peek().t === 'op' && (peek().v === '-' || peek().v === '+')) { const op = toks[i++].v; const v = unary(); return op === '-' ? -v : v; } return power(); }
+  function power() { const b = atom(); if (peek() && peek().t === 'op' && peek().v === '**') { i++; return b ** unary(); } return b; } // v1.3.7 (یافتهٔ ۱۳): -2^2 = -(2^2)
+  function atom() {
+    const t = peek();
+    if (!t) throw new Error('عبارت نامعتبر');
+    if (t.t === 'num') { i++; return t.v; }
+    if (t.t === 'id') {
+      i++;
+      if (t.v === 'pi') return Math.PI;
+      if (t.v === 'e') return Math.E;
+      if (FUN1[t.v]) { eat('('); const a = expr(); eat(')'); return FUN1[t.v](a); }
+      if (FUN2[t.v]) { eat('('); const a = expr(); eat(','); const b = expr(); eat(')'); return FUN2[t.v](a, b); }
+      throw new Error('عبارت نامعتبر');
+    }
+    if (t.t === 'op' && t.v === '(') { i++; const v = expr(); eat(')'); return v; }
+    throw new Error('عبارت نامعتبر');
+  }
+  const v = expr();
+  if (i !== toks.length) throw new Error('عبارت نامعتبر');
   if (typeof v !== 'number' || !isFinite(v)) throw new Error('نتیجه عددی نیست');
   return v;
 }
@@ -197,7 +228,7 @@ register({
         .replace(/[٠-٩]/g, (d) => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
       if (!/^[+-]?(\d+(\.\d*)?|\.\d+)$/.test(clean)) { out.set('❌ ورودی عدد نیست'); return; }
       const [int, dec] = clean.split('.');
-      const grouped = (int === '' ? '0' : int).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      const grouped = groupInt(int === '' ? '0' : int); // v1.3.7: خطی به‌جای رجکس O(n²)
       out.set(`${grouped}${dec !== undefined ? '.' + dec : ''}\n${faGroup(clean)}`);
       if (hadSep) note.append(el('span', { class: 'warn-box', style: 'display:inline-block' }, 'این ورودی از قبل جداکننده دارد؛ نیازی به جداسازی نبود 🙂'));
     };

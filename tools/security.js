@@ -153,15 +153,11 @@ register({
       // v1.3.3: تضمین حداقل یک نویسه از هر مجموعه تیک‌خورده + برزدن Fisher–Yates با crypto
       const chars = [];
       for (const set of sets) {
-        const r1 = new Uint32Array(1); crypto.getRandomValues(r1);
-        chars.push(set[r1[0] % set.length]);
+        chars.push(set[randInt(set.length)]); // v1.3.7: بدون بایاس modulo
       }
-      const rest = new Uint32Array(Math.max(0, L - chars.length));
-      crypto.getRandomValues(rest);
-      for (let i = 0; i < rest.length; i++) chars.push(all[rest[i] % all.length]);
+      for (let i = 0; i < Math.max(0, L - chars.length); i++) chars.push(all[randInt(all.length)]);
       for (let i = chars.length - 1; i > 0; i--) {
-        const rj = new Uint32Array(1); crypto.getRandomValues(rj);
-        const j = rj[0] % (i + 1);
+        const j = randInt(i + 1);
         [chars[i], chars[j]] = [chars[j], chars[i]];
       }
       out.set(chars.join(''));

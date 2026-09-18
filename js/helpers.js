@@ -75,3 +75,25 @@ export function timeAgo(ts) {
 /* Jalali / Gregorian formatting via Intl (no external lib). */
 export const faDate = (d = new Date()) =>
   new Intl.DateTimeFormat('fa-IR', { dateStyle: 'full' }).format(d);
+
+/* v1.3.7 (یافتهٔ ۱۰): جداسازی هزارگان خطی O(n) — رجکس قبلی lookahead تودرتو O(n²) بود */
+export function groupInt(int) {
+  const neg = int.startsWith('-') || int.startsWith('+');
+  const sign = neg ? int[0] : '';
+  const d = neg ? int.slice(1) : int;
+  let r = '';
+  for (let i = 0, n = d.length; i < n; i++) {
+    r += d[i];
+    const left = n - 1 - i;
+    if (left && left % 3 === 0) r += ',';
+  }
+  return sign + r;
+}
+
+/* v1.3.7 (یافتهٔ ۸): انتخاب یکنواخت با rejection sampling — بدون بایاس modulo */
+export function randInt(max) {
+  const limit = Math.floor(4294967296 / max) * max;
+  const buf = new Uint32Array(1);
+  do { crypto.getRandomValues(buf); } while (buf[0] >= limit);
+  return buf[0] % max;
+}

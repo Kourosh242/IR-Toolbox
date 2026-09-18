@@ -167,7 +167,10 @@ register({
       out.set(JSON.stringify(rows.slice(1).map((v) =>
         Object.fromEntries(head.map((h, i) => [h, (v[i] ?? '').trim()]))), null, 2));
     };
-    const csvCell = (s) => /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+    /* v1.3.7 (یافتهٔ ۳): مقابله با تزریق فرمول (CWE-1236) — سلول شروع‌شده با = + - @
+   با آپاستروف آغاز می‌شود تا اکسل/شی츠 آن را فرمول اجرا نکند */
+    const csvSafe = (v) => /^[=+\-@]/.test(v) ? "'" + v : v;
+    const csvCell = (s) => { s = csvSafe(String(s)); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
     const json2csv = () => {
       try {
         const arr = JSON.parse(ta.value);

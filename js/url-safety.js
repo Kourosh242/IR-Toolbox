@@ -54,7 +54,7 @@ export function analyzeUrl(input) {
    * رشتهٔ خامِ ورودی انجام شود نه روی آبجکت URL. حالا هر سه حالت گرفته می‌شود:
    * user@host، user:pass@host و @host. */
   const rawAuthority = (raw.split('//')[1] || '').split(/[/?#]/)[0];
-  if (rawAuthority.includes('@')) add(30, 'ترفند «@»: مرورگر فقط بخش بعد از @ را باز می‌کند');
+  if (rawAuthority.includes('@')) add(40, 'ترفند «@»: مرورگر فقط بخش بعد از @ را باز می‌کند'); // وزن ۴۰: حتی با https هم به آستانهٔ «خطر» برسد
   if (host.startsWith('xn--')) add(30, 'پیشوند Punycode (xn--) — حروف غیرانگلیسی شبیه به حروف اصلی (هموگلیف)');
   if (/[^\x00-\x7F]/.test(host)) add(25, 'حروف غیرانگلیسی در دامنه — احتمال حملهٔ هموگلیف');
 

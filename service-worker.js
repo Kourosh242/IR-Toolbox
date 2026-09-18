@@ -2,7 +2,7 @@
  * Versioned cache, safe update, old-cache cleanup.
  * Never caches sensitive/decrypted content (those live only in memory).
  */
-const VERSION = 'ir-v11'; // v1.3.6-fix: صفحات استاتیک SEO/GEO (about · tools · دسته‌ها · ابزارها)
+const VERSION = 'ir-v12'; // v1.3.7 — CSP + Worker رگکس + KDF 600k // v1.3.6-fix: صفحات استاتیک SEO/GEO (about · tools · دسته‌ها · ابزارها)
 // و اصلاح کش ناوبری — هر آدرس با کلید خودش کش می‌شود، نه زیر './index.html'.
 // شمارهٔ کش بالا می‌رود تا کلاینت‌های قبلی کش کهنه (ir-v10) را دور بیندازند.
 // نسخهٔ اپ همان 1.3.6 است.

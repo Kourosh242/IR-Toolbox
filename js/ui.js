@@ -130,6 +130,7 @@ export function stat(label, value) {
 }
 
 /* v1.3.6-fix: جداکنندهٔ هزارگان زنده در ورودی‌های عددی */
+import { groupInt } from './helpers.js';
 export const toLatinDigits = (s) => String(s).replace(/[۰-۹]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, (d) => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
 export const numOf = (v) => Number(toLatinDigits(String(v)).replace(/[،,٬\s]/g, '').replace(/٫/g, '.'));
 export function liveGroup(inp) {
@@ -140,7 +141,7 @@ export function liveGroup(inp) {
     const m = toLatinDigits(stripped).match(/^([+-]?)(\d*)([.]?)(\d*)$/);
     if (!m) { if (stripped !== raw) inp.value = stripped; return; }
     const [, sign, int, dot, dec] = m;
-    const nv = sign + int.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (dot || (dec ? '.' : '')) + dec;
+    const nv = sign + groupInt(int) + (dot || (dec ? '.' : '')) + dec;
     if (nv === raw) return;
     inp.value = nv;
     const effBefore = toLatinDigits(raw.slice(0, caret)).replace(/[،,٬]/g, '').length;
