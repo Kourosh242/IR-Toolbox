@@ -55,9 +55,9 @@ export const SITE = {
         datePublished/dateModified ← تاریخ همان انتشار (هر دو یکی)
         CITATION.cff               ← version و date-released (باید با dateModified یکی باشد)
      «npm run validate:seo» یکی‌بودن همهٔ این‌ها را بررسی می‌کند. */
-  version: '1.3.7',
-  datePublished: '2026-09-18',
-  dateModified: '2026-09-18',
+  version: '1.3.8',
+  datePublished: '2026-09-21',
+  dateModified: '2026-09-21',
 
   /* ── واقعیت‌های ساختاری (با کد راستی‌آزمایی می‌شوند) ── */
   toolCount: 52,

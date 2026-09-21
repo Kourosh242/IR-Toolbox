@@ -40,7 +40,7 @@ body:
     id: version
     attributes:
       label: نسخه (Version)
-      placeholder: v1.3.7
+      placeholder: v1.3.8
     validations:
       required: true
   - type: input

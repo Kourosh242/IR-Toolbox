@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://github.com/Kourosh242/IR-Toolbox/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="لایسنس MIT"></a>
-  <img src="https://img.shields.io/badge/version-v1.3.7-blue.svg" alt="نسخه v1.3.7">
+  <img src="https://img.shields.io/badge/version-v1.3.8-blue.svg" alt="نسخه v1.3.8">
   <img src="https://img.shields.io/badge/PWA-installable-5A0FC8.svg" alt="PWA قابل نصب">
   <img src="https://img.shields.io/badge/works%20offline-100%25-success.svg" alt="کاملاً آفلاین">
   <img src="https://img.shields.io/badge/privacy-no%20tracking%2C%20no%20server-0A6E57.svg" alt="بدون ردیابی و بدون سرور">
@@ -72,8 +72,8 @@
 | خلاصهٔ ماشین‌خوان برای دستیارهای هوش مصنوعی | <https://kourosh242.github.io/IR-Toolbox/llms.txt> |
 | فایل استناد | [`CITATION.cff`](CITATION.cff) |
 
-- **نسخه:** 1.3.7 · **لایسنس:** MIT · **سازنده:** [Kourosh242](https://github.com/Kourosh242)
-- **آخرین به‌روزرسانی:** 2026-09-18 (۱۴۰۵-۰۶-۲۷) · **تاریخچهٔ کامل:** [`js/changelog.js`](js/changelog.js) و [تغییرات نسخه](#-تغییرات-نسخه)
+- **نسخه:** 1.3.8 · **لایسنس:** MIT · **سازنده:** [Kourosh242](https://github.com/Kourosh242)
+- **آخرین به‌روزرسانی:** 2026-09-21 (۱۴۰۵-۰۶-۳۰) · **تاریخچهٔ کامل:** [`js/changelog.js`](js/changelog.js) و [تغییرات نسخه](#-تغییرات-نسخه)
 - **فناوری:** Vanilla JavaScript (ES modules) — بدون فریم‌ورک و بدون مرحلهٔ build
 - **حریم خصوصی:** بدون سرور، بدون API، بدون کوکی ردیابی و بدون اسکریپت شخص ثالث
 
@@ -181,6 +181,15 @@ python3 -m http.server 8080
 این پروژه تحت لایسنس [MIT](LICENSE) منتشر شده است — رایگان برای استفاده شخصی و تجاری.
 
 ## 🗂️ تغییرات نسخه
+
+### v1.3.8 — ۱۴۰۵-۰۶-۳۰ (2026-09-21)
+
+انتشار **اصلاح فوری** (Patch) — مهم‌ترین مورد، بازگشتن ابزار تولید رمز عبور پس از یک باگ بحرانی است:
+
+- 🐞 **رفع بحرانی: ابزار «تولید رمز عبور» از کار افتاده بود** — به‌دلیل `import` نشدن `randInt` با خطای `ReferenceError` کاملاً کرش می‌کرد؛ اکنون درست باز می‌شود و رمز می‌سازد.
+- 🔑 **رفع: مولد رمز طول درخواستی را رعایت می‌کند** — قبلاً رمزی کوتاه‌تر از طول درخواستی می‌ساخت (مثلاً ۱۰ به‌جای ۱۶)؛ باگ کرانِ حلقه برطرف شد و حالا دقیقاً همان طول تولید می‌شود (همراه حذف کد مرده). در ابزار رمزساز و مدیر رمز عبور.
+- 🔢 **رفع: جداکنندهٔ ۳ رقمی برای اعداد بزرگ دقیق است** — اعداد ۱۶ رقم و بیشتر حالا دقیق گروه‌بندی می‌شوند؛ قبلاً بی‌صدا گِرد می‌شدند و اعداد خیلی بزرگ `∞` می‌دادند.
+- 🧾 **امنیت: محافظت تزریق فرمول CSV گسترده‌تر شد** — کاراکترهای `Tab` و `CR` هم پوشش داده می‌شوند (توصیهٔ OWASP / CWE-1236).
 
 ### v1.3.7 — ۱۴۰۵-۰۶-۲۷ (2026-09-18)
 
