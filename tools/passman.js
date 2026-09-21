@@ -48,9 +48,11 @@ const genPassword = (len = 16) => {
   const all = sets.join('');
   const chars = [];
   for (const set of sets) chars.push(set[randInt(set.length)]); // v1.3.7: بدون بایاس
-  const rest = new Uint32Array(Math.max(0, len - chars.length));
-  crypto.getRandomValues(rest);
-  for (let i = 0; i < rest.length; i++) chars.push(all[randInt(all.length)]);
+  /* v1.3.8 (یافتهٔ ۴+۵): آرایهٔ rest مرده حذف شد، اما کران حلقه باید یک‌بار
+   * محاسبه شود — شرط `i < len - chars.length` با هر push کوچک‌تر می‌شد و رمز
+   * ۱۰ کاراکتری به‌جای ۱۶ می‌ساخت. */
+  const need = Math.max(0, len - chars.length);
+  for (let i = 0; i < need; i++) chars.push(all[randInt(all.length)]);
   for (let i = chars.length - 1; i > 0; i--) { const j = randInt(i + 1); [chars[i], chars[j]] = [chars[j], chars[i]]; }
   return chars.join('');
 };

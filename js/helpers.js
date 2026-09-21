@@ -8,7 +8,15 @@ export const faNum = (n) => String(n).replace(/\d/g, (d) => FA_DIGITS[+d]);
 
 /* Number with thousands separators + Persian digits (e.g. faGroup(150000) → «۱۵۰٬۰۰۰») */
 const groupFmt = new Intl.NumberFormat('fa-IR', { maximumFractionDigits: 6 });
-export const faGroup = (n) => groupFmt.format(Number(String(n).replace(/[،,٬\s]/g, ''))); // v1.3.6-fix: ورودیِ دارای جداکننده هم پذیرفته می‌شود
+export const faGroup = (n) => {
+  const s = String(n).replace(/[،,٬\s]/g, '');
+  /* v1.3.8 (یافتهٔ ۲): عدد صحیح بزرگ‌تر از دقت double (≥۱۶ رقم) قبلاً از Number()
+   * رد می‌شد → بی‌صدا گِرد می‌شد (…۸۹۰ ← …۰۰۰) یا برای ورودی‌های خیلی بزرگ ∞ می‌داد.
+   * حالا این حالت رقم‌به‌رقم و دقیق با groupInt خطی جدا می‌شود؛ بقیهٔ حالت‌ها
+   * (اعشاری، منفی، محدودهٔ امن) همان مسیر قبلی Intl را می‌روند. */
+  if (/^[+]?\d{16,}$/.test(s) || /^-\d{16,}$/.test(s)) return faNum(groupInt(s).replace(/,/g, '٬'));
+  return groupFmt.format(Number(s));
+};
 
 export function faBytes(bytes) {
   if (!isFinite(bytes)) return '—';

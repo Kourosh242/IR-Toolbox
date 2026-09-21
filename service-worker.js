@@ -4,12 +4,14 @@
  */
 /* نسخهٔ کش — با هر انتشار بالا می‌رود تا کلاینت‌های قبلی کش کهنه را دور بیندازند
  * (کش قدیمی در activate حذف و نسخهٔ جدید خودکار اعمال می‌شود).
+ * ir-v13 = v1.3.8: اصلاح import ابزار تولید رمز + دقت اعداد بزرگ در جداکننده
+ * + پوشش Tab/CR در مقابله با تزریق فرمول CSV.
  * ir-v12 = v1.3.7: CSP سخت‌گیرانه روی همهٔ صفحه‌ها + اجرای Regex در Web Worker
  * + مشتق کلید PBKDF2 با ۶۰۰٬۰۰۰ تکرار.
  * ⚠️ این عدد «نسخهٔ کش» است، نه نسخهٔ اپ. نسخهٔ اپ در js/changelog.js (VERSION)،
  *    seo/site.mjs (SITE.version) و manifest.json (version) تعریف می‌شود و
  *    «npm run validate:seo» یکی بودن هر سه را بررسی می‌کند. */
-const VERSION = 'ir-v12';
+const VERSION = 'ir-v13';
 const CORE = [
   './',
   './index.html',

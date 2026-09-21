@@ -1,7 +1,7 @@
 /* IR-Toolbox — امنیت / Security tools */
 import { register } from '../js/registry.js';
 import { el, field, areaInput, textInput, selectInput, readout, fileInput, stat } from '../js/ui.js';
-import { faNum, faBytes, debounce, hasCrypto, INSECURE_MSG } from '../js/helpers.js';
+import { faNum, faBytes, debounce, hasCrypto, INSECURE_MSG, randInt } from '../js/helpers.js'; // v1.3.8 (یافتهٔ ۱): randInt استفاده می‌شد ولی import نشده بود → ابزار با ReferenceError می‌مرد
 import { digest } from '../vault/crypto-utils.js';
 import { md5hex, sha1hex, sha256hex } from '../js/hashes-sync.js';
 
@@ -155,7 +155,11 @@ register({
       for (const set of sets) {
         chars.push(set[randInt(set.length)]); // v1.3.7: بدون بایاس modulo
       }
-      for (let i = 0; i < Math.max(0, L - chars.length); i++) chars.push(all[randInt(all.length)]);
+      // v1.3.8 (یافتهٔ ۵): کران حلقه باید «یک‌بار» محاسبه شود — شرط قبلی
+      // `i < L - chars.length` با هر push کوچک‌تر می‌شد و رمز ~نصف طول درخواستی
+      // تولید می‌شد (۱۰ به‌جای ۱۶). حالا تعداد لازم ابتدا ثابت می‌شود.
+      const need = Math.max(0, L - chars.length);
+      for (let i = 0; i < need; i++) chars.push(all[randInt(all.length)]);
       for (let i = chars.length - 1; i > 0; i--) {
         const j = randInt(i + 1);
         [chars[i], chars[j]] = [chars[j], chars[i]];
