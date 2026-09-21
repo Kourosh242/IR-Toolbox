@@ -103,7 +103,7 @@ npm run validate:seo    # راستی‌آزمایی: عنوان/توضیح/canon
 
 | فایل | چه چیزی |
 | --- | --- |
-| `js/changelog.js` | `VERSION` + ورودی تازهٔ `CHANGELOG` (تاریخ شمسی کامل: `۱۴۰۵-۰۶-۲۷`) |
+| `js/changelog.js` | `VERSION` + ورودی تازهٔ `CHANGELOG` (تاریخ شمسی کامل: `۱۴۰۵-۰۶-۳۰`) |
 | `seo/site.mjs` | `version` و `dateModified` (و `datePublished` فقط برای اولین انتشار) |
 | `manifest.json` | `version` (و `description` اگر شمار ابزار/دسته عوض شد) |
 | `package.json` | `version` |
